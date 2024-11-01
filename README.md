@@ -1,19 +1,19 @@
-# Shuoshuo (with Notion)
+# astion-static (with Notion)
 
 > [!IMPORTANT]
-> This program is under development, for more information, please visit [Shuoshuo/About](https://demo.shuoshuo.saroprock.com/about)
+> This program is under development, for more information, please visit [astion-static/About](https://demo.shuoshuo.saroprock.com/about)
 
-[![license](https://badgen.net/github/license/EveSunMaple/Shuoshuo)](https://github.com/EveSunMaple/Shuoshuo/blob/main/LICENSE)&nbsp;&nbsp;&nbsp;[![release](https://badgen.net/github/release/EveSunMaple/Shuoshuo)](https://github.com/EveSunMaple/Shuoshuo/releases)&nbsp;&nbsp;&nbsp;[![stackblitz](https://developer.stackblitz.com/img/open_in_stackblitz_small.svg)](https://stackblitz.com/github/EveSunMaple/Shuoshuo)
+[![license](https://badgen.net/github/license/EveSunMaple/astion-static)](https://github.com/EveSunMaple/astion-static/blob/main/LICENSE)&nbsp;&nbsp;&nbsp;[![release](https://badgen.net/github/release/EveSunMaple/astion-static)](https://github.com/EveSunMaple/astion-static/releases)&nbsp;&nbsp;&nbsp;[![stackblitz](https://developer.stackblitz.com/img/open_in_stackblitz_small.svg)](https://stackblitz.com/github/EveSunMaple/astion-static)
 
 ```sh
-pnpm create astro@latest -- --template EveSunMaple/Shuoshuo
+pnpm create astro@latest -- --template EveSunMaple/astion-static
 ```
 
 Please visit [Demo](https://demo.shuoshuo.saroprock.com)
 
 ## 🚀 About
 
-> "This project leverages Astro + Notion to create a dynamic website that fetches data directly from Notion. A standout feature is the Shuoshuo page, where you can share quick, spontaneous moments in a format similar to Twitter posts. Alongside the Shuoshuo, the site also features standard blog pages, making it a perfect blend of casual updates and full-length articles, catering to both concise thoughts and in-depth content."
+> "This project leverages Astro + Notion to create a dynamic website that fetches data directly from Notion. A standout feature is the astion-static page, where you can share quick, spontaneous moments in a format similar to Twitter posts. Alongside the astion-static, the site also features standard blog pages, making it a perfect blend of casual updates and full-length articles, catering to both concise thoughts and in-depth content."
 
 ## 🖥️ Preview
 

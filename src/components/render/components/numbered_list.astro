@@ -6,14 +6,14 @@ const { items } = Astro.props as { items: NumberedListItem[] };
 ---
 
 <ol>
-    {
-        items.map((item) => (
-            <li>
-                {item.rich_text.map((text) => (
-                    <FormattedText text={text} />
-                ))}
-                <Content blocks={item.children} layout="numbered_list" />
-            </li>
-        ))
-    }
+  {
+    items.map((item) => (
+      <li>
+        {item.rich_text.map((text) => (
+          <FormattedText text={text} />
+        ))}
+        <Content blocks={item.children} layout="numbered_list" />
+      </li>
+    ))
+  }
 </ol>

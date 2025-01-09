@@ -1,6 +1,7 @@
 ---
 import type { BulletedListItem } from "../../utils/interfaces.ts";
 import type { NumberedListItem } from "../../utils/interfaces.ts";
+import type { Block } from "../../utils/interfaces.ts";
 import BulletedList from "./components/bulleted_list.astro";
 import NumberedList from "./components/numbered_list.astro";
 import ParagraphBlock from "./components/paragraph.astro";
@@ -12,8 +13,6 @@ import ToDoBlock from "./components/to_do.astro";
 import Heading1Block from "./components/heading_1.astro";
 import Heading2Block from "./components/heading_2.astro";
 import Heading3Block from "./components/heading_3.astro";
-
-import type { Block } from "../../utils/interfaces.ts";
 
 const { blocks, layout } = Astro.props as { blocks: Block[]; layout: string };
 let numberedListItems = [] as BulletedListItem[];
@@ -45,6 +44,7 @@ let id = 0;
                 );
                 return null;
             case "end":
+                // eslint-disable-next-line format/prettier
                 if (bulletedListItems.length > 0) {
                     IsList = true;
                     return <BulletedList items={bulletedListItems} />;

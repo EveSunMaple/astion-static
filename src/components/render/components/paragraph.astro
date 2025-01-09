@@ -5,5 +5,5 @@ const { block } = Astro.props as { block: Paragraph };
 ---
 
 <p>
-    {block.rich_text.map((text) => <FormattedText text={text} />)}
+  {block.rich_text.map((text) => <FormattedText text={text} />)}
 </p>

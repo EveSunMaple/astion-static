@@ -5,37 +5,37 @@ const { block } = Astro.props as { block: Table };
 ---
 
 <div class="overflow-x-auto rounded-xl">
-    <table class="table table-lg">
-        <thead>
-            <tr class="bg-base-300">
-                {
-                    block.children[0].table_row.cells.map((cell) =>
-                        cell.map((text) => (
-                            <th>
-                                <FormattedText text={text} />
-                            </th>
-                        )),
-                    )
-                }
-            </tr>
-        </thead>
-        <tbody>
-            {
-                block.children.map(
-                    (row, index) =>
-                        index > 0 && (
-                            <tr class="hover">
-                                {row.table_row.cells.map((cell) =>
-                                    cell.map((text) => (
-                                        <td>
-                                            <FormattedText text={text} />
-                                        </td>
-                                    )),
-                                )}
-                            </tr>
-                        ),
-                )
-            }
-        </tbody>
-    </table>
+  <table class="table table-lg">
+    <thead>
+      <tr class="bg-base-300">
+        {
+          block.children[0].table_row.cells.map((cell) =>
+            cell.map((text) => (
+              <th>
+                <FormattedText text={text} />
+              </th>
+            )),
+          )
+        }
+      </tr>
+    </thead>
+    <tbody>
+      {
+        block.children.map(
+          (row, index) =>
+            index > 0 && (
+              <tr class="hover">
+                {row.table_row.cells.map((cell) =>
+                  cell.map((text) => (
+                    <td>
+                      <FormattedText text={text} />
+                    </td>
+                  )),
+                )}
+              </tr>
+            ),
+        )
+      }
+    </tbody>
+  </table>
 </div>

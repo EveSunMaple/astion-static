@@ -5,6 +5,6 @@ const { block, id } = Astro.props as { block: Heading3; id: string };
 ---
 
 <h4 id={id}>
-    {block.rich_text.map((text) => <FormattedText text={text} />)}
-    <a href=`#${id}` class="not-link anchor">#</a>
+  {block.rich_text.map((text) => <FormattedText text={text} />)}
+  <a href=`#${id}` class="not-link anchor">#</a>
 </h4>

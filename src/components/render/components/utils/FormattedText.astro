@@ -1,45 +1,39 @@
 ---
 interface TextObj {
-    plain_text: string;
-    href?: string;
-    annotations?: {
-        bold?: boolean;
-        italic?: boolean;
-        underline?: boolean;
-        strikethrough?: boolean; // 添加删除线支持
-    };
+  plain_text: string;
+  href?: string;
+  annotations?: {
+    bold?: boolean;
+    italic?: boolean;
+    underline?: boolean;
+    strikethrough?: boolean; // 添加删除线支持
+  };
 }
 
 const { text } = Astro.props as { text: TextObj };
 
 const getStyledText = () => {
-    let styledText = text.plain_text;
-    let TextElement = styledText;
+  let styledText = text.plain_text;
+  let TextElement = styledText;
 
-    if (text.annotations) {
-        if (text.annotations.bold) {
-            TextElement = `<strong>${TextElement}</strong>`;
-        }
-        if (text.annotations.italic) {
-            TextElement = `<em>${TextElement}</em>`;
-        }
-        if (text.annotations.underline) {
-            TextElement = `<u>${TextElement}</u>`;
-        }
-        if (text.annotations.strikethrough) {
-            // 添加删除线处理
-            TextElement = `<del>${TextElement}</del>`;
-        }
+  if (text.annotations) {
+    if (text.annotations.bold) {
+      TextElement = `<strong>${TextElement}</strong>`;
     }
+    if (text.annotations.italic) {
+      TextElement = `<em>${TextElement}</em>`;
+    }
+    if (text.annotations.underline) {
+      TextElement = `<u>${TextElement}</u>`;
+    }
+    if (text.annotations.strikethrough) {
+      // 添加删除线处理
+      TextElement = `<del>${TextElement}</del>`;
+    }
+  }
 
-    return TextElement;
+  return TextElement;
 };
 ---
 
-{
-    text.href ? (
-        <a href={text.href} set:html={getStyledText()} />
-    ) : (
-        <span set:html={getStyledText()} />
-    )
-}
+{text.href ? <a href={text.href} set:html={getStyledText()} /> : <span set:html={getStyledText()} />}

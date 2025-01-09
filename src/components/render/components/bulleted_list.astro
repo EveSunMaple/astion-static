@@ -6,14 +6,14 @@ const { items } = Astro.props as { items: BulletedListItem[] };
 ---
 
 <ul>
-    {
-        items.map((item) => (
-            <li>
-                {item.rich_text.map((text) => (
-                    <FormattedText text={text} />
-                ))}
-                <Content blocks={item.children} layout="bulleted_list" />
-            </li>
-        ))
-    }
+  {
+    items.map((item) => (
+      <li>
+        {item.rich_text.map((text) => (
+          <FormattedText text={text} />
+        ))}
+        <Content blocks={item.children} layout="bulleted_list" />
+      </li>
+    ))
+  }
 </ul>

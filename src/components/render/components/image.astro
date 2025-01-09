@@ -5,16 +5,6 @@ const imageUrl = block.file?.url || block.external?.url;
 ---
 
 <figure>
-    <img
-        src={imageUrl}
-        alt={block.caption?.map((c) => c.plain_text).join("") || "Image"}
-        loading="lazy"
-    />
-    {
-        block.caption?.length > 0 && (
-            <figcaption>
-                {block.caption.map((c) => c.plain_text).join("")}
-            </figcaption>
-        )
-    }
+  <img src={imageUrl} alt={block.caption?.map((c) => c.plain_text).join("") || "Image"} loading="lazy" />
+  {block.caption?.length > 0 && <figcaption>{block.caption.map((c) => c.plain_text).join("")}</figcaption>}
 </figure>

@@ -1,0 +1,12 @@
+---
+import PostCard from "./PostCard.astro";
+import { shuoshuos } from "../services/data";
+---
+
+<div class="grid grid-cols-1 gap-4">
+  {
+    shuoshuos.map((shuoshuo) => (
+      <PostCard id={shuoshuo.id} title={shuoshuo.title} block={shuoshuo.blocks} pubDate={shuoshuo.pubDate} />
+    ))
+  }
+</div>

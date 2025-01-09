@@ -4,83 +4,54 @@ import Card from "../components/temple/Card.astro";
 ---
 
 <BaseLayout title="About">
-    <Card>
-        <article
-            id="about"
-            class="relative w-full h-full p-6 flex flex-col justify-between article"
-        >
-            <h1>About</h1>
-            <p>
-                "This project leverages Astro + Notion to create a dynamic
-                website that fetches data directly from Notion. A standout
-                feature is the Shuoshuo page, where you can share quick,
-                spontaneous moments in a format similar to Twitter posts.
-                Alongside the Shuoshuo, the site also features standard blog
-                pages, making it a perfect blend of casual updates and
-                full-length articles, catering to both concise thoughts and
-                in-depth content."
-            </p>
-            <h2>Progress</h2>
-            <p>Overall project progress: <code>10%</code></p>
-            <progress class="progress progress-info w-full" value="10" max="100"
-            ></progress>
-            <p>Page construction progress: <code>50%</code></p>
-            <progress class="progress progress-info w-full" value="50" max="100"
-            ></progress>
-            <p>Notion data rendering processing progress: <code>30%</code></p>
-            <progress class="progress progress-info w-full" value="30" max="100"
-            ></progress>
-            <p>Other: <code>??%</code></p>
-            <progress class="progress progress-warning w-full" max="100"
-            ></progress>
-            <h2>Roadmap</h2>
-            <ul class="steps steps-vertical">
-                <li class="step step-primary">Feasibility Validation</li>
-                <li class="step step-primary">Project Framework Setup</li>
-                <li class="step step-primary">
-                    Notion Data Processing: Text and Headings
-                </li>
-                <li class="step step-primary">
-                    Notion Data Processing: Lists and Quotes
-                </li>
-                <li class="step step-primary">
-                    Notion Data Processing: Images
-                </li>
-                <li class="step step-primary">
-                    Notion Data Processing: Code Blocks
-                </li>
-                <li class="step step-primary">
-                    Notion Data Processing: To-dos
-                </li>
-                <li class="step step-primary">
-                    Notion Data Processing: Tables
-                </li>
-                <li class="step step-primary">Build Shuoshuo Page</li>
-                <li class="step step-primary">Add Separate Shuoshuo Page</li>
-                <li class="step step-warning">
-                    Add Comment Feature to Shuoshuo (Currently in testing)
-                </li>
-                <li class="step">Refine Notion Data Processing: Emphasis</li>
-                <li class="step">Refine Notion Data Processing: Divider</li>
-                <li class="step">Refine Notion Data Processing: Pages</li>
-                <li class="step">
-                    Refine Notion Data Processing: Toggle Lists
-                </li>
-                <li class="step">Build Blog Page</li>
-                <li class="step">Add Separate Blog Page</li>
-                <li class="step">Refine Sidebar Functionality</li>
-                <li class="step">Refine Notion Data Processing: Add Cover</li>
-                <li class="step">Refine Notion Data Processing: Audio</li>
-                <li class="step">Refine Notion Data Processing: Video</li>
-                <li class="step">Refine Notion Data Processing: Bookmarks</li>
-                <li class="step">
-                    Refine Notion Data Processing: Handle Databases (Too many)
-                </li>
-                <li class="step">Add Pagination to Blog & Shuoshuo</li>
-                <li class="step">Add Tags to Blog & Shuoshuo</li>
-                <li class="step">Add Search to Blog & Shuoshuo</li>
-                <li class="step" data-content="...">More</li>
-            </ul>
-        </article>
-    </Card></BaseLayout
+  <Card>
+    <article id="about" class="relative w-full h-full p-6 flex flex-col justify-between article">
+      <h1>About</h1>
+      <p>
+        "This project leverages Astro + Notion to create a dynamic website that fetches data directly from Notion. A
+        standout feature is the Post page, where you can share quick, spontaneous moments in a format similar to Twitter
+        posts. Alongside the Post, the site also features standard blog pages, making it a perfect blend of casual
+        updates and full-length articles, catering to both concise thoughts and in-depth content."
+      </p>
+      <h2>Progress</h2>
+      <p>Overall project progress: <code>10%</code></p>
+      <progress class="progress progress-info w-full" value="10" max="100"></progress>
+      <p>Page construction progress: <code>50%</code></p>
+      <progress class="progress progress-info w-full" value="50" max="100"></progress>
+      <p>Notion data rendering processing progress: <code>30%</code></p>
+      <progress class="progress progress-info w-full" value="30" max="100"></progress>
+      <p>Other: <code>??%</code></p>
+      <progress class="progress progress-warning w-full" max="100"></progress>
+      <h2>Roadmap</h2>
+      <ul class="steps steps-vertical">
+        <li class="step step-primary">Feasibility Validation</li>
+        <li class="step step-primary">Project Framework Setup</li>
+        <li class="step step-primary">Notion Data Processing: Text and Headings</li>
+        <li class="step step-primary">Notion Data Processing: Lists and Quotes</li>
+        <li class="step step-primary">Notion Data Processing: Images</li>
+        <li class="step step-primary">Notion Data Processing: Code Blocks</li>
+        <li class="step step-primary">Notion Data Processing: To-dos</li>
+        <li class="step step-primary">Notion Data Processing: Tables</li>
+        <li class="step step-primary">Build Post Page</li>
+        <li class="step step-primary">Add Separate Post Page</li>
+        <li class="step step-warning">Add Comment Feature to Post (Currently in testing)</li>
+        <li class="step">Refine Notion Data Processing: Emphasis</li>
+        <li class="step">Refine Notion Data Processing: Divider</li>
+        <li class="step">Refine Notion Data Processing: Pages</li>
+        <li class="step">Refine Notion Data Processing: Toggle Lists</li>
+        <li class="step">Build Blog Page</li>
+        <li class="step">Add Separate Blog Page</li>
+        <li class="step">Refine Sidebar Functionality</li>
+        <li class="step">Refine Notion Data Processing: Add Cover</li>
+        <li class="step">Refine Notion Data Processing: Audio</li>
+        <li class="step">Refine Notion Data Processing: Video</li>
+        <li class="step">Refine Notion Data Processing: Bookmarks</li>
+        <li class="step">Refine Notion Data Processing: Handle Databases (Too many)</li>
+        <li class="step">Add Pagination to Blog & Post</li>
+        <li class="step">Add Tags to Blog & Post</li>
+        <li class="step">Add Search to Blog & Post</li>
+        <li class="step" data-content="...">More</li>
+      </ul>
+    </article>
+  </Card></BaseLayout
 >

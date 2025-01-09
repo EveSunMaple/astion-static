@@ -1,0 +1,24 @@
+---
+import dayjs from "dayjs";
+import { t } from "i18next";
+import { DATE_FORMAT } from "../config";
+import HeadingLink from "./widgets/HeadingLink.astro";
+import ActionButtons from "./widgets/ActionButtons.astro";
+import Card from "./temple/Card.astro";
+import Content from "./render/Content.astro";
+const { id, title, block, pubDate } = Astro.props;
+const displayDate = dayjs(pubDate).format(DATE_FORMAT);
+---
+
+<Card>
+  <article id={id} class="relative w-full h-full p-6 flex flex-col justify-between">
+    <span class="flex items-center text-neutral-content"
+      ><i class="icon-[material-symbols--calendar-today-outline-rounded] mr-2"></i>{displayDate}</span
+    >
+    <HeadingLink slug={id} path="post" title={title} />
+    <div class="article">
+      <Content blocks={block} layout="article" />
+    </div>
+    <ActionButtons />
+  </article>
+</Card>

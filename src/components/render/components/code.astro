@@ -1,9 +1,0 @@
----
-import type { Code } from "../../../utils/interfaces.ts";
-import { highlightCode } from "../../../utils/highlightCode.mjs";
-const { block } = Astro.props as { block: Code };
-
-const html = highlightCode(block);
----
-
-<div class={`language-${block.language}`} set:html={html} />

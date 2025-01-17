@@ -1,0 +1,12 @@
+---
+import type { ToDo } from "../../../interface/post.ts";
+import FormattedText from "./utils/FormattedText.astro";
+const { block } = Astro.props as { block: ToDo };
+---
+
+<div class="flex items-center">
+  <label class="cursor-pointer flex items-center">
+    <input type="checkbox" class="checkbox checkbox-sm mr-2" checked={block.checked} />
+    {block.rich_text.map((text) => <FormattedText text={text} />)}
+  </label>
+</div>

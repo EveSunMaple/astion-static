@@ -1,0 +1,29 @@
+---
+import type { Post } from "../../interface/post";
+import { getPostById, posts } from "../../services/data";
+import BaseLayout from "../../layout/BaseLayout.astro";
+import PostCard from "../../components/PostCard.astro";
+
+export async function getStaticPaths() {
+  return posts.map((post) => ({
+    params: { slug: post.id },
+  }));
+}
+
+const { slug } = Astro.params;
+
+let post: Post | undefined;
+if (typeof slug === "string") {
+  post = getPostById(slug);
+}
+
+if (!post) {
+  throw new Error("Post not found");
+}
+
+const { title, blocks, pubDate } = post;
+---
+
+<BaseLayout title={title}>
+  <PostCard title={title} block={blocks} pubDate={pubDate} />
+</BaseLayout>

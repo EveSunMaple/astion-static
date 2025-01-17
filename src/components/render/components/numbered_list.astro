@@ -1,0 +1,19 @@
+---
+import type { NumberedListItem } from "../../../interface/post.ts";
+import FormattedText from "./utils/FormattedText.astro";
+import Content from "../Content.astro";
+const { items } = Astro.props as { items: NumberedListItem[] };
+---
+
+<ol>
+  {
+    items.map((item) => (
+      <li>
+        {item.rich_text.map((text) => (
+          <FormattedText text={text} />
+        ))}
+        <Content blocks={item.children} layout="numbered_list" />
+      </li>
+    ))
+  }
+</ol>

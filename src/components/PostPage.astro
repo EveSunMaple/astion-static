@@ -1,0 +1,8 @@
+---
+import PostCard from "./PostCard.astro";
+import { posts } from "../services/data";
+---
+
+<div class="grid grid-cols-1 gap-4">
+  {posts.map((post) => <PostCard id={post.id} title={post.title} block={post.blocks} pubDate={post.pubDate} />)}
+</div>

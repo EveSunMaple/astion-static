@@ -1,0 +1,48 @@
+---
+import {
+  USER_AVATAR,
+  USER_NAME,
+  USER_SIDEBAR_TITLE,
+  USER_SIDEBAR_DESCRIPTION,
+  USER_SIDEBAR_SOCIAL_ICONS,
+} from "../../config";
+import { Icon } from "astro-icon/components";
+import Image from "astro/components/Image.astro";
+import Card from "../temple/Card.astro";
+---
+
+<Card>
+  <aside>
+    <div class="relative p-2 md:p-4 flex flex-row md:flex-col">
+      <div class="basis-1/2 md:mb-4 p-4 md:p-0">
+        <div class="avatar online">
+          <Image
+            class="mask mask-circle"
+            format="webp"
+            width={150}
+            height={150}
+            src={USER_AVATAR}
+            alt="Profile"
+            loading="eager"
+          />
+        </div>
+      </div>
+      <div class="grid grid-cols-3 content-end justify-center gap-2 basis-1/2">
+        <div class="card-title md:justify-center col-span-3">{USER_NAME}</div>
+        {
+          USER_SIDEBAR_SOCIAL_ICONS.map((icon) => (
+            <div class="tooltip" data-tip={icon.title}>
+              <a tabindex="0" class="btn" href={icon.href} aria-label={icon.ariaLabel}>
+                <Icon name={icon.svg} class="text-2xl md:text-xl" />
+              </a>
+            </div>
+          ))
+        }
+      </div>
+      <div class="card-body py-6 px-2">
+        <h5 class="card-title">{USER_SIDEBAR_TITLE}</h5>
+        <p class="card-text">{USER_SIDEBAR_DESCRIPTION}</p>
+      </div>
+    </div>
+  </aside>
+</Card>

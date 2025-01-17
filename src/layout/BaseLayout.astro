@@ -1,0 +1,51 @@
+---
+import "medium-zoom/dist/style.css";
+import { SITE_TAB, SITE_TITLE, SITE_DESCRIPTION, SITE_FAVICON, SITE_THEME } from "../config";
+import i18next, { changeLanguage } from "i18next";
+import Header from "../components/Header.astro";
+import Navbar from "../components/Navbar.astro";
+import SideBarLeft from "../components/SideBarLeft.astro";
+import SideBarRight from "../components/SideBarRight.astro";
+import Footer from "../components/Footer.astro";
+
+changeLanguage("en");
+const { title, image } = Astro.props;
+---
+
+<!doctype html>
+<html lang={i18next.language} class="transition bg-base-300" data-theme={SITE_THEME.light}>
+  <head>
+    <Header title={SITE_TITLE} description={SITE_DESCRIPTION} favicon={SITE_FAVICON} image={image} />
+    <title class="sr-only">{`${title} - ${SITE_TAB}`}</title>
+    <script is:inline>
+      (function () {
+        const storedTheme = localStorage.getItem("theme");
+        const userPreferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "winter" : "dracula";
+        const theme = storedTheme || userPreferredTheme;
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="max-w-7xl m-auto">
+      <div class="relative grid grid-cols-1 md:grid-cols-5 gap-4 p-4">
+        <Navbar title={SITE_TITLE} />
+        <section class="col-span-1 top-4 bg-opacity-0 order-2">
+          <SideBarLeft />
+        </section>
+        <section class="col-span-1 md:col-span-3 bg-opacity-0 order-3">
+          <main id="swup" class="detail transition-main">
+            <div class="grid grid-cols-1 gap-4">
+              <slot />
+            </div>
+            <br />
+            <Footer />
+          </main>
+        </section>
+        <section class="col-span-1 top-4 bg-opacity-0 order-4 h-full">
+          <SideBarRight />
+        </section>
+      </div>
+    </div>
+  </body>
+</html>

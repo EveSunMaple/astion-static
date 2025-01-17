@@ -1,0 +1,9 @@
+---
+import type { Paragraph } from "../../../interface/post.ts";
+import FormattedText from "./utils/FormattedText.astro";
+const { block } = Astro.props as { block: Paragraph };
+---
+
+<p>
+  {block.rich_text.map((text) => <FormattedText text={text} />)}
+</p>

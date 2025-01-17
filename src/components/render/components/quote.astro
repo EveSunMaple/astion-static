@@ -1,0 +1,9 @@
+---
+import type { Quote } from "../../../interface/post.ts";
+import FormattedText from "./utils/FormattedText.astro";
+const { block } = Astro.props as { block: Quote };
+---
+
+<blockquote>
+  {block.rich_text.map((text) => <FormattedText text={text} />)}
+</blockquote>

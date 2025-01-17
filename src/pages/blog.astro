@@ -1,0 +1,25 @@
+---
+import { Icon } from "astro-icon/components";
+import BaseLayout from "../layout/BaseLayout.astro";
+import Card from "../components/temple/Card.astro";
+---
+
+<BaseLayout title="Blog">
+  <Card>
+    <article id="blog" class="relative w-full h-full p-6 flex flex-col justify-between">
+      <div class="relative card article">
+        <div class="mockup-window bg-base-300 border">
+          <div class="bg-base-200 flex justify-center p-6">
+            <Icon name="mdi:hammer-wrench" class="text-6xl my-auto" />
+            <p class="p-4 my-auto">
+              This project is currently under construction! Please visit the
+              <a href="/about" target="_self" aria-label="About">About</a>
+              page for more information! Source code repository:
+              <a href="https://github.com/EveSunMaple/Post" target="_self" aria-label="Repo">EveSunMaple/Post</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </article>
+  </Card>
+</BaseLayout>

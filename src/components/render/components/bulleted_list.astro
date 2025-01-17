@@ -1,0 +1,19 @@
+---
+import type { BulletedListItem } from "../../../interface/post.ts";
+import FormattedText from "./utils/FormattedText.astro";
+import Content from "../Content.astro";
+const { items } = Astro.props as { items: BulletedListItem[] };
+---
+
+<ul>
+  {
+    items.map((item) => (
+      <li>
+        {item.rich_text.map((text) => (
+          <FormattedText text={text} />
+        ))}
+        <Content blocks={item.children} layout="bulleted_list" />
+      </li>
+    ))
+  }
+</ul>

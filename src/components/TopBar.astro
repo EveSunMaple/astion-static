@@ -1,0 +1,64 @@
+---
+import { SITE_TITLE } from "@config";
+import { Icon } from "astro-icon/components";
+import ThemeToggle from "./widgets/ThemeToggle.astro";
+
+const { title } = Astro.props as { title?: string };
+---
+
+<header
+  class="sticky top-0 z-30 flex h-12 items-center justify-between gap-2 border-b border-base-content/10 bg-base-100/85 px-3 backdrop-blur md:px-6"
+>
+  <div class="flex min-w-0 items-center gap-1">
+    <button
+      id="sidebar-toggle"
+      class="btn btn-ghost btn-square btn-sm lg:hidden"
+      aria-label="Open navigation"
+      aria-controls="app-sidebar"
+      aria-expanded="false"
+    >
+      <Icon name="lucide:menu" class="h-4 w-4" />
+    </button>
+    <button
+      id="sidebar-collapse"
+      class="btn btn-ghost btn-square btn-sm hidden lg:inline-flex"
+      aria-label="Toggle sidebar"
+    >
+      <Icon name="lucide:panel-left" class="h-4 w-4" />
+    </button>
+
+    <nav
+      class="ml-1 flex min-w-0 items-center gap-1.5 text-sm"
+      aria-label="Breadcrumb"
+    >
+      <a
+        href="/"
+        class="max-w-[9rem] truncate rounded px-1.5 py-0.5 text-base-content/50 transition-colors hover:bg-base-200 hover:text-base-content"
+      >
+        {SITE_TITLE}
+      </a>
+      {
+        title && (
+          <>
+            <span class="text-base-content/30">/</span>
+            <span class="max-w-[14rem] truncate px-1.5 text-base-content/80">
+              {title}
+            </span>
+          </>
+        )
+      }
+    </nav>
+  </div>
+
+  <div class="flex flex-none items-center gap-0.5">
+    <a
+      href="/blog/search"
+      class="btn btn-ghost btn-square btn-sm text-base-content/50 hover:text-base-content"
+      aria-label="Search"
+      title="Search (/)"
+    >
+      <Icon name="lucide:search" class="h-4 w-4" />
+    </a>
+    <ThemeToggle className="topbar-theme" />
+  </div>
+</header>

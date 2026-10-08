@@ -45,6 +45,12 @@ const pageLinks = generatePageLinks(totalPages);
     </div>
   </header>
 
+  <div class="db-header">
+    <div class="db-header-date">Date</div>
+    <div class="db-header-main">Title</div>
+    <div class="db-header-meta">Tags</div>
+  </div>
+
   <CardGroup cols="1">
     {
       page.data.map((blog: Post, index: number) => (

@@ -2,8 +2,9 @@
 import { ClientRouter } from "astro:transitions";
 import Footer from "@components/Footer.astro";
 import Header from "@components/Header.astro";
-import Navbar from "@components/Navbar.astro";
 import Sidebar from "@components/Sidebar.astro";
+import TOCBar from "@components/sidebar/TOCBar.astro";
+import TopBar from "@components/TopBar.astro";
 import MobileTOC from "@components/widgets/MobileTOC.astro";
 import {
   SITE_DESCRIPTION,
@@ -93,9 +94,21 @@ const jsonLd =
         });
       })();
     </script>
+
+    <script is:inline>
+      (function () {
+        try {
+          if (localStorage.getItem("astion-sidebar") === "collapsed") {
+            document.documentElement.dataset.sidebar = "collapsed";
+          }
+        } catch (_) {
+          // ignore
+        }
+      })();
+    </script>
   </head>
 
-  <body class="flex min-h-screen flex-col" {...isIndexed ? { "data-pagefind-body": true } : {}}>
+  <body class="min-h-screen bg-base-100" {...isIndexed ? { "data-pagefind-body": true } : {}}>
     <a
       href="#main-content"
       class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:btn focus:btn-primary"
@@ -103,24 +116,34 @@ const jsonLd =
       {t("label.skipToContent")}
     </a>
 
-    <Navbar />
+    <div id="sidebar-overlay" class="fixed inset-0 z-40 hidden bg-black/40 lg:hidden"></div>
 
-    <div class="mx-auto w-full max-w-[1120px] flex-grow px-4 md:px-6">
-      <div class="grid grid-cols-1 gap-10 lg:grid-cols-[232px_minmax(0,1fr)]">
-        <aside class="order-1 hidden lg:block">
-          <div class="sticky top-20 flex flex-col">
-            <Sidebar headings={headings} showTOC={showTOC} />
-            <slot name="sidebar" />
-          </div>
-        </aside>
+    <div class="lg:flex">
+      <aside
+        id="app-sidebar"
+        aria-label="Sidebar"
+        class="fixed inset-y-0 left-0 z-50 w-64 -translate-x-full overflow-y-auto border-r border-base-content/10 bg-base-200 transition-transform duration-200 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 lg:transition-none"
+      >
+        <Sidebar />
+      </aside>
 
-        <main
-          id="main-content"
-          tabindex="-1"
-          class="order-2 mt-20 flex min-w-0 flex-col lg:mt-0"
-        >
-          <div class="flex flex-grow flex-col">
-            <slot />
+      <div class="flex min-w-0 flex-1 flex-col">
+        <TopBar title={title} />
+
+        <main id="main-content" tabindex="-1" class="flex-1">
+          <div class="mx-auto flex w-full max-w-[1180px] justify-center gap-10 px-5 md:px-8">
+            <div class="w-full min-w-0 max-w-[780px] pb-10">
+              <slot />
+            </div>
+            {
+              showTOC && headings.length > 0 && (
+                <aside class="hidden w-48 flex-none pt-12 xl:block" aria-label="Table of contents">
+                  <div class="sticky top-16">
+                    <TOCBar headings={headings} showTOC={showTOC} />
+                  </div>
+                </aside>
+              )
+            }
           </div>
           <Footer />
         </main>
@@ -163,6 +186,69 @@ const jsonLd =
             }
           });
         });
+      });
+    </script>
+
+    <script is:inline>
+      document.addEventListener("astro:page-load", () => {
+        const sidebar = document.getElementById("app-sidebar");
+        const overlay = document.getElementById("sidebar-overlay");
+        const toggle = document.getElementById("sidebar-toggle");
+        const collapse = document.getElementById("sidebar-collapse");
+        if (!sidebar) return;
+
+        const isMobileOpen = () => !sidebar.classList.contains("-translate-x-full");
+
+        const openMobile = () => {
+          sidebar.classList.remove("-translate-x-full");
+          overlay?.classList.remove("hidden");
+          document.body.classList.add("overflow-hidden");
+          toggle?.setAttribute("aria-expanded", "true");
+        };
+
+        const closeMobile = () => {
+          sidebar.classList.add("-translate-x-full");
+          overlay?.classList.add("hidden");
+          document.body.classList.remove("overflow-hidden");
+          toggle?.setAttribute("aria-expanded", "false");
+        };
+
+        toggle?.addEventListener("click", () => {
+          if (isMobileOpen()) {
+            closeMobile();
+          } else {
+            openMobile();
+          }
+        });
+
+        overlay?.addEventListener("click", closeMobile);
+
+        sidebar.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => {
+            if (window.innerWidth < 1024) closeMobile();
+          });
+        });
+
+        collapse?.addEventListener("click", () => {
+          const html = document.documentElement;
+          if (html.dataset.sidebar === "collapsed") {
+            delete html.dataset.sidebar;
+            try {
+              localStorage.setItem("astion-sidebar", "expanded");
+            } catch (_) {
+              // ignore
+            }
+          } else {
+            html.dataset.sidebar = "collapsed";
+            try {
+              localStorage.setItem("astion-sidebar", "collapsed");
+            } catch (_) {
+              // ignore
+            }
+          }
+        });
+
+        document.addEventListener("astro:before-swap", closeMobile, { once: true });
       });
     </script>
 

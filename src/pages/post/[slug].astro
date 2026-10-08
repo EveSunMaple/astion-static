@@ -32,6 +32,9 @@ const image = new URL(`/og/${slug}.png`, Astro.site).toString();
 const stats = computeReadingStats(
   (post as unknown as { rendered?: { html?: string } }).rendered?.html ?? "",
 );
+const rawIcon = (post.data as { icon?: { type?: string; emoji?: string } })
+  .icon;
+const pageIcon = rawIcon?.type === "emoji" ? rawIcon.emoji : undefined;
 ---
 
 <BaseLayout
@@ -43,7 +46,13 @@ const stats = computeReadingStats(
   ogType="article"
   pubDate={post.data.pubDate}
 >
-  <MainCard title={post.data.title} description={post.data.description} image={post.data.image} infoIcon="lucide:info">
+  <MainCard
+    title={post.data.title}
+    description={post.data.description}
+    image={post.data.image}
+    icon={pageIcon}
+    infoIcon="lucide:info"
+  >
     <PostInfo
       pubDate={displayDate}
       badge={post.data.badge}

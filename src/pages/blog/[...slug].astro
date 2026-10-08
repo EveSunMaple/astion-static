@@ -38,6 +38,9 @@ const url = new URL(`/blog/${slug}`, Astro.site ?? Astro.url.origin);
 const stats = computeReadingStats(
   (blog as unknown as { rendered?: { html?: string } }).rendered?.html ?? "",
 );
+const rawIcon = (blog.data as { icon?: { type?: string; emoji?: string } })
+  .icon;
+const pageIcon = rawIcon?.type === "emoji" ? rawIcon.emoji : undefined;
 ---
 
 <BaseLayout
@@ -49,7 +52,13 @@ const stats = computeReadingStats(
   ogType="article"
   pubDate={blog.data.pubDate}
 >
-  <MainCard title={blog.data.title} description={blog.data.description} image={blog.data.image} infoIcon="lucide:info">
+  <MainCard
+    title={blog.data.title}
+    description={blog.data.description}
+    image={blog.data.image}
+    icon={pageIcon}
+    infoIcon="lucide:info"
+  >
     <PostInfo
       pubDate={displayDate}
       badge={blog.data.badge}

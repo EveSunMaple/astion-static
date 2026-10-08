@@ -9,9 +9,10 @@ export interface MainCardProps extends PostData {
   showTextBackground?: boolean;
   headerClass?: string;
   extraClasses?: string;
+  icon?: string;
 }
 
-const { title, description, image } = Astro.props as MainCardProps;
+const { title, description, image, icon } = Astro.props as MainCardProps;
 ---
 
 <div class="w-full">
@@ -30,6 +31,7 @@ const { title, description, image } = Astro.props as MainCardProps;
   }
 
   <header class="pb-5">
+    {icon && <div class="page-icon">{icon}</div>}
     <h1 class="page-header-title">{title}</h1>
     {description && <p class="page-header-description">{description}</p>}
   </header>

@@ -1,108 +1,104 @@
 ---
 import { Icon } from "astro-icon/components";
 import MainCard from "@/components/MainCard.astro";
-import GitHubStats from "@/components/mdx/GitHubStats.astro";
-import RepositoryCard from "@/components/mdx/RepositoryCard.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const repos = [
+  {
+    name: "astion-static",
+    description: "A Notion-powered blog template built with Astro.",
+    url: "https://github.com/EveSunMaple/astion-static",
+    pinned: true,
+  },
+  {
+    name: "Frosti",
+    description:
+      "A clean, elegant, and fast static blog template built with Astro.",
+    url: "https://github.com/EveSunMaple/Frosti",
+    pinned: true,
+  },
+  {
+    name: "SaroProck",
+    description: "我的个人博客（Astro + React）。",
+    url: "https://github.com/EveSunMaple/SaroProck",
+  },
+  {
+    name: "rehype-smart-links",
+    description:
+      "A rehype plugin that styles internal and external links differently.",
+    url: "https://github.com/EveSunMaple/rehype-smart-links",
+  },
+  {
+    name: "astro-update-theme",
+    description: "A CLI program written in C++ for updating Astro themes.",
+    url: "https://github.com/EveSunMaple/astro-update-theme",
+  },
+  {
+    name: "Word-testing-application",
+    description: "一个用 Python + Tkinter 制作的单词测试应用。",
+    url: "https://github.com/EveSunMaple/Word-testing-application",
+  },
+];
 ---
 
 <BaseLayout title="Projects">
   <MainCard
     title="Projects"
-    description="A showcase of my open-source projects and contributions on GitHub."
-    textOverlay="PROJECTS"
-    infoIcon="lucide:code-2"
+    icon="🛠️"
+    description="A selection of open-source projects and experiments."
   >
-    <!-- Featured Projects -->
-    <section class="py-4">
-      <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-        <Icon name="lucide:star" class="w-6 h-6 text-primary" />
-        <span>Featured Projects</span>
-      </h2>
-
-      <GitHubStats username="EveSunMaple" repositoryName="astion-static" />
-    </section>
-
-    <!-- My Repositories -->
-    <section class="py-4">
-      <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-        <Icon name="lucide:folder" class="w-6 h-6 text-primary" />
-        <span>My Repositories</span>
-      </h2>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <RepositoryCard repo="EveSunMaple/astion-static" isPinned={true} />
-        <RepositoryCard repo="EveSunMaple/Frosti" isPinned={true} />
-        <RepositoryCard repo="EveSunMaple/SaroProck" isPinned={true} />
-        <RepositoryCard repo="EveSunMaple/astion-static" />
-        <RepositoryCard repo="EveSunMaple/astro-update-theme" />
-        <RepositoryCard repo="EveSunMaple/Word-testing-application" />
-        <RepositoryCard repo="EveSunMaple/Smooth-Snake-Game" />
+    <div class="notion-content">
+      <h2>Featured</h2>
+      <div class="grid gap-2 sm:grid-cols-2">
+        {
+          repos
+            .filter((repo) => repo.pinned)
+            .map((repo) => (
+              <a
+                href={repo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="doc-tile"
+              >
+                <Icon name="ri:github-line" class="doc-tile-icon" />
+                <span class="min-w-0">
+                  <span class="doc-tile-title block">{repo.name}</span>
+                  <span class="doc-tile-description block">{repo.description}</span>
+                </span>
+              </a>
+            ))
+        }
       </div>
 
-      <div class="flex justify-center mt-10">
+      <h2>All repositories</h2>
+      <div class="grid gap-2 sm:grid-cols-2">
+        {
+          repos.map((repo) => (
+            <a
+              href={repo.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="doc-tile"
+            >
+              <Icon name="ri:git-repository-line" class="doc-tile-icon" />
+              <span class="min-w-0">
+                <span class="doc-tile-title block">{repo.name}</span>
+                <span class="doc-tile-description block">{repo.description}</span>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+
+      <p>
         <a
           href="https://github.com/EveSunMaple?tab=repositories"
           target="_blank"
           rel="noopener noreferrer"
-          class="btn btn-outline gap-2"
         >
-          <Icon name="lucide:github" class="w-5 h-5" />
-          <span>View More on GitHub</span>
+          View more on GitHub →
         </a>
-      </div>
-    </section>
-
-    <!-- Open Source Contributions -->
-    <section class="py-4">
-      <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-        <Icon name="lucide:git-pull-request" class="w-6 h-6 text-primary" />
-        <span>Open Source Contributions</span>
-      </h2>
-
-      <div class="card bg-base-200 p-6">
-        <ul class="space-y-6">
-          {
-            [
-              {
-                project: "Astro",
-                description: "Contributed to performance improvements and bug fixes",
-                url: "https://github.com/withastro/astro",
-              },
-              {
-                project: "TailwindCSS",
-                description: "Added new utility classes and documentation improvements",
-                url: "https://github.com/tailwindlabs/tailwindcss",
-              },
-              {
-                project: "DaisyUI",
-                description: "Contributed component enhancements and theme improvements",
-                url: "https://github.com/saadeghi/daisyui",
-              },
-            ].map((contrib) => (
-              <li class="flex items-start gap-4">
-                <div class="flex-shrink-0 bg-base-300 p-2 rounded-full">
-                  <Icon name="lucide:git-commit" class="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h3 class="text-lg font-bold">
-                    <a
-                      href={contrib.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="hover:text-primary transition-colors flex items-center gap-1"
-                    >
-                      {contrib.project}
-                      <Icon name="lucide:external-link" class="w-4 h-4" />
-                    </a>
-                  </h3>
-                  <p class="text-base-content/80">{contrib.description}</p>
-                </div>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </section>
+      </p>
+    </div>
   </MainCard>
 </BaseLayout>

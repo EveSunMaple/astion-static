@@ -64,26 +64,20 @@ if (pathname.startsWith("/blog/tag/")) {
       <Icon name="lucide:map" class="w-10 h-10" />
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      <a href="/blog" class="card bg-base-200 p-4 hover-lift text-center transition-all duration-300">
-        <div class="text-info mb-2">
-          <Icon name="lucide:book-open" class="w-8 h-8 mx-auto" />
-        </div>
-        <h3 class="font-semibold">{t("label.404exploreBlog")}</h3>
+    <div class="grid grid-cols-1 gap-2 sm:grid-cols-3">
+      <a href="/blog" class="doc-tile items-center">
+        <Icon name="lucide:book-open" class="doc-tile-icon" />
+        <h3 class="doc-tile-title">{t("label.404exploreBlog")}</h3>
       </a>
 
-      <a href="/blog/archives" class="card bg-base-200 p-4 hover-lift text-center transition-all duration-300">
-        <div class="text-info mb-2">
-          <Icon name="lucide:archive" class="w-8 h-8 mx-auto" />
-        </div>
-        <h3 class="font-semibold">{t("label.404browseArchives")}</h3>
+      <a href="/blog/archives" class="doc-tile items-center">
+        <Icon name="lucide:archive" class="doc-tile-icon" />
+        <h3 class="doc-tile-title">{t("label.404browseArchives")}</h3>
       </a>
 
-      <a href="/blog/search" class="card bg-base-200 p-4 hover-lift text-center transition-all duration-300">
-        <div class="text-info mb-2">
-          <Icon name="lucide:search" class="w-8 h-8 mx-auto" />
-        </div>
-        <h3 class="font-semibold">{t("label.404searchContent")}</h3>
+      <a href="/blog/search" class="doc-tile items-center">
+        <Icon name="lucide:search" class="doc-tile-icon" />
+        <h3 class="doc-tile-title">{t("label.404searchContent")}</h3>
       </a>
     </div>
   </MainCard>

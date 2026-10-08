@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Layout overhaul: Notion workspace shell with a fixed full-height sidebar
+  (collapsible on desktop, off-canvas on mobile), sticky top bar with
+  breadcrumb, and a right-hand outline rail on wide screens
+- Rebuilt About / Friends / Projects / 404 as Notion-style documents with
+  bordered link tiles; removed the Frosti MDX card components
+- Blog list gains a database-style header row; detail pages show Notion page
+  icons (emoji) and covers
 - Visual redesign: replaced the Frosti look with a Notion-like design system
   (custom `notion` / `notion-dark` daisyUI themes, Notion typography, page
   headers, document-style list rows, subtle borders instead of cards/shadows)

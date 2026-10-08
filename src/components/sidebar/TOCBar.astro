@@ -8,11 +8,11 @@ const { headings = [], showTOC = true } = Astro.props as TOCBarProps;
 
 {
   showTOC && headings.length > 0 && (
-    <div id="toc-container" class="mt-5 hidden lg:block">
+    <div id="toc-container">
       <div class="px-2 pb-1 text-xs font-medium tracking-wide text-base-content/40 uppercase">
         On this page
       </div>
-      <nav class="toc-nav relative max-h-[calc(100vh-280px)] overflow-y-auto scrollbar-none">
+      <nav class="toc-nav relative max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-none">
         {/* Animated active indicator */}
         <div
           id="active-indicator"

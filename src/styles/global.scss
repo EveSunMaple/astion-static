@@ -571,11 +571,11 @@ pre.shiki code {
    Page header (list pages / detail pages)
    ========================================================================== */
 .page-header {
-  padding: 2.5rem 0 1.25rem;
+  padding: 1.75rem 0 1rem;
 }
 
-.page-header-icon {
-  font-size: 3.5rem;
+.page-icon {
+  font-size: 3.75rem;
   line-height: 1;
   margin-bottom: 0.75rem;
 }
@@ -614,6 +614,79 @@ pre.shiki code {
   padding: 0.75rem 0.75rem;
   border-radius: 4px;
   transition: background-color 0.15s ease;
+}
+
+/* Database-like header row for lists */
+.db-header {
+  display: flex;
+  gap: 1.25rem;
+  padding: 0 0.75rem 0.4rem;
+  border-bottom: 1px solid var(--n-border);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--n-text-3);
+}
+
+.db-header-date {
+  flex: none;
+  width: 5.5rem;
+}
+
+.db-header-main {
+  flex: 1;
+}
+
+.db-header-meta {
+  flex: none;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .db-header-meta {
+    display: block;
+    width: 8rem;
+    text-align: right;
+  }
+}
+
+/* Notion-like bordered tile (links / repos / friends) */
+.doc-tile {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  border: 1px solid var(--n-border);
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.doc-tile:hover {
+  background: var(--n-bg-gray);
+  border-color: color-mix(in srgb, var(--n-border) 60%, var(--n-text-3));
+}
+
+.doc-tile-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--n-text);
+}
+
+.doc-tile-description {
+  margin-top: 0.15rem;
+  font-size: 0.85rem;
+  color: var(--n-text-2);
+}
+
+.doc-tile-icon {
+  flex: none;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-top: 0.15rem;
+  color: var(--n-text-3);
 }
 
 .doc-row:hover {
@@ -1108,4 +1181,27 @@ a:hover .title-anchor {
   text-align: center;
   padding: 2rem 0;
   color: var(--n-text-3);
+}
+
+/* ==========================================================================
+   App shell (sidebar + top bar)
+   ========================================================================== */
+#app-sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--n-border) transparent;
+}
+
+#app-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+#app-sidebar::-webkit-scrollbar-thumb {
+  background: var(--n-border);
+  border-radius: 3px;
+}
+
+@media (min-width: 1024px) {
+  html[data-sidebar="collapsed"] #app-sidebar {
+    display: none;
+  }
 }

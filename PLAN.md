@@ -1,6 +1,6 @@
 # Astion v2 执行计划
 
-> 状态：Phase 0 ✅、Phase 1 ✅、Phase 2 ✅、Phase 3 ✅（决策门 B 通过），准备进入 Phase 4 · 最后更新：2026-10-08
+> 状态：Phase 0–3 ✅、Phase 4 进行中（CI/文档已完成，待部署配置与 Demo 内容） · 最后更新：2026-10-08
 > 审计报告见 [REVIVAL_PLAN.md](./REVIVAL_PLAN.md)，Notion 接入教程见 [docs/notion-setup.zh-CN.md](./docs/notion-setup.zh-CN.md)
 
 ## 目标与决策记录
@@ -58,13 +58,15 @@
 - [x] **决策门 B 通过**：常用 block 渲染覆盖 + XSS 用例全过；`pnpm test` / `pnpm check` / `pnpm build` 全绿
 - 备注：更换 rehype 插件后需 `FORCE_RERENDER=1 astro sync` 刷新内容层缓存（缓存键是 Notion last_edited_time）
 
-## Phase 4 — 产品化（2–3 天）
+## Phase 4 — 产品化（进行中 2026-10-08）
 
-- [ ] GitHub Actions：PR `check + build`；`schedule` + `workflow_dispatch` → Vercel Deploy Hook（1–6h）
-- [ ] README（EN）+ `README.zh-CN` + 一键 Deploy 按钮 + 接入教程互链
-- [ ] Demo 切换到新 Notion 示例库；补截图
-- [ ] CHANGELOG、tag、issue/PR 模板（复用 Frosti）、CONTRIBUTING
-- [ ] 验收：新账号照文档 10 分钟跑通；手动触发定时构建成功
+- [x] GitHub Actions：PR `check + biome + test + build`；定时重建 `schedule.yml`（每 6h + 手动触发 → Deploy Hook）
+- [x] README（EN）+ `README.zh-CN` + 一键 Deploy 按钮 + 教程互链
+- [x] CHANGELOG、CONTRIBUTING、CODE_OF_CONDUCT、SECURITY（issue 模板沿用 Frosti）
+- [x] 文档：`docs/deploy-and-schedule.zh-CN.md`（解释 Deploy Hook 原理与配置）
+- [ ] Demo 切换到新 Notion 示例库；补截图（需你提供内容与部署）
+- [ ] 配置 GitHub Secret `DEPLOY_HOOK_URL`（需你在 Vercel 生成后填入；见部署文档）
+- [ ] 验收：新账号照文档 10 分钟跑通（待真实用户验证）
 
 ## Phase 5 — 发布（0.5 天）
 

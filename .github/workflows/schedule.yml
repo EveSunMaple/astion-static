@@ -1,0 +1,25 @@
+name: Scheduled rebuild
+
+on:
+  schedule:
+    # Every 6 hours (UTC). Adjust the cadence to your needs.
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: scheduled-rebuild
+  cancel-in-progress: false
+
+jobs:
+  trigger-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check deploy hook secret
+        run: |
+          if [ -z "${{ secrets.DEPLOY_HOOK_URL }}" ]; then
+            echo "::error::DEPLOY_HOOK_URL secret is not set. See docs/deploy-and-schedule.zh-CN.md"
+            exit 1
+          fi
+
+      - name: Trigger platform deploy hook
+        run: curl -fsS -X POST "${{ secrets.DEPLOY_HOOK_URL }}"

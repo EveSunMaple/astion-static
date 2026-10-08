@@ -46,5 +46,8 @@ jobs:
       - name: Biome formatting check on src (no write)
         run: pnpm biome:format -- ./src --write=false
 
+      - name: Unit tests
+        run: pnpm test
+
       - name: Production build
         run: pnpm build

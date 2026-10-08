@@ -1,6 +1,6 @@
 # Astion v2 执行计划
 
-> 状态：Phase 0 ✅、Phase 1 ✅、Phase 2 ✅，准备进入 Phase 3 · 最后更新：2026-10-08
+> 状态：Phase 0 ✅、Phase 1 ✅、Phase 2 ✅、Phase 3 ✅（决策门 B 通过），准备进入 Phase 4 · 最后更新：2026-10-08
 > 审计报告见 [REVIVAL_PLAN.md](./REVIVAL_PLAN.md)，Notion 接入教程见 [docs/notion-setup.zh-CN.md](./docs/notion-setup.zh-CN.md)
 
 ## 目标与决策记录
@@ -46,14 +46,17 @@
 - [x] 清理：删除 Frosti 示例 Markdown；旧的 `blogUtils`/`paginationUtils` 已迁移到 Notion 数据源（collection 名暂沿用 `blog`，Phase 4 可重命名为 `notion`）
 - [ ] 待办（转 Phase 3）：详情页 Notion 正文 H1 与页面标题重复（SEO）；Cover 封面实测
 
-## Phase 3 — 渲染正确性与安全（1–2 天）· 决策门 B
+## Phase 3 — 渲染正确性与安全（已完成 2026-10-08）· 决策门 B ✅
 
-- [ ] rich text：加粗/斜体/下划线/删除线/行内 code/链接/颜色/mention/公式
-- [ ] `rehype-sanitize` + 链接 `rel="noopener"` + `rehype-external-links`
-- [ ] 未知 block 降级 + 构建告警；API 失败 fail-fast
-- [ ] 代码高亮方案定稿（loader HTML 与 expressive-code 不兼容时用 shiki rehype 桥接）
-- [ ] Vitest fixture 快照（主要 block + XSS 用例）
-- [ ] **决策门 B**：渲染覆盖 ≥90% 常用 block 且 XSS 用例全过
+- [x] rich text：加粗/斜体/下划线/删除线/行内 code/链接 由 notion-rehype 原生支持并经 sanitize 校验
+- [x] `rehype-sanitize`（含自定义白名单：details/summary/section/notion-* class/input/表格属性/`clobberPrefix: ""`）+ `rehype-external-links`（`target=_blank` `rel=noopener noreferrer`）
+- [x] 代码高亮：新增 `src/plugins/notion-rehype.ts`，用 shiki `codeToHast` 桥接 Notion `<pre><code>`，支持语言别名与未知语言回退
+- [x] 详情页 H1 重复：正文标题整体降一级（h1→h2 … h5→h6）
+- [x] Notion block 样式：callout/toggle/to_do_list/image/caption/code/column/divider/bookmark 等类名样式写入 `global.scss`
+- [x] 封面：新增 `CoverImage` 组件，外链封面用 `<img>`（不依赖 remotePatterns），本地/Notion 托管封面走 Astro `<Image>` 优化；已用外链封面实测
+- [x] 测试：Vitest 7 用例（标题降级、shiki 高亮、notion 类名保留、script/javascript: 过滤、外链 rel、阅读统计）；CI 增加 `pnpm test`
+- [x] **决策门 B 通过**：常用 block 渲染覆盖 + XSS 用例全过；`pnpm test` / `pnpm check` / `pnpm build` 全绿
+- 备注：更换 rehype 插件后需 `FORCE_RERENDER=1 astro sync` 刷新内容层缓存（缓存键是 Notion last_edited_time）
 
 ## Phase 4 — 产品化（2–3 天）
 

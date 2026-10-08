@@ -16,6 +16,7 @@
     "search:clean": "node -e \"require('node:fs').rmSync('public/pagefind',{recursive:true,force:true})\"",
     "search:index": "npm run build && cpy 'dist/pagefind/**' public/pagefind",
     "preview": "astro preview",
+    "test": "vitest run",
     "astro": "astro",
     "lint": "biome check --write ./src",
     "biome:check": "biome check ./src",
@@ -65,6 +66,7 @@
     "@iconify/json": "^2.2.414",
     "@iconify/tailwind": "^1.2.0",
     "@pagefind/default-ui": "^1.4.0",
+    "@types/hast": "^3.0.5",
     "@types/js-yaml": "^4.0.9",
     "@types/mdast": "^4.0.4",
     "cpy-cli": "^5.0.0",
@@ -72,8 +74,13 @@
     "pagefind": "^1.4.0",
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
+    "rehype-parse": "^9.0.1",
+    "rehype-sanitize": "^6.0.0",
+    "rehype-stringify": "^10.0.1",
     "sass-embedded": "^1.93.3",
     "shiki": "^1.29.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "unist-util-visit": "^5.1.0",
+    "vitest": "^5.0.3"
   }
 }

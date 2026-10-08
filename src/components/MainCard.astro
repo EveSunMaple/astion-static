@@ -1,9 +1,9 @@
 ---
-import { Image } from "astro:assets";
 import { t } from "@config";
 import type { PostData } from "@interfaces/data";
 import { Icon } from "astro-icon/components";
 import Card from "@/components/temple/Card.astro";
+import CoverImage from "@/components/widgets/CoverImage.astro";
 
 export interface MainCardProps extends PostData {
   infoIcon?: string; // Icon for the info button
@@ -37,29 +37,14 @@ const dropdownId = `info-dropdown-${Math.random().toString(36).substring(2, 10)}
       // With image - show image with overlay title
       <div class="relative">
         <div class="aspect-video w-full overflow-hidden">
-          {
-            typeof image === "string" ? (
-              <Image
-                src={image}
-                alt={title}
-                width={1200}
-                height={630}
-                format="webp"
-                loading="eager"
-                class="w-full h-full object-cover"
-              />
-            ) : (
-              <Image
-                src={image}
-                alt={title}
-                width={1200}
-                height={630}
-                format="webp"
-                loading="eager"
-                class="w-full h-full object-cover"
-              />
-            )
-          }
+          <CoverImage
+            src={image}
+            alt={title}
+            width={1200}
+            height={630}
+            loading="eager"
+            class="w-full h-full object-cover"
+          />
         </div>
 
         {/* Flex container for Title and Button */}

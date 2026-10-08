@@ -7,6 +7,8 @@ import {
 import type { ImageMetadata } from "astro";
 import { z } from "astro/zod";
 import slugify from "slugify";
+import { CODE_THEME } from "./config";
+import { notionRehypePlugins } from "./plugins/notion-rehype";
 
 const coverAssets = import.meta.glob(
   "./assets/notion/**/*.{png,jpg,jpeg,webp,avif,gif}",
@@ -56,6 +58,7 @@ const blog = defineCollection({
     imageSavePath: "assets/notion",
     publicPath: "public/notion-assets",
     cacheImageInData: true,
+    rehypePlugins: notionRehypePlugins(CODE_THEME),
     filter: {
       and: [
         { property: "Draft", checkbox: { equals: false } },

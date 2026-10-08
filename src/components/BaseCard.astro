@@ -1,6 +1,6 @@
 ---
-import { Image } from "astro:assets";
 import Card from "@components/temple/Card.astro";
+import CoverImage from "@components/widgets/CoverImage.astro";
 import type { PostData } from "@interfaces/data";
 
 const { title, image } = Astro.props as PostData;
@@ -9,12 +9,15 @@ const { title, image } = Astro.props as PostData;
 <Card>
   <div>
     {
-      image &&
-        (typeof image === "string" ? (
-          <Image src={image} width={1920} height={1080} alt={title} loading="eager" />
-        ) : (
-          <Image src={image} width={1920} height={1080} alt={title} loading="eager" />
-        ))
+      image && (
+        <CoverImage
+          src={image}
+          alt={title}
+          width={1920}
+          height={1080}
+          loading="eager"
+        />
+      )
     }
   </div>
   <div class="p-4 sm:p-6">

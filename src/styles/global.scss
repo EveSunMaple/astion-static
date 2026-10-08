@@ -684,3 +684,134 @@ code {
     @apply block text-center py-8 text-base-content opacity-50;
   }
 }
+
+/* ===== Notion rendered blocks ===== */
+.notion-callout {
+  @apply flex items-start gap-3 rounded-xl border p-4 my-4;
+  border-color: oklch(var(--bc) / 0.15);
+
+  .notion-callout-icon {
+    @apply text-xl leading-6 flex-none;
+  }
+
+  .notion-callout-content {
+    @apply flex-1 min-w-0;
+  }
+
+  .notion-callout-content > p:first-child {
+    @apply mt-0;
+  }
+
+  .notion-callout-content > p:last-child {
+    @apply mb-0;
+  }
+
+  &.color-gray {
+    @apply bg-base-200;
+  }
+
+  &.color-brown {
+    @apply bg-base-200;
+  }
+
+  &.color-blue {
+    @apply bg-info/10;
+    border-color: oklch(var(--in) / 0.35);
+  }
+
+  &.color-green {
+    @apply bg-success/10;
+    border-color: oklch(var(--su) / 0.35);
+  }
+
+  &.color-yellow,
+  &.color-orange {
+    @apply bg-warning/10;
+    border-color: oklch(var(--wa) / 0.35);
+  }
+
+  &.color-red {
+    @apply bg-error/10;
+    border-color: oklch(var(--er) / 0.35);
+  }
+
+  &.color-purple,
+  &.color-pink {
+    @apply bg-secondary/10;
+    border-color: oklch(var(--s) / 0.35);
+  }
+}
+
+.notion-toggle {
+  @apply my-2 rounded-xl border border-base-300 px-4 py-2;
+
+  summary {
+    @apply cursor-pointer select-none font-medium;
+  }
+
+  &[open] > summary {
+    @apply mb-2;
+  }
+}
+
+.notion-image {
+  @apply my-4 flex flex-col items-center;
+
+  img {
+    @apply h-auto max-w-full rounded-xl;
+  }
+}
+
+.notion-caption {
+  @apply mt-2 text-center text-sm opacity-60;
+}
+
+.notion-code {
+  @apply my-4;
+
+  .notion-caption {
+    @apply text-left;
+  }
+}
+
+.notion-to_do_list {
+  @apply list-none pl-0;
+
+  li {
+    @apply flex items-start gap-2;
+  }
+
+  li > input[type="checkbox"] {
+    @apply checkbox checkbox-sm mt-1 flex-none;
+  }
+}
+
+.notion-column_list {
+  @apply my-4 flex flex-wrap gap-4;
+}
+
+.notion-column {
+  @apply min-w-0 flex-1;
+}
+
+.notion-divider {
+  @apply my-6 border-base-300;
+}
+
+.notion-bookmark,
+.notion-link_preview,
+.notion-file {
+  @apply my-4 block rounded-xl border border-base-300 p-3 text-sm break-all;
+}
+
+.notion-equation {
+  @apply my-4 overflow-x-auto text-center;
+}
+
+pre.shiki {
+  @apply my-4 overflow-x-auto rounded-xl p-4 text-sm;
+}
+
+.prose pre.shiki code {
+  @apply bg-transparent p-0 text-inherit;
+}

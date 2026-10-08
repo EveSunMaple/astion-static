@@ -50,10 +50,14 @@ function resolveCover(
   return undefined;
 }
 
+const notionToken = process.env.NOTION_TOKEN ?? import.meta.env.NOTION_TOKEN;
+const notionDataSourceId =
+  process.env.NOTION_DATA_SOURCE_ID ?? import.meta.env.NOTION_DATA_SOURCE_ID;
+
 const blog = defineCollection({
   loader: notionLoader({
-    auth: import.meta.env.NOTION_TOKEN,
-    data_source_id: import.meta.env.NOTION_DATA_SOURCE_ID,
+    auth: notionToken,
+    data_source_id: notionDataSourceId,
     collectionName: "blog",
     imageSavePath: "assets/notion",
     publicPath: "public/notion-assets",

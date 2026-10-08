@@ -43,6 +43,15 @@ Astion 是**静态站点**：内容在**构建时**从 Notion 拉取并渲染成
 
 若地址泄露：回到 Vercel 删除该 hook 并重新创建，再更新 Secret 即可。
 
+### 顺便加上 Notion Secrets（CI 用）
+
+CI 的「类型检查」和「构建」步骤同样会拉取 Notion 内容，所以还需要添加两个 Secret：
+
+- `NOTION_TOKEN`
+- `NOTION_DATA_SOURCE_ID`
+
+未配置时，CI 会自动跳过这两步（fork 提交的 PR 拿不到 Secret，属正常现象），lint、格式检查和单元测试照常运行。
+
 ## 3. 工作流是怎么工作的
 
 仓库内置 `.github/workflows/schedule.yml`：

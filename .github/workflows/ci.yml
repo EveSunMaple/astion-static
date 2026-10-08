@@ -15,6 +15,12 @@ jobs:
     timeout-minutes: 20
     permissions:
       contents: read
+    env:
+      # Needed by Astro content sync (Notion loader). Add these as repository
+      # secrets to run typecheck/build in CI; forks and PRs without secrets
+      # automatically skip those steps below.
+      NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+      NOTION_DATA_SOURCE_ID: ${{ secrets.NOTION_DATA_SOURCE_ID }}
 
     steps:
       - name: Checkout
@@ -37,7 +43,8 @@ jobs:
       - name: Audit production dependencies
         run: pnpm audit --prod --audit-level high
 
-      - name: Astro typecheck
+      - name: Astro typecheck (skipped without Notion secrets)
+        if: env.NOTION_TOKEN != ''
         run: pnpm check
 
       - name: Biome check (lint + formatting) on src
@@ -49,5 +56,10 @@ jobs:
       - name: Unit tests
         run: pnpm test
 
-      - name: Production build
+      - name: Production build (skipped without Notion secrets)
+        if: env.NOTION_TOKEN != ''
         run: pnpm build
+
+      - name: Notice when Notion secrets are missing
+        if: env.NOTION_TOKEN == ''
+        run: echo "::notice::NOTION_TOKEN / NOTION_DATA_SOURCE_ID secrets are not set - skipping typecheck and build. See docs/deploy-and-schedule.zh-CN.md"

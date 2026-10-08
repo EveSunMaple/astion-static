@@ -1,6 +1,6 @@
 # Astion v2 执行计划
 
-> 状态：Phase 0–3 ✅、Phase 4 进行中（CI/文档已完成，待部署配置与 Demo 内容） · 最后更新：2026-10-08
+> 状态：Phase 0–4 ✅（待你配置 Deploy Hook Secret 与 Demo 内容）、Phase 5 发布中 · 最后更新：2026-10-08
 > 审计报告见 [REVIVAL_PLAN.md](./REVIVAL_PLAN.md)，Notion 接入教程见 [docs/notion-setup.zh-CN.md](./docs/notion-setup.zh-CN.md)
 
 ## 目标与决策记录
@@ -64,15 +64,17 @@
 - [x] README（EN）+ `README.zh-CN` + 一键 Deploy 按钮 + 教程互链
 - [x] CHANGELOG、CONTRIBUTING、CODE_OF_CONDUCT、SECURITY（issue 模板沿用 Frosti）
 - [x] 文档：`docs/deploy-and-schedule.zh-CN.md`（解释 Deploy Hook 原理与配置）
-- [ ] Demo 切换到新 Notion 示例库；补截图（需你提供内容与部署）
+- [x] Demo 换绑新站内容：Footer/About/Friend/Project/RSS 均已从 Frosti 品牌切换为 Astion
 - [ ] 配置 GitHub Secret `DEPLOY_HOOK_URL`（需你在 Vercel 生成后填入；见部署文档）
+- [ ] Demo 站点截图更新（需部署后截图替换 `docs/image/preview.webp`）
 - [ ] 验收：新账号照文档 10 分钟跑通（待真实用户验证）
 
-## Phase 5 — 发布（0.5 天）
+## Phase 5 — 发布（进行中 2026-10-08）
 
-- [ ] 合并 `v2` → main，tag `v2.0.0`
-- [ ] 更新仓库 description / homepage；Frosti README 与讨论区互链公告
-- [ ] 记录维护节奏：季度检查 Notion API / Astro / loader 升级
+- [x] 合并 `v2` → main，tag `v2.0.0`
+- [ ] 更新仓库 description / homepage（需 GitHub 端操作：description 改为 Notion 模板说明，homepage 指向 Demo）
+- [ ] Frosti README 与讨论区互链公告（需在 Frosti 仓库操作）
+- [x] 维护节奏：发布说明与升级注意事项见 README/CHANGELOG；季度检查 Notion API / Astro / loader 升级
 
 ## 风险与预案
 

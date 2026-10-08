@@ -1,6 +1,64 @@
 ---
-import BaseLayout from "../layout/BaseLayout.astro";
-import PostPage from "../components/PostPage.astro";
+import BaseCard from "@components/BaseCard.astro";
+import PostCard from "@components/PostCard.astro";
+import CardGroup from "@components/temple/CardGroup.astro";
+import { t } from "@config";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import {
+  getAllShuoshuo,
+  getPostSlug,
+  getPostsWithStats,
+  sortPostsByDate,
+} from "@utils/blogUtils";
+import { Icon } from "astro-icon/components";
+
+const posts = await getAllShuoshuo();
+const postsWithStats = await getPostsWithStats(sortPostsByDate(posts));
 ---
 
-<BaseLayout title="Home"> <PostPage /> </BaseLayout>
+<BaseLayout title="Home">
+  <BaseCard title="Astion">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div class="flex items-center gap-2">
+        <Icon name="lucide:message-circle" class="w-6 h-6 text-primary" />
+        <h1 id="h1" class="text-2xl md:text-3xl font-bold">{t("label.post")}</h1>
+        <div class="badge badge-primary">{postsWithStats.length}</div>
+      </div>
+      <a href="/blog" class="btn btn-outline btn-sm gap-2">
+        <Icon name="lucide:book-open" class="w-4 h-4" />
+        <span>{t("label.blogPage")}</span>
+      </a>
+    </div>
+    <div class="divider my-2"></div>
+    <p class="text-sm opacity-75">A blog template with Notion, built with Astro.</p>
+  </BaseCard>
+
+  {
+    postsWithStats.length > 0 ? (
+      <CardGroup cols="1">
+        {postsWithStats.map((post, index) => (
+          <PostCard
+            priority={index === 0}
+            title={post.data.title}
+            image={post.data.image}
+            description={post.data.description}
+            url={"/post/" + getPostSlug(post)}
+            pubDate={post.data.pubDate}
+            badge={post.data.badge}
+            categories={post.data.categories}
+            tags={post.data.tags}
+            word={post.remarkPluginFrontmatter.totalCharCount}
+            time={post.remarkPluginFrontmatter.readingTime}
+          />
+        ))}
+      </CardGroup>
+    ) : (
+      <BaseCard title={t("label.post")}>
+        <div class="empty-state">
+          <Icon name="ri:emotion-sad-line" class="empty-icon" />
+          <p class="empty-text">{t("label.noPosts")}</p>
+        </div>
+      </BaseCard>
+    )
+  }
+</BaseLayout>

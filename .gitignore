@@ -22,3 +22,13 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# pagefind
+public/pagefind/
+
+# notion downloaded assets (content layer generates these)
+src/assets/notion/
+public/notion-assets/
+
+# local pnpm store
+.pnpm-store/

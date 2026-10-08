@@ -1,29 +1,64 @@
 ---
-import type { Post } from "../../interface/post";
-import { getPostById, posts } from "../../services/data";
-import BaseLayout from "../../layout/BaseLayout.astro";
-import PostCard from "../../components/PostCard.astro";
+import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+import PostFilter from "@components/widgets/PostFilter.astro";
+import PostInfo from "@components/widgets/PostInfo.astro";
+import { DATE_FORMAT } from "@config";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import {
+  computeReadingStats,
+  getAllShuoshuo,
+  getPostSlug,
+} from "@utils/blogUtils";
+import dayjs from "@utils/dayjs";
+import MainCard from "@/components/MainCard.astro";
 
 export async function getStaticPaths() {
-  return posts.map((post) => ({
-    params: { slug: post.id },
+  const posts = await getAllShuoshuo();
+
+  return posts.map((post: CollectionEntry<"blog">) => ({
+    params: { slug: getPostSlug(post) },
+    props: { post },
   }));
 }
 
-const { slug } = Astro.params;
-
-let post: Post | undefined;
-if (typeof slug === "string") {
-  post = getPostById(slug);
-}
-
-if (!post) {
-  throw new Error("Post not found");
-}
-
-const { title, blocks, pubDate } = post;
+const { post } = Astro.props as { post: CollectionEntry<"blog"> };
+const slug = getPostSlug(post);
+const { Content, headings } = await render(post);
+const displayDate = post.data.pubDate
+  ? dayjs(post.data.pubDate).format(DATE_FORMAT)
+  : "";
+const image = new URL(`/og/${slug}.png`, Astro.site).toString();
+const stats = computeReadingStats(
+  (post as unknown as { rendered?: { html?: string } }).rendered?.html ?? "",
+);
 ---
 
-<BaseLayout title={title}>
-  <PostCard title={title} block={blocks} pubDate={pubDate} />
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  image={image}
+  headings={headings}
+  showTOC={true}
+  ogType="article"
+  pubDate={post.data.pubDate}
+>
+  <MainCard title={post.data.title} description={post.data.description} image={post.data.image} infoIcon="lucide:info">
+    <PostInfo
+      pubDate={displayDate}
+      badge={post.data.badge}
+      word={stats.totalCharCount}
+      time={stats.readingTime}
+    />
+
+    <div class="mb-6">
+      <PostFilter categories={post.data.categories} tags={post.data.tags} />
+    </div>
+
+    <div class="mt-8">
+      <div id="content" class="prose max-w-none prose-headings:scroll-mt-20 prose-img:rounded-xl prose-img:mx-auto">
+        <Content />
+      </div>
+    </div>
+  </MainCard>
 </BaseLayout>

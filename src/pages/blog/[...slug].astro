@@ -1,0 +1,81 @@
+---
+import { type CollectionEntry, render } from "astro:content";
+import License from "@components/widgets/License.astro";
+import PostFilter from "@components/widgets/PostFilter.astro";
+import PostInfo from "@components/widgets/PostInfo.astro";
+import { DATE_FORMAT } from "@config";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import {
+  computeReadingStats,
+  getAllPosts,
+  getPostSlug,
+} from "@utils/blogUtils";
+import dayjs from "@utils/dayjs";
+import MainCard from "@/components/MainCard.astro";
+import "katex/dist/katex.min.css";
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+
+  return posts.map((blog: CollectionEntry<"blog">) => ({
+    params: { slug: getPostSlug(blog) },
+    props: { blog },
+  }));
+}
+
+interface Props {
+  blog: CollectionEntry<"blog">;
+}
+
+const { blog } = Astro.props;
+const slug = getPostSlug(blog);
+const { Content, headings } = await render(blog);
+const displayDate = blog.data.pubDate
+  ? dayjs(blog.data.pubDate).format(DATE_FORMAT)
+  : "";
+const image = new URL(`/og/${slug}.png`, Astro.site).toString();
+const url = new URL(`/blog/${slug}`, Astro.site ?? Astro.url.origin);
+const stats = computeReadingStats(
+  (blog as unknown as { rendered?: { html?: string } }).rendered?.html ?? "",
+);
+---
+
+<BaseLayout
+  title={blog.data.title}
+  description={blog.data.description}
+  image={image}
+  headings={headings}
+  showTOC={true}
+  ogType="article"
+  pubDate={blog.data.pubDate}
+>
+  <MainCard title={blog.data.title} description={blog.data.description} image={blog.data.image} infoIcon="lucide:info">
+    <PostInfo
+      pubDate={displayDate}
+      badge={blog.data.badge}
+      word={stats.totalCharCount}
+      time={stats.readingTime}
+    />
+
+    <div class="mb-6">
+      <PostFilter categories={blog.data.categories} tags={blog.data.tags} />
+    </div>
+
+    <div class="mt-8">
+      <div id="content" class="prose max-w-none prose-headings:scroll-mt-20 prose-img:rounded-xl prose-img:mx-auto">
+        <Content />
+        <License
+          url={url}
+          title={blog.data.title}
+          image={blog.data.image}
+          pubDate={blog.data.pubDate}
+          badge={blog.data.badge}
+          categories={blog.data.categories}
+          tags={blog.data.tags}
+          word={stats.totalCharCount}
+          time={stats.readingTime}
+        />
+      </div>
+    </div>
+  </MainCard>
+</BaseLayout>

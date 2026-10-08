@@ -47,7 +47,8 @@ Click the button above, or import the repository on any static host. Set the env
 | --- | --- | --- |
 | `NOTION_TOKEN` | yes | Notion internal connection token |
 | `NOTION_DATA_SOURCE_ID` | yes | Notion data source id |
-| `PUBLIC_SITE_URL` | no | Canonical site URL (config is read from `astion.config.yaml` too) |
+
+Site title, description, menus and the canonical site URL live in [`astion.config.yaml`](./astion.config.yaml) (`user.site`).
 
 The build fails fast when credentials are missing or Notion is unreachable, so a broken build never publishes an empty site.
 

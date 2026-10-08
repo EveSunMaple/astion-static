@@ -47,7 +47,8 @@ pnpm dev
 | --- | --- | --- |
 | `NOTION_TOKEN` | 是 | Notion 内部连接 token |
 | `NOTION_DATA_SOURCE_ID` | 是 | Notion Data Source ID |
-| `PUBLIC_SITE_URL` | 否 | 站点域名（站点信息也可在 `astion.config.yaml` 配置） |
+
+站点标题、描述、菜单与站点域名在 [`astion.config.yaml`](./astion.config.yaml)（`user.site`）中配置。
 
 凭证缺失或 Notion 接口异常时构建会直接失败，不会发布会一个空站。
 

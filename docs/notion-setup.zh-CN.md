@@ -165,7 +165,8 @@ pnpm build
 | --- | --- | --- | --- |
 | `NOTION_TOKEN` | 是 | 第 1 步连接详情页 | `ntn_xxxxxxxx` |
 | `NOTION_DATA_SOURCE_ID` | 是 | 第 4 步数据源设置菜单 | `248104cd-477e-80af-bc30-000bd28de8f9` |
-| `PUBLIC_SITE_URL` | 部署时 | 你的站点域名（用于 canonical / RSS / sitemap） | `https://blog.example.com` |
+
+> 站点域名、标题、菜单等其它配置在根目录 `astion.config.yaml` 中修改。
 
 ---
 

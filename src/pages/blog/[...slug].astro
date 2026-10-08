@@ -38,9 +38,6 @@ const url = new URL(`/blog/${slug}`, Astro.site ?? Astro.url.origin);
 const stats = computeReadingStats(
   (blog as unknown as { rendered?: { html?: string } }).rendered?.html ?? "",
 );
-const rawIcon = (blog.data as { icon?: { type?: string; emoji?: string } })
-  .icon;
-const pageIcon = rawIcon?.type === "emoji" ? rawIcon.emoji : undefined;
 ---
 
 <BaseLayout
@@ -56,7 +53,7 @@ const pageIcon = rawIcon?.type === "emoji" ? rawIcon.emoji : undefined;
     title={blog.data.title}
     description={blog.data.description}
     image={blog.data.image}
-    icon={pageIcon}
+    icon="ri:article-line"
     infoIcon="lucide:info"
   >
     <PostInfo

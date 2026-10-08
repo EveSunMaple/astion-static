@@ -1,0 +1,147 @@
+---
+// Global, page-agnostic scripts. They live outside the swup container so the
+// listeners survive navigation; each `app:page` event re-initializes widgets
+// found in the freshly swapped content.
+---
+
+<script>
+  document.addEventListener("app:page", () => {
+    initCategories();
+    initPagefind();
+  });
+
+  const MAX_HEIGHT_PX = 500;
+
+  function collapseCategory(
+    contentEl: HTMLElement,
+    iconEl: HTMLElement | null,
+    innerEl: HTMLElement | null,
+  ): void {
+    contentEl.style.maxHeight = "0px";
+    contentEl.classList.remove("expanded");
+    iconEl?.classList.remove("rotate-180");
+    innerEl?.classList.remove("expanded");
+    contentEl
+      .closest(".category-card")
+      ?.querySelector(".toggle-btn")
+      ?.setAttribute("aria-expanded", "false");
+  }
+
+  function expandCategory(
+    contentEl: HTMLElement,
+    iconEl: HTMLElement,
+    innerEl: HTMLElement,
+  ): void {
+    const scrollHeight = contentEl.scrollHeight;
+    contentEl.style.maxHeight = `${Math.min(scrollHeight, MAX_HEIGHT_PX)}px`;
+    contentEl.classList.add("expanded");
+    iconEl.classList.add("rotate-180");
+    innerEl.classList.add("expanded");
+    contentEl
+      .closest(".category-card")
+      ?.querySelector(".toggle-btn")
+      ?.setAttribute("aria-expanded", "true");
+  }
+
+  function initCategories(): void {
+    const categoryHeaders = document.querySelectorAll(".category-header");
+    if (categoryHeaders.length === 0) return;
+
+    categoryHeaders.forEach((header) => {
+      const card = header.closest(".category-card");
+      if (!card) return;
+
+      const content = card.querySelector(".category-content") as HTMLElement | null;
+      const toggleIcon = header.querySelector(".toggle-icon") as HTMLElement | null;
+      const inner = card.querySelector(".category-inner") as HTMLElement | null;
+
+      if (content) {
+        if (content.classList.contains("expanded")) {
+          content.style.maxHeight = `${Math.min(content.scrollHeight, MAX_HEIGHT_PX)}px`;
+          card.querySelector(".toggle-btn")?.setAttribute("aria-expanded", "true");
+        } else {
+          content.style.maxHeight = "0px";
+          card.querySelector(".toggle-btn")?.setAttribute("aria-expanded", "false");
+        }
+      }
+
+      header.addEventListener("click", () => {
+        if (!content || !toggleIcon || !inner) return;
+
+        const isCurrentlyExpanded =
+          content.classList.contains("expanded") && content.style.maxHeight !== "0px";
+
+        if (isCurrentlyExpanded) {
+          collapseCategory(content, toggleIcon, inner);
+        } else {
+          document.querySelectorAll(".category-content.expanded").forEach((openContent) => {
+            if (openContent !== content) {
+              const otherCard = openContent.closest(".category-card");
+              if (otherCard) {
+                collapseCategory(
+                  openContent as HTMLElement,
+                  otherCard.querySelector(".toggle-icon") as HTMLElement | null,
+                  otherCard.querySelector(".category-inner") as HTMLElement | null,
+                );
+              }
+            }
+          });
+          expandCategory(content, toggleIcon, inner);
+        }
+      });
+    });
+  }
+
+  function initPagefind(): void {
+    const container = document.querySelector<HTMLElement>("#pagefind-search");
+    if (!container || container.dataset.pagefindReady === "true") return;
+    container.dataset.pagefindReady = "true";
+
+    const params = new URLSearchParams(window.location.search);
+    const onIdle = window.requestIdleCallback || ((cb: IdleRequestCallback) => setTimeout(cb, 1));
+
+    onIdle(async () => {
+      try {
+        // @ts-expect-error - Pagefind UI types
+        const { PagefindUI } = await import("@pagefind/default-ui");
+
+        const search = new PagefindUI({
+          element: "#pagefind-search",
+          showImages: false,
+          processTerm(term: string): string {
+            params.set("q", term);
+            history.replaceState(history.state, "", `?${params.toString()}`);
+            return term;
+          },
+        });
+
+        const query = params.get("q");
+        if (query) {
+          search.triggerSearch(query);
+        }
+
+        const searchInput = document.querySelector(".pagefind-ui__search-input");
+        const clearButton = document.querySelector(".pagefind-ui__search-clear");
+
+        const resetSearchParam = (event: Event): void => {
+          if ((event.target as HTMLInputElement).value === "") {
+            history.replaceState(history.state, "", window.location.pathname);
+          }
+        };
+
+        searchInput?.addEventListener("input", resetSearchParam);
+        clearButton?.addEventListener("click", resetSearchParam);
+      } catch (error) {
+        console.error("Error initializing search:", error);
+        const searchContainer = document.querySelector("#search-container");
+        if (searchContainer) {
+          searchContainer.innerHTML = `
+            <div class="alert alert-error">
+              Error loading search functionality. Please try again later.
+            </div>
+          `;
+        }
+      }
+    });
+  }
+</script>

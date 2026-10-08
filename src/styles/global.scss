@@ -63,8 +63,8 @@ body {
   @apply font-sans antialiased;
   background-color: var(--n-bg);
   color: var(--n-text);
-  font-size: 16px;
-  line-height: 1.5;
+  font-size: 17px;
+  line-height: 1.6;
 }
 
 ::selection {
@@ -203,7 +203,7 @@ a {
    ========================================================================== */
 .notion-content {
   color: var(--n-text);
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.6;
 }
 
@@ -574,9 +574,10 @@ pre.shiki code {
   padding: 1.75rem 0 1rem;
 }
 
-.page-icon {
-  font-size: 3.75rem;
-  line-height: 1;
+.page-icon-svg {
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--n-text-2);
   margin-bottom: 0.75rem;
 }
 
@@ -590,6 +591,7 @@ pre.shiki code {
 
 .page-header-description {
   margin-top: 0.5rem;
+  font-size: 1.05rem;
   color: var(--n-text-2);
 }
 
@@ -620,9 +622,9 @@ pre.shiki code {
 .db-header {
   display: flex;
   gap: 1.25rem;
-  padding: 0 0.75rem 0.4rem;
+  padding: 0 0.75rem 0.5rem;
   border-bottom: 1px solid var(--n-border);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -670,14 +672,14 @@ pre.shiki code {
 }
 
 .doc-tile-title {
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--n-text);
 }
 
 .doc-tile-description {
-  margin-top: 0.15rem;
-  font-size: 0.85rem;
+  margin-top: 0.2rem;
+  font-size: 0.9rem;
   color: var(--n-text-2);
 }
 
@@ -697,7 +699,7 @@ pre.shiki code {
   flex: none;
   width: 5.5rem;
   padding-top: 0.15rem;
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   color: var(--n-text-3);
   font-variant-numeric: tabular-nums;
 }
@@ -708,15 +710,15 @@ pre.shiki code {
 }
 
 .doc-row-title {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 600;
   color: var(--n-text);
   line-height: 1.4;
 }
 
 .doc-row-description {
-  margin-top: 0.15rem;
-  font-size: 0.875rem;
+  margin-top: 0.2rem;
+  font-size: 0.95rem;
   color: var(--n-text-2);
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -725,12 +727,12 @@ pre.shiki code {
 }
 
 .doc-row-meta {
-  margin-top: 0.45rem;
+  margin-top: 0.5rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   color: var(--n-text-3);
 }
 
@@ -771,8 +773,8 @@ pre.shiki code {
   align-items: center;
   gap: 0.25rem;
   border-radius: 999px;
-  padding: 0.05rem 0.55rem;
-  font-size: 0.75rem;
+  padding: 0.1rem 0.6rem;
+  font-size: 0.8rem;
   color: var(--n-text-2);
   background: var(--n-bg-gray);
   transition: background-color 0.15s ease;
@@ -892,7 +894,7 @@ pre.shiki code {
 }
 
 .category-title h2 {
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--n-text);
 }
@@ -949,9 +951,9 @@ pre.shiki code {
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.35rem 0.6rem;
+  padding: 0.4rem 0.6rem;
   border-radius: 4px;
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   color: var(--n-text-2);
 }
 
@@ -1000,7 +1002,7 @@ pre.shiki code {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 500;
   color: var(--n-text-3);
 }
@@ -1039,13 +1041,13 @@ pre.shiki code {
 }
 
 .archive-title {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 400;
   color: var(--n-text);
 }
 
 .archive-description {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--n-text-3);
 }
 
@@ -1064,7 +1066,7 @@ pre.shiki code {
 }
 
 .empty-text {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 /* ==========================================================================
@@ -1113,17 +1115,17 @@ a:hover .title-anchor {
   --pagefind-ui-font: inherit;
 }
 
-.pagefind-ui__search-input {
+.pagefind-ui .pagefind-ui__search-input {
   background: var(--n-bg-gray);
   border: 0;
   color: var(--n-text);
 }
 
-.pagefind-ui__search-clear {
+.pagefind-ui .pagefind-ui__search-clear {
   display: none;
 }
 
-.pagefind-ui__result {
+.pagefind-ui .pagefind-ui__result {
   padding: 1rem 0;
   border: 0;
   border-bottom: 1px solid var(--n-border);
@@ -1131,51 +1133,51 @@ a:hover .title-anchor {
   margin: 0;
 }
 
-.pagefind-ui__result-title {
+.pagefind-ui .pagefind-ui__result-title {
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.35rem;
 }
 
-.pagefind-ui__result-link {
+.pagefind-ui .pagefind-ui__result-link {
   color: var(--n-text);
   text-decoration: none;
 }
 
-.pagefind-ui__result-link:hover {
+.pagefind-ui .pagefind-ui__result-link:hover {
   text-decoration: underline;
 }
 
-.pagefind-ui__result-excerpt {
+.pagefind-ui .pagefind-ui__result-excerpt {
   font-size: 0.875rem;
   color: var(--n-text-2);
 }
 
-.pagefind-ui__result-excerpt mark {
+.pagefind-ui .pagefind-ui__result-excerpt mark {
   background: rgba(255, 212, 0, 0.4);
   color: inherit;
   padding: 0 1px;
   border-radius: 2px;
 }
 
-.pagefind-ui__button {
+.pagefind-ui .pagefind-ui__button {
   background: var(--n-bg-gray);
   color: var(--n-text);
   border: 0;
   border-radius: 4px;
 }
 
-.pagefind-ui__button:hover {
+.pagefind-ui .pagefind-ui__button:hover {
   background: var(--n-bg-hover);
 }
 
-.pagefind-ui__message {
+.pagefind-ui .pagefind-ui__message {
   font-size: 0.875rem;
   color: var(--n-text-2);
   margin: 1rem 0;
 }
 
-.pagefind-ui__message:empty::before {
+.pagefind-ui .pagefind-ui__message:empty::before {
   content: "No results found. Try a different search term.";
   display: block;
   text-align: center;
@@ -1203,5 +1205,39 @@ a:hover .title-anchor {
 @media (min-width: 1024px) {
   html[data-sidebar="collapsed"] #app-sidebar {
     display: none;
+  }
+}
+
+/* ==========================================================================
+   Swup page transitions
+   ========================================================================== */
+html.is-changing .transition-swup {
+  transition:
+    opacity 260ms ease,
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 1;
+  transform: none;
+}
+
+html.is-animating .transition-swup {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+html.is-rendering .transition-swup {
+  opacity: 0;
+}
+
+#swup-progress-bar,
+.swup-progress-bar {
+  height: 2px;
+  background: var(--n-blue);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.is-changing .transition-swup,
+  html.is-animating .transition-swup {
+    transition: none;
+    transform: none;
   }
 }

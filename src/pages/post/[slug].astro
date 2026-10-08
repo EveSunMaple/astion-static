@@ -32,9 +32,6 @@ const image = new URL(`/og/${slug}.png`, Astro.site).toString();
 const stats = computeReadingStats(
   (post as unknown as { rendered?: { html?: string } }).rendered?.html ?? "",
 );
-const rawIcon = (post.data as { icon?: { type?: string; emoji?: string } })
-  .icon;
-const pageIcon = rawIcon?.type === "emoji" ? rawIcon.emoji : undefined;
 ---
 
 <BaseLayout
@@ -50,7 +47,7 @@ const pageIcon = rawIcon?.type === "emoji" ? rawIcon.emoji : undefined;
     title={post.data.title}
     description={post.data.description}
     image={post.data.image}
-    icon={pageIcon}
+    icon="ri:chat-3-line"
     infoIcon="lucide:info"
   >
     <PostInfo

@@ -9,7 +9,7 @@ const { headings = [], showTOC = true } = Astro.props as TOCBarProps;
 {
   showTOC && headings.length > 0 && (
     <div id="toc-container">
-      <div class="px-2 pb-1 text-xs font-medium tracking-wide text-base-content/40 uppercase">
+      <div class="px-2 pb-1 text-[13px] font-medium tracking-wide text-base-content/40 uppercase">
         On this page
       </div>
       <nav class="toc-nav relative max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-none">
@@ -25,7 +25,7 @@ const { headings = [], showTOC = true } = Astro.props as TOCBarProps;
                 href={`#${heading.slug}`}
                 data-heading-slug={heading.slug}
                 data-heading-depth={heading.depth}
-                class={`toc-link relative flex items-center rounded-md py-1 text-[13px] leading-5 ${heading.depth === 1 ? "font-medium" : ""}`}
+                class={`toc-link relative flex items-center rounded-md py-1 text-[14px] leading-5 ${heading.depth === 1 ? "font-medium" : ""}`}
                 style={`padding-left: ${8 + (heading.depth - 1) * 12}px;`}
               >
                 <span class="link-text truncate transition-colors duration-200">{heading.text}</span>
@@ -59,7 +59,12 @@ const { headings = [], showTOC = true } = Astro.props as TOCBarProps;
 
 <script>
   // Highlight active heading in TOC and manage the active indicator
-  document.addEventListener("astro:page-load", () => {
+  let tocCleanup: (() => void) | null = null;
+
+  document.addEventListener("app:page", () => {
+    tocCleanup?.();
+    tocCleanup = null;
+
     // Cache DOM elements and reduce DOM queries
     const tocNav = document.querySelector(".toc-nav") as HTMLElement;
     const activeIndicator = document.getElementById("active-indicator") as HTMLElement;
@@ -267,14 +272,10 @@ const { headings = [], showTOC = true } = Astro.props as TOCBarProps;
     };
     window.addEventListener("hashchange", onHashChange);
 
-    document.addEventListener(
-      "astro:before-swap",
-      () => {
-        window.removeEventListener("resize", onResize);
-        window.removeEventListener("hashchange", onHashChange);
-        observer.disconnect();
-      },
-      { once: true },
-    );
+    tocCleanup = () => {
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("hashchange", onHashChange);
+      observer.disconnect();
+    };
   });
 </script>

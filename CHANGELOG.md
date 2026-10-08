@@ -7,7 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Swup page transitions replacing Astro View Transitions: animated content
+  container (`#swup`), persistent sidebar/top bar, hover/viewport preloading,
+  progress bar and smooth scrolling, bridged through stable `app:page` /
+  `app:before` events with idempotent component lifecycles
+- Pagefind UI stylesheet is now bundled on the search page
+
 ### Changed
+
+- Removed the Friends page and its menu entry
+- Replaced the remaining emoji page icons with iconify icons
+- Increased the typography scale (base 17px, larger list rows, meta text,
+  sidebar/top bar/TOC labels)
 
 - Layout overhaul: Notion workspace shell with a fixed full-height sidebar
   (collapsible on desktop, off-canvas on mobile), sticky top bar with

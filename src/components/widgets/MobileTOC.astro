@@ -54,7 +54,12 @@ const { headings = [], showTOC = true } = Astro.props as TOCBarProps;
 )}
 
 <script>
-  document.addEventListener("astro:page-load", () => {
+  let cleanup: (() => void) | null = null;
+
+  document.addEventListener("app:page", () => {
+    cleanup?.();
+    cleanup = null;
+
     const tocButton = document.getElementById("mobile-toc-button");
     if (!tocButton) return;
 
@@ -117,11 +122,11 @@ const { headings = [], showTOC = true } = Astro.props as TOCBarProps;
 
     handleScroll();
 
-    document.addEventListener("astro:before-swap", () => {
+    cleanup = () => {
       window.removeEventListener("scroll", handleScroll);
       if (scrollTimeout) {
         clearTimeout(scrollTimeout);
       }
-    });
+    };
   });
 </script>

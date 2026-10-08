@@ -3,6 +3,7 @@ import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import { unified } from "@astrojs/markdown-remark";
 import playformCompress from "@playform/compress";
+import swup from "@swup/astro";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import { defineConfig } from "astro/config";
@@ -39,7 +40,20 @@ export default defineConfig({
       includePaths: ["./src/styles"],
     },
   },
-  integrations: [updateConfig(), expressiveCode({
+  integrations: [updateConfig(), swup({
+    theme: false,
+    containers: ["#swup"],
+    cache: true,
+    preload: {
+      hover: true,
+      visible: true,
+    },
+    accessibility: true,
+    progress: true,
+    smoothScrolling: true,
+    updateHead: true,
+    reloadScripts: true,
+  }), expressiveCode({
     themes: [CODE_THEME],
     styleOverrides: {
       borderRadius: "0.75rem",

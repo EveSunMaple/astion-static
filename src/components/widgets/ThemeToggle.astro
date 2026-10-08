@@ -43,7 +43,7 @@ const { className = "" } = Astro.props as ThemeToggleProps;
   };
 
   // Apply correct icons on page load and navigation
-  document.addEventListener("astro:page-load", () => {
+  document.addEventListener("app:page", () => {
     // Use the unique ID to get this specific toggle button
     const themeToggle = document.getElementById(uniqueId);
     if (!themeToggle) return;
@@ -52,6 +52,10 @@ const { className = "" } = Astro.props as ThemeToggleProps;
 
     // Initialize icon state based on current theme
     updateThemeIcons(themeToggle, currentTheme === SITE_THEME.dark);
+
+    // Bind the click handler only once per button instance
+    if (themeToggle.dataset.bound === "true") return;
+    themeToggle.dataset.bound = "true";
 
     // Toggle theme on click
     themeToggle.addEventListener("click", () => {

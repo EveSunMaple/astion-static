@@ -1,6 +1,7 @@
 ---
 import CoverImage from "@components/widgets/CoverImage.astro";
 import type { PostData } from "@interfaces/data";
+import { Icon } from "astro-icon/components";
 
 export interface MainCardProps extends PostData {
   textOverlay?: string;
@@ -31,7 +32,7 @@ const { title, description, image, icon } = Astro.props as MainCardProps;
   }
 
   <header class="pb-5">
-    {icon && <div class="page-icon">{icon}</div>}
+    {icon && <Icon name={icon} class="page-icon-svg" />}
     <h1 class="page-header-title">{title}</h1>
     {description && <p class="page-header-description">{description}</p>}
   </header>

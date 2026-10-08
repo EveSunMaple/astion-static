@@ -53,11 +53,6 @@ site:
       href: /project
       svg: "material-symbols:code-blocks-outline"
       target: _self
-    - id: friend
-      text: Friend
-      href: /friend
-      svg: "material-symbols:supervisor-account-outline-rounded"
-      target: _self
     - id: contact
       text: Contact
       href: "mailto:contact.evesunmaple@outlook.com"

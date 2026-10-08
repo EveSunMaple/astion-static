@@ -1,5 +1,5 @@
 ---
-import { ClientRouter } from "astro:transitions";
+import AppScripts from "@components/AppScripts.astro";
 import Footer from "@components/Footer.astro";
 import Header from "@components/Header.astro";
 import Sidebar from "@components/Sidebar.astro";
@@ -16,8 +16,6 @@ import {
   USER_NAME,
   USER_SITE,
 } from "@config";
-import ElementCrossing from "astro-vtbot/components/ElementCrossing.astro";
-import PointerOnNavigation from "astro-vtbot/components/PointerOnNavigation.astro";
 
 const {
   title,
@@ -58,9 +56,6 @@ const jsonLd =
 <!doctype html>
 <html lang={SITE_LANGUAGE} class="bg-base-100" data-theme={SITE_THEME.light} data-theme-type="light">
   <head>
-    <ClientRouter />
-    <ElementCrossing />
-    <PointerOnNavigation />
     <Header
       title={title}
       description={description}
@@ -70,6 +65,28 @@ const jsonLd =
     />
     <title>{`${title} - ${SITE_TAB}`}</title>
     <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+
+    <script is:inline>
+      // Bridge swup/navigation events into stable app events used by components.
+      (function () {
+        const emit = (name) => document.dispatchEvent(new Event(name));
+
+        const syncBreadcrumb = () => {
+          const crumb = document.getElementById("breadcrumb-current");
+          if (crumb && document.title) {
+            crumb.textContent = document.title.split(" - ")[0];
+          }
+        };
+
+        document.addEventListener("astro:page-load", () => emit("app:page"));
+        document.addEventListener("swup:page:view", () => {
+          emit("app:page");
+          requestAnimationFrame(syncBreadcrumb);
+        });
+        document.addEventListener("swup:visit:start", () => emit("app:before"));
+        document.addEventListener("astro:before-swap", () => emit("app:before"));
+      })();
+    </script>
 
     <script define:vars={{ SITE_THEME }} is:inline>
       (function () {
@@ -131,40 +148,32 @@ const jsonLd =
         <TopBar title={title} />
 
         <main id="main-content" tabindex="-1" class="flex-1">
-          <div class="mx-auto flex w-full max-w-[1180px] justify-center gap-10 px-5 md:px-8">
-            <div class="w-full min-w-0 max-w-[780px] pb-10">
-              <slot />
+          <div id="swup" class="transition-swup">
+            <div class="mx-auto flex w-full max-w-[1180px] justify-center gap-10 px-5 md:px-8">
+              <div class="w-full min-w-0 max-w-[780px] pb-10">
+                <slot />
+              </div>
+              {
+                showTOC && headings.length > 0 && (
+                  <aside class="hidden w-48 flex-none pt-12 xl:block" aria-label="Table of contents">
+                    <div class="sticky top-16">
+                      <TOCBar headings={headings} showTOC={showTOC} />
+                    </div>
+                  </aside>
+                )
+              }
             </div>
-            {
-              showTOC && headings.length > 0 && (
-                <aside class="hidden w-48 flex-none pt-12 xl:block" aria-label="Table of contents">
-                  <div class="sticky top-16">
-                    <TOCBar headings={headings} showTOC={showTOC} />
-                  </div>
-                </aside>
-              )
-            }
+            <Footer />
           </div>
-          <Footer />
         </main>
       </div>
     </div>
 
     <MobileTOC headings={headings} showTOC={showTOC} />
-
-    <script define:vars={{ SITE_THEME }} is:inline>
-      document.addEventListener("astro:after-swap", () => {
-        const storedTheme = localStorage.getItem("theme");
-        if (storedTheme) {
-          document.documentElement.setAttribute("data-theme", storedTheme);
-          const themeType = storedTheme === SITE_THEME.dark ? "dark" : "light";
-          document.documentElement.setAttribute("data-theme-type", themeType);
-        }
-      });
-    </script>
+    <AppScripts />
 
     <script is:inline>
-      document.addEventListener("astro:page-load", () => {
+      document.addEventListener("app:page", () => {
         document.querySelectorAll(".btn-copy").forEach((button) => {
           button.addEventListener("click", async () => {
             const codeBlock = button.closest(".frosti-code");
@@ -190,7 +199,7 @@ const jsonLd =
     </script>
 
     <script is:inline>
-      document.addEventListener("astro:page-load", () => {
+      (function () {
         const sidebar = document.getElementById("app-sidebar");
         const overlay = document.getElementById("sidebar-overlay");
         const toggle = document.getElementById("sidebar-toggle");
@@ -223,10 +232,11 @@ const jsonLd =
 
         overlay?.addEventListener("click", closeMobile);
 
-        sidebar.querySelectorAll("a").forEach((link) => {
-          link.addEventListener("click", () => {
-            if (window.innerWidth < 1024) closeMobile();
-          });
+        sidebar.addEventListener("click", (event) => {
+          const target = event.target;
+          if (window.innerWidth < 1024 && target instanceof Element && target.closest("a")) {
+            closeMobile();
+          }
         });
 
         collapse?.addEventListener("click", () => {
@@ -248,8 +258,27 @@ const jsonLd =
           }
         });
 
-        document.addEventListener("astro:before-swap", closeMobile, { once: true });
-      });
+        document.addEventListener("app:before", closeMobile);
+
+        // The sidebar lives outside the swup container, so keep its active
+        // link in sync with the current URL after each navigation.
+        const syncSidebarActive = () => {
+          const path = window.location.pathname;
+          sidebar.querySelectorAll("a[href]").forEach((link) => {
+            const href = link.getAttribute("href");
+            if (!href || href.startsWith("http") || href.startsWith("mailto")) return;
+            const isActive =
+              href === "/" ? path === "/" : path === href || path.startsWith(`${href}/`);
+            link.classList.toggle("bg-base-200", isActive);
+            link.classList.toggle("font-medium", isActive);
+            link.classList.toggle("text-base-content", isActive);
+            link.classList.toggle("text-base-content/70", !isActive);
+          });
+        };
+
+        document.addEventListener("app:page", syncSidebarActive);
+        syncSidebarActive();
+      })();
     </script>
 
     <style is:inline>

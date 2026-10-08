@@ -27,8 +27,8 @@ const currentPath = Astro.url.pathname;
     loading="eager"
   />
   <span class="min-w-0">
-    <span class="block truncate text-sm font-semibold text-base-content">{USER_NAME}</span>
-    <span class="block truncate text-xs text-base-content/50">{SITE_TITLE}</span>
+    <span class="block truncate text-[15px] font-semibold text-base-content">{USER_NAME}</span>
+    <span class="block truncate text-[13px] text-base-content/50">{SITE_TITLE}</span>
   </span>
 </a>
 
@@ -40,7 +40,7 @@ const currentPath = Astro.url.pathname;
           <details open={currentPath.startsWith(item.href)}>
             <summary
               class:list={[
-                "flex items-center gap-2 rounded-md px-2 py-1.5 text-sm text-base-content/70 hover:bg-base-200 hover:text-base-content",
+                "flex items-center gap-2 rounded-md px-2 py-1.5 text-[15px] text-base-content/70 hover:bg-base-200 hover:text-base-content",
               ]}
             >
               <Icon name={item.svg} class="h-4 w-4 flex-none" />
@@ -52,7 +52,7 @@ const currentPath = Astro.url.pathname;
                 <li class="relative w-full">
                   <a
                     class:list={[
-                      "flex items-center gap-2 rounded-md px-2 py-1.5 text-sm",
+                      "flex items-center gap-2 rounded-md px-2 py-1.5 text-[15px]",
                       currentPath === subItem.href
                         ? "bg-base-200 font-medium text-base-content"
                         : "text-base-content/70 hover:bg-base-200 hover:text-base-content",

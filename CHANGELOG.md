@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.1] - 2026-10-08
+
+### Fixed
+
+- CI audit failures: patched transitive advisories via pnpm overrides
+  (axios, form-data, glob, minimatch, brace-expansion, source-map-js) and
+  documented the advisories without a published fix
+- CI now passes Notion secrets to the pipeline and skips typecheck/build
+  gracefully when they are absent (forks/PRs)
+- Notion credentials can come from `process.env` so CI/Vercel env vars work
+
 ## [2.0.0] - 2026-10-08
 
 ### Added
@@ -33,5 +44,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - v1 hand-rolled Notion block renderer (`src/services`, `src/components/render`)
 - Markdown sample content and the jest/eslint toolchain
 
-[Unreleased]: https://github.com/EveSunMaple/astion-static/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/EveSunMaple/astion-static/compare/v2.0.1...HEAD
+[2.0.1]: https://github.com/EveSunMaple/astion-static/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/EveSunMaple/astion-static/releases/tag/v2.0.0

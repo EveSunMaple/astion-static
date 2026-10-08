@@ -6,7 +6,7 @@ const { class: className = "", cols = "1" } = Astro.props as CardGroupProps;
 
 <div
   class:list={[
-    "w-full flex flex-col",
+    "flex w-full flex-col",
     cols === "2" && "gap-2 md:grid md:grid-cols-2 md:gap-4",
     className,
   ]}

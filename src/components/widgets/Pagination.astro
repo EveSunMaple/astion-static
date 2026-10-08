@@ -8,12 +8,9 @@ import PaginationNumber from "./PaginationNumber.astro";
 const { page, totalPages, pageLinks, baseUrl } = Astro.props as PaginationProps;
 ---
 
-<div
-  class="order-4 mt-8 flex w-full items-center justify-between gap-2 border-t border-base-content/10 pt-4"
-  transition:name="pagination"
->
+<div class="pager mt-8 border-t border-line-soft pt-4" transition:name="pagination">
   <PaginationArrow direction="prev" url={page.url.prev} label={t("label.prevPage")} />
-  <div class="join">
+  <div class="pager-numbers">
     {
       totalPages > 3 ? (
         <>

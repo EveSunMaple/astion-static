@@ -6,18 +6,18 @@ import { Icon } from "astro-icon/components";
 const { pubDate, badge, word, time } = Astro.props as PostData;
 ---
 
-<div class="mb-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[14px] text-base-content/50">
+<div class="mb-6 flex flex-wrap items-center gap-x-6 gap-y-1 text-[14px] text-meta">
   {
     pubDate && (
-      <span class="inline-flex items-center gap-1">
+      <span class="inline-flex items-center gap-1.5">
         <Icon name="lucide:calendar" class="h-3.5 w-3.5" />
-        <span>{pubDate}</span>
+        <span class="font-variant-numeric tabular-nums">{pubDate}</span>
       </span>
     )
   }
   {
     badge && (
-      <span class="inline-flex items-center gap-1">
+      <span class="inline-flex items-center gap-1.5">
         <Icon name="lucide:bookmark" class="h-3.5 w-3.5" />
         <span>{badge}</span>
       </span>
@@ -25,8 +25,14 @@ const { pubDate, badge, word, time } = Astro.props as PostData;
   }
   {
     (word || time) && (
-      <span>
-        {word} {t("label.wordCount")} · {time} {t("label.readTime")}
+      <span class="inline-flex items-center gap-1.5 tabular-nums">
+        <span>
+          {word} {t("label.wordCount")}
+        </span>
+        <span class="h-3 w-px bg-line-soft" />
+        <span>
+          {time} {t("label.readTime")}
+        </span>
       </span>
     )
   }

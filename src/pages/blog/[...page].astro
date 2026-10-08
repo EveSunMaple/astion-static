@@ -26,29 +26,28 @@ const pageLinks = generatePageLinks(totalPages);
       <p class="page-header-description">{SITE_DESCRIPTION}</p>
     </div>
     <div class="flex flex-wrap gap-1">
-      <a href="/blog/archives" class="btn btn-ghost btn-sm gap-1">
+      <a href="/blog/archives" class="button gap-1.5" data-variant="ghost" data-size="sm">
         <Icon name="lucide:archive" class="h-4 w-4" />
         <span>{t("label.archivePage")}</span>
       </a>
-      <a href="/blog/categories" class="btn btn-ghost btn-sm gap-1">
+      <a href="/blog/categories" class="button gap-1.5" data-variant="ghost" data-size="sm">
         <Icon name="lucide:folder" class="h-4 w-4" />
         <span>{t("label.categoryPage")}</span>
       </a>
-      <a href="/blog/tags" class="btn btn-ghost btn-sm gap-1">
+      <a href="/blog/tags" class="button gap-1.5" data-variant="ghost" data-size="sm">
         <Icon name="lucide:tag" class="h-4 w-4" />
         <span>{t("label.tagPage")}</span>
       </a>
-      <a href="/blog/search" class="btn btn-ghost btn-sm gap-1">
+      <a href="/blog/search" class="button gap-1.5" data-variant="ghost" data-size="sm">
         <Icon name="lucide:search" class="h-4 w-4" />
         <span>{t("label.searchPage")}</span>
       </a>
     </div>
   </header>
 
-  <div class="db-header">
-    <div class="db-header-date">Date</div>
-    <div class="db-header-main">Title</div>
-    <div class="db-header-meta">Tags</div>
+  <div class="list-header">
+    <div class="list-header-date">Date</div>
+    <div class="list-header-main">Title</div>
   </div>
 
   <CardGroup cols="1">

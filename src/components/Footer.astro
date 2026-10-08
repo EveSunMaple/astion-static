@@ -5,29 +5,42 @@ import { Icon } from "astro-icon/components";
 const year = new Date().getFullYear();
 ---
 
-<footer class="mt-16 border-t border-base-content/10 py-8 text-[13px] text-base-content/50">
-  <div class="flex flex-col items-center justify-between gap-3 sm:flex-row">
-    <p>
-      © {year}
-      <a href={USER_SITE} target="_blank" rel="noopener noreferrer" class="hover:text-base-content">{USER_NAME}</a>
-      · Powered by
-      <a
-        href="https://github.com/EveSunMaple/astion-static"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="hover:text-base-content">Astion</a
-      >
-    </p>
-    <div class="flex items-center gap-1">
+<footer class="mt-16 border-t border-line-soft py-8">
+  <div
+    class="flex flex-col items-start justify-between gap-4 text-[13px] text-muted sm:flex-row sm:items-center"
+  >
+    <div class="flex flex-wrap items-center gap-x-6 gap-y-1">
+      <span class="inline-flex items-center gap-1">
+        <span>© {year}</span>
+        <a
+          href={USER_SITE}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="transition-colors duration-150 ease-standard hover:text-fg">{USER_NAME}</a
+        >
+      </span>
+      <span class="inline-flex items-center gap-1">
+        <span>Built with</span>
+        <a
+          href="https://github.com/EveSunMaple/astion-static"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="transition-colors duration-150 ease-standard hover:text-fg">Astion</a
+        >
+      </span>
+    </div>
+    <div class="flex items-center gap-0.5">
       {
         USER_FOOTER_SOCIAL_ICONS.map((icon) => (
           <a
+            class="button text-meta"
+            data-variant="ghost"
+            data-size="icon"
             href={icon.href}
             aria-label={icon.ariaLabel}
             title={icon.title}
             target="_blank"
             rel="noopener noreferrer"
-            class="btn btn-ghost btn-xs btn-square text-base-content/40 hover:text-base-content"
           >
             <Icon name={icon.svg} class="h-4 w-4" />
           </a>

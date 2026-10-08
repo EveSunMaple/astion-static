@@ -15,13 +15,9 @@ const href = number === 1 ? baseUrl : `${baseUrl}/${number}`;
   title={`Page ${number}`}
   aria-label={`Page ${number}`}
   aria-current={number === current ? "page" : undefined}
-  class:list={[
-    "join-item btn btn-sm min-w-9 px-2 font-normal",
-    number === current
-      ? "bg-base-200 text-base-content"
-      : "btn-ghost text-base-content/60",
-    isOnly && "rounded-btn",
-  ]}
+  class:list={["button min-w-8 px-2", number === current ? "" : "text-muted", isOnly && "w-8"]}
+  data-variant="ghost"
+  data-size="sm"
 >
   {number}
 </a>

@@ -33,14 +33,14 @@ const pageLinks = generatePageLinks(totalPages);
       <div class="flex items-center gap-2">
         <Icon name="lucide:tag" class="w-6 h-6 text-secondary" />
         <h1 id="h1" class="page-header-title">{tag}</h1>
-        <div class="badge badge-secondary">{page.total} {page.total === 1 ? t("label.post") : t("label.posts")}</div>
+        <div class="pill">{page.total} {page.total === 1 ? t("label.post") : t("label.posts")}</div>
       </div>
-      <a href="/blog/tags" class="btn btn-outline btn-sm gap-2">
-        <Icon name="lucide:tag" class="w-4 h-4" />
+      <a href="/blog/tags" class="button gap-1.5" data-variant="secondary" data-size="sm">
+        <Icon name="lucide:tag" class="h-4 w-4" />
         <span>{t("label.allTags")}</span>
       </a>
     </div>
-    <div class="divider my-2"></div>
+    <div class="my-2 border-t border-line-soft"></div>
     <p class="page-header-description">{t("label.tagDescription")}</p>
   </BaseCard>
   <CardGroup cols="1" gap="6">

@@ -40,16 +40,16 @@ const socialLinks = [
 ];
 ---
 
-<hr class="my-8 border-base-content/10" />
+<hr class="my-8 border-0 border-t border-line-soft" />
 
-<div class="flex flex-col gap-3 pb-4 text-xs text-base-content/50">
-  <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
-    {displayDate && <span>{displayDate}</span>}
+<div class="flex flex-col gap-4 pb-4 text-[13px] text-muted">
+  <div class="flex flex-wrap items-center gap-x-6 gap-y-1">
+    {displayDate && <span class="tabular-nums">{displayDate}</span>}
     {badge && <span>{badge}</span>}
     {
       word && time && (
-        <span>
-          {word} {t("label.wordCount")} · {time} {t("label.readTime")}
+        <span class="tabular-nums">
+          {word} {t("label.wordCount")} / {time} {t("label.readTime")}
         </span>
       )
     }
@@ -58,20 +58,17 @@ const socialLinks = [
 
   <div class="flex flex-wrap items-center justify-between gap-3">
     <p>
-      © {USER_NAME} ·
+      © {USER_NAME}
       <a
         href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed"
         target="_blank"
         rel="noopener noreferrer"
-        class="underline decoration-base-content/30 underline-offset-2 hover:text-base-content"
+        class="underline decoration-line underline-offset-2 transition-colors duration-150 ease-standard hover:text-fg"
       >
         CC BY-NC-SA 4.0
       </a>
     </p>
-    <button
-      class="btn btn-ghost btn-sm gap-1 text-base-content/60"
-      onclick="share_modal.showModal()"
-    >
+    <button class="button" data-variant="ghost" data-size="sm" onclick="share_modal.showModal()">
       {t("label.share")}
       <Icon name="ri:share-line" class="h-4 w-4" />
     </button>
@@ -79,8 +76,8 @@ const socialLinks = [
 </div>
 
 <dialog id="share_modal" class="modal">
-  <div class="modal-box max-w-sm bg-base-100">
-    <h3 class="mb-3 text-sm font-semibold">{t("label.share")}</h3>
+  <div class="dialog-card max-w-sm p-4">
+    <h3 class="mb-3 text-[15px] font-semibold">{t("label.share")}</h3>
     <div class="flex flex-wrap gap-2">
       {
         socialLinks.map((social) => (
@@ -88,7 +85,9 @@ const socialLinks = [
             href={social.url}
             target="_blank"
             rel="noopener noreferrer"
-            class="btn btn-ghost btn-sm gap-1"
+            class="button"
+            data-variant="ghost"
+            data-size="sm"
           >
             <Icon name={social.icon} class="h-4 w-4" />
             {social.name}
@@ -96,9 +95,9 @@ const socialLinks = [
         ))
       }
     </div>
-    <div class="modal-action">
+    <div class="mt-4 flex justify-end">
       <form method="dialog">
-        <button class="btn btn-ghost btn-sm">Close</button>
+        <button class="button" data-variant="secondary" data-size="sm">Close</button>
       </form>
     </div>
   </div>

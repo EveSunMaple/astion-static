@@ -9,16 +9,13 @@ const { categories = [], tags = [] } = Astro.props as PostData;
   (categories.length > 0 || tags.length > 0) && (
     <div class="flex flex-wrap items-center gap-2">
       {categories.map((category) => (
-        <a
-          href={`/blog/category/${encodeURIComponent(category)}`}
-          class="n-pill"
-        >
+        <a href={`/blog/category/${encodeURIComponent(category)}`} class="pill">
           <Icon name="lucide:folder" class="h-3 w-3" />
           <span>{category}</span>
         </a>
       ))}
       {tags.map((tag) => (
-        <a href={`/blog/tag/${encodeURIComponent(tag)}`} class="n-pill">
+        <a href={`/blog/tag/${encodeURIComponent(tag)}`} class="pill">
           <Icon name="lucide:tag" class="h-3 w-3" />
           <span>{tag}</span>
         </a>

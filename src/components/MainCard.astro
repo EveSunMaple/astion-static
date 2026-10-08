@@ -5,11 +5,6 @@ import { Icon } from "astro-icon/components";
 
 export interface MainCardProps extends PostData {
   textOverlay?: string;
-  infoIcon?: string;
-  helpText?: string;
-  showTextBackground?: boolean;
-  headerClass?: string;
-  extraClasses?: string;
   icon?: string;
 }
 
@@ -20,20 +15,14 @@ const { title, description, image, icon } = Astro.props as MainCardProps;
   {
     image && (
       <div class="page-cover">
-        <CoverImage
-          src={image}
-          alt={title}
-          width={1200}
-          height={420}
-          loading="eager"
-        />
+        <CoverImage src={image} alt={title} width={1200} height={420} loading="eager" />
       </div>
     )
   }
 
-  <header class="pb-5">
+  <header class="pb-6 pt-8">
     {icon && <Icon name={icon} class="page-icon-svg" />}
-    <h1 class="page-header-title">{title}</h1>
+    <h1 class="detail-title">{title}</h1>
     {description && <p class="page-header-description">{description}</p>}
   </header>
 

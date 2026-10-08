@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Redesigned the whole site on the new Astion Theme v3 spec
+  (`docs/design/theme.md`): strict 4/8px spacing rhythm, 680px reading
+  measure shared by every page, fixed list columns (88px date), warm-neutral
+  palette with a single `#0075de` accent, whisper borders, and one restrained
+  page transition
+- Removed daisyUI entirely: components now use a small semantic layer
+  (`.button`, `.pill`, `.field`, `.side-link`, `.doc-row`, `.doc-tile`,
+  dialog/pager/notice patterns) plus Tailwind tokens
+- Fixed list/table-header alignment, sidebar ordering, footer spacing,
+  mobile top bar, tag pills and Pagefind search initialization
+- Removed dead helpers from `blogUtils` and unused components
+
+### Added
+
+- Initial page-load bridge (`app:page`) so components work without
+  Astro View Transitions (Swup only emits events on navigation)
+
 ### Added
 
 - Swup page transitions replacing Astro View Transitions: animated content

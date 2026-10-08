@@ -7,9 +7,11 @@ import { Icon } from "astro-icon/components";
   aria-label="Scroll to top"
   aria-hidden="true"
   tabindex="-1"
-  class="btn btn-ghost btn-square btn-sm fixed bottom-6 right-6 z-50 border border-base-content/10 bg-base-100/90 opacity-0 invisible backdrop-blur transition-all"
+  class="button fixed right-6 bottom-6 z-50 border border-line bg-bg/90 opacity-0 invisible shadow-raised backdrop-blur transition-all duration-200 ease-standard"
+  data-variant="ghost"
+  data-size="icon"
 >
-  <Icon name="material-symbols:arrow-upward-rounded" class="h-5 w-5" />
+  <Icon name="lucide:arrow-up" class="h-4 w-4" />
 </button>
 
 <script>
@@ -22,9 +24,8 @@ import { Icon } from "astro-icon/components";
     const scrollButton = document.getElementById("scroll-to-top");
     if (!scrollButton) return;
 
-    // Show button when user scrolls down 300px
     const toggleVisibility = () => {
-      if (window.scrollY > 300) {
+      if (window.scrollY > 400) {
         scrollButton.classList.remove("opacity-0", "invisible");
         scrollButton.classList.add("opacity-100", "visible");
         scrollButton.setAttribute("aria-hidden", "false");

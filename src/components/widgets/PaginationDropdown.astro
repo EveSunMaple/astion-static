@@ -5,27 +5,26 @@ const { hiddenPages, current, baseUrl } =
   Astro.props as PaginationDropdownProps;
 ---
 
-<div class="dropdown dropdown-top join-item">
-  <div
-    tabindex="0"
-    role="button"
-    aria-haspopup="menu"
+<details class="relative">
+  <summary
+    class="button min-w-8 cursor-pointer list-none px-2 text-muted [&::-webkit-details-marker]:hidden"
+    data-variant="ghost"
+    data-size="sm"
     aria-label="More pages"
-    class="btn btn-ghost btn-sm join-item px-2 font-normal text-base-content/60"
   >
     ...
-  </div>
+  </summary>
   <ul
-    class="dropdown-content menu z-[100] mt-1 w-auto rounded-md border border-base-content/10 bg-base-100 p-1 shadow-lg"
+    class="absolute bottom-full left-1/2 z-[100] mb-1 -translate-x-1/2 rounded-sm border border-line bg-bg p-1 shadow-raised"
   >
     {
       hiddenPages.map((page) => (
-        <li class="w-full">
+        <li>
           <a
             href={page === 1 ? baseUrl : `${baseUrl}/${page}`}
             class:list={[
-              "py-1 px-3 text-center text-sm",
-              page === current && "bg-base-200 text-base-content",
+              "block min-w-8 rounded-sm px-2 py-1 text-center text-[14px] text-muted hover:bg-surface-2 hover:text-fg",
+              page === current && "bg-surface-2 text-fg",
             ]}
           >
             {page}
@@ -34,4 +33,4 @@ const { hiddenPages, current, baseUrl } =
       ))
     }
   </ul>
-</div>
+</details>

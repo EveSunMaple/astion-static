@@ -7,12 +7,14 @@ const { title } = Astro.props as { title?: string };
 ---
 
 <header
-  class="sticky top-0 z-30 flex h-12 items-center justify-between gap-2 border-b border-base-content/10 bg-base-100/85 px-3 backdrop-blur md:px-6"
+  class="sticky top-0 z-30 flex h-12 items-center justify-between gap-4 border-b border-line bg-bg/85 px-4 backdrop-blur md:px-6"
 >
   <div class="flex min-w-0 items-center gap-1">
     <button
       id="sidebar-toggle"
-      class="btn btn-ghost btn-square btn-sm lg:hidden"
+      class="button lg:hidden"
+      data-variant="ghost"
+      data-size="icon"
       aria-label="Open navigation"
       aria-controls="app-sidebar"
       aria-expanded="false"
@@ -21,30 +23,26 @@ const { title } = Astro.props as { title?: string };
     </button>
     <button
       id="sidebar-collapse"
-      class="btn btn-ghost btn-square btn-sm hidden lg:inline-flex"
+      class="button hidden lg:inline-flex"
+      data-variant="ghost"
+      data-size="icon"
       aria-label="Toggle sidebar"
     >
       <Icon name="lucide:panel-left" class="h-4 w-4" />
     </button>
 
-    <nav
-      class="ml-1 flex min-w-0 items-center gap-1.5 text-[15px]"
-      aria-label="Breadcrumb"
-    >
+    <nav class="ml-2 flex min-w-0 items-center gap-2 text-[15px]" aria-label="Breadcrumb">
       <a
         href="/"
-        class="max-w-[9rem] truncate rounded px-1.5 py-0.5 text-base-content/50 transition-colors hover:bg-base-200 hover:text-base-content"
+        class="max-w-36 truncate rounded-sm px-1.5 py-0.5 text-muted transition-colors duration-150 ease-standard hover:text-fg"
       >
         {SITE_TITLE}
       </a>
       {
         title && (
           <>
-            <span class="text-base-content/30">/</span>
-            <span
-              id="breadcrumb-current"
-              class="max-w-[14rem] truncate px-1.5 text-base-content/80"
-            >
+            <span class="text-meta">/</span>
+            <span id="breadcrumb-current" class="max-w-56 truncate px-1.5 text-fg">
               {title}
             </span>
           </>
@@ -53,15 +51,17 @@ const { title } = Astro.props as { title?: string };
     </nav>
   </div>
 
-  <div class="flex flex-none items-center gap-0.5">
+  <div class="flex flex-none items-center gap-1">
     <a
       href="/blog/search"
-      class="btn btn-ghost btn-square btn-sm text-base-content/50 hover:text-base-content"
+      class="button text-muted"
+      data-variant="ghost"
+      data-size="icon"
       aria-label="Search"
-      title="Search (/)"
+      title="Search"
     >
       <Icon name="lucide:search" class="h-4 w-4" />
     </a>
-    <ThemeToggle className="topbar-theme" />
+    <ThemeToggle />
   </div>
 </header>

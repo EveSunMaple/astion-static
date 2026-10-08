@@ -47,20 +47,20 @@ if (pathname.startsWith("/blog/tag/")) {
 <BaseLayout title={title} isIndexed={false}>
   <MainCard title={title} description={description} textOverlay={textOverlay} infoIcon="lucide:help-circle">
     <div class="flex flex-col sm:flex-row gap-4 justify-center my-8">
-      <a href={primaryAction.href} class="btn btn-primary gap-2 btn-shine-effect">
-        <Icon name={primaryAction.icon} class="w-5 h-5" />
+      <a href={primaryAction.href} class="button" data-variant="primary">
+        <Icon name={primaryAction.icon} class="h-4 w-4" />
         <span>{primaryAction.text}</span>
       </a>
       <button
         id="goBackBtn"
-        class="btn btn-outline gap-2"
+        class="button" data-variant="secondary"
         onclick="if (history.length > 1) history.back(); else location.href = '/'"
       >
-        <Icon name="lucide:corner-up-left" class="w-5 h-5" />
+        <Icon name="lucide:corner-up-left" class="h-4 w-4" />
         <span>{t("label.404goBack")}</span>
       </button>
     </div>
-    <div class="divider my-6">
+    <div class="my-6 border-t border-line-soft">
       <Icon name="lucide:map" class="w-10 h-10" />
     </div>
 

@@ -13,33 +13,35 @@ const { headings = [], showTOC = true } = Astro.props as TOCBarProps;
       aria-label={t("label.tableOfContents")}
       aria-hidden="true"
       tabindex="-1"
-      class="btn btn-ghost btn-square btn-sm fixed bottom-20 right-6 z-50 border border-base-content/10 bg-base-100/90 opacity-0 invisible backdrop-blur transition-all lg:hidden"
+      class="button fixed right-6 bottom-20 z-50 border border-line bg-bg/90 opacity-0 invisible shadow-raised backdrop-blur transition-all duration-200 ease-standard lg:hidden"
+      data-variant="ghost"
+      data-size="icon"
       onclick="mobile_toc_modal.showModal()"
     >
-      <Icon name="lucide:list" class="w-5 h-5" />
+      <Icon name="lucide:list" class="h-4 w-4" />
     </button>
 
     <dialog id="mobile_toc_modal" class="modal lg:hidden">
-      <div class="modal-box w-10/12 max-w-md rounded-lg border border-base-content/10 bg-base-100 shadow-xl">
-        <div class="flex justify-between items-center border-b border-base-200 pb-4">
-          <h3 class="font-medium">{t("label.tableOfContents")}</h3>
+      <div class="dialog-card w-10/12 max-w-md p-4">
+        <div class="flex items-center justify-between border-b border-line-soft pb-3">
+          <h3 class="text-[15px] font-semibold">{t("label.tableOfContents")}</h3>
           <form method="dialog">
-            <button class="btn btn-circle btn-ghost" aria-label={t("label.close")}>
-              <Icon name="lucide:x" class="h-5 w-5" />
+            <button class="button text-muted" data-variant="ghost" data-size="icon" aria-label={t("label.close")}>
+              <Icon name="lucide:x" class="h-4 w-4" />
             </button>
           </form>
         </div>
-        <div class="pt-4 max-h-[70vh] overflow-auto">
-          <ul class="menu menu-sm">
+        <div class="max-h-[70vh] overflow-auto pt-3">
+          <ul>
             {headings.map((heading) => (
-              <li class="my-1">
+              <li>
                 <a
                   href={`#${heading.slug}`}
-                  class="mobile-toc-link flex items-center rounded-lg transition-color hover:bg-base-200"
+                  class="mobile-toc-link block truncate rounded-sm px-2 py-1.5 text-[14px] text-muted transition-colors duration-150 ease-standard hover:bg-surface-2 hover:text-fg"
                   style={`margin-left: ${(heading.depth - 1) * 12}px`}
                   data-mobile-heading-id={heading.slug}
                 >
-                  <span class="text-sm truncate">{heading.text}</span>
+                  {heading.text}
                 </a>
               </li>
             ))}
@@ -74,7 +76,7 @@ const { headings = [], showTOC = true } = Astro.props as TOCBarProps;
       scrollTimeout = setTimeout(() => {
         const currentScrollY = window.scrollY;
 
-        if (currentScrollY > 300) {
+        if (currentScrollY > 400) {
           tocButton.classList.remove("opacity-0", "invisible");
           tocButton.classList.add("opacity-100", "visible");
           tocButton.setAttribute("aria-hidden", "false");
@@ -111,15 +113,14 @@ const { headings = [], showTOC = true } = Astro.props as TOCBarProps;
       tocLinks.forEach((link) => {
         const headingId = link.getAttribute("data-mobile-heading-id");
         if (headingId === activeHeadingId) {
-          link.classList.add("bg-primary/10", "font-medium");
+          link.classList.add("bg-surface-2", "text-fg");
         } else {
-          link.classList.remove("bg-primary/10", "font-medium");
+          link.classList.remove("bg-surface-2", "text-fg");
         }
       });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-
     handleScroll();
 
     cleanup = () => {

@@ -6,13 +6,13 @@ import { Icon } from "astro-icon/components";
 <form action="/blog/search" method="get" class="relative w-full">
   <Icon
     name="lucide:search"
-    class="pointer-events-none absolute top-1/2 left-2.5 h-4 w-4 -translate-y-1/2 text-base-content/40"
+    class="pointer-events-none absolute top-1/2 left-2.5 h-4 w-4 -translate-y-1/2 text-meta"
   />
   <input
     type="text"
     name="q"
+    class="field pl-8"
     placeholder={t("label.searchPlaceholder") || "Search..."}
-    class="w-full rounded-md border-0 bg-base-200 py-1.5 pr-3 pl-8 text-[15px] text-base-content outline-none placeholder:text-base-content/40 focus:ring-2 focus:ring-primary/40"
     aria-label={t("label.search") || "Search"}
   />
 </form>

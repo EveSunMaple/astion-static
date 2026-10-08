@@ -1,113 +1,80 @@
 ---
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
-import {
-  SITE_MENU,
-  SITE_TITLE,
-  USER_AVATAR,
-  USER_NAME,
-  USER_SIDEBAR_SOCIAL_ICONS,
-} from "../../config";
+import { SITE_MENU, SITE_TITLE, USER_AVATAR, USER_NAME } from "../../config";
+import SearchBar from "./SearchBar.astro";
 
-// Get current path to determine active link
 const currentPath = Astro.url.pathname;
 ---
 
 <a
   href="/"
-  class="flex items-center gap-2 rounded-md px-2 py-1.5 transition-colors hover:bg-base-200"
+  class="flex items-center gap-3 rounded-sm px-2 py-2 transition-colors duration-150 ease-standard hover:bg-surface-2"
 >
   <Image
-    class="rounded-md"
+    class="rounded-full"
     format="webp"
-    width={64}
-    height={64}
+    width={72}
+    height={72}
     src={USER_AVATAR}
     alt={`${USER_NAME} avatar`}
     loading="eager"
   />
   <span class="min-w-0">
-    <span class="block truncate text-[15px] font-semibold text-base-content">{USER_NAME}</span>
-    <span class="block truncate text-[13px] text-base-content/50">{SITE_TITLE}</span>
+    <span class="block truncate text-[15px] font-semibold text-fg">{USER_NAME}</span>
+    <span class="block truncate text-[13px] text-meta">{SITE_TITLE}</span>
   </span>
 </a>
 
-<ul class="menu mt-2 w-full gap-0">
-  {
-    SITE_MENU.map((item) => (
-      <li class="relative w-full">
-        {item.subItems ? (
-          <details open={currentPath.startsWith(item.href)}>
-            <summary
-              class:list={[
-                "flex items-center gap-2 rounded-md px-2 py-1.5 text-[15px] text-base-content/70 hover:bg-base-200 hover:text-base-content",
-              ]}
+<div class="mt-3">
+  <SearchBar />
+</div>
+
+<nav class="mt-3 border-t border-line-soft pt-3" aria-label="Main">
+  <ul class="flex flex-col gap-0.5">
+    {
+      SITE_MENU.map((item) => (
+        <li>
+          {item.subItems ? (
+            <details open={currentPath.startsWith(item.href)}>
+              <summary class="side-link cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                <Icon name={item.svg} class="h-4 w-4 flex-none" />
+                <span class="flex-1 truncate">{item.text}</span>
+                <Icon name="lucide:chevron-right" class="h-3.5 w-3.5 flex-none opacity-60" />
+              </summary>
+              <ul class="side-group flex flex-col gap-0.5">
+                {item.subItems.map((subItem) => (
+                  <li>
+                    <a
+                      class="side-link"
+                      id={`header-${subItem.id}`}
+                      href={subItem.href}
+                      target={subItem.target || "_self"}
+                      aria-label={subItem.text}
+                      aria-current={currentPath === subItem.href ? "page" : undefined}
+                    >
+                      <Icon name={subItem.svg} class="h-4 w-4 flex-none opacity-70" />
+                      <span class="truncate">{subItem.text}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ) : (
+            <a
+              class="side-link"
+              id={item.id}
+              href={item.href}
+              target={item.target || "_self"}
+              aria-label={item.text}
+              aria-current={currentPath === item.href ? "page" : undefined}
             >
               <Icon name={item.svg} class="h-4 w-4 flex-none" />
-              <span class="flex-1 truncate">{item.text}</span>
-              <Icon name="lucide:chevron-right" class="h-3.5 w-3.5 flex-none opacity-50" />
-            </summary>
-            <ul class="pl-3">
-              {item.subItems.map((subItem) => (
-                <li class="relative w-full">
-                  <a
-                    class:list={[
-                      "flex items-center gap-2 rounded-md px-2 py-1.5 text-[15px]",
-                      currentPath === subItem.href
-                        ? "bg-base-200 font-medium text-base-content"
-                        : "text-base-content/70 hover:bg-base-200 hover:text-base-content",
-                    ]}
-                    id={`header-${subItem.id}`}
-                    href={subItem.href}
-                    target={subItem.target || "_self"}
-                    aria-label={subItem.text}
-                    aria-current={currentPath === subItem.href ? "page" : undefined}
-                  >
-                    <Icon name={subItem.svg} class="h-4 w-4 flex-none opacity-70" />
-                    <span class="truncate">{subItem.text}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </details>
-        ) : (
-          <a
-            class:list={[
-              "flex items-center gap-2 rounded-md px-2 py-1.5 text-sm",
-              currentPath === item.href
-                ? "bg-base-200 font-medium text-base-content"
-                : "text-base-content/70 hover:bg-base-200 hover:text-base-content",
-            ]}
-            id={item.id}
-            href={item.href}
-            target={item.target || "_self"}
-            aria-label={item.text}
-            aria-current={currentPath === item.href ? "page" : undefined}
-          >
-            <Icon name={item.svg} class="h-4 w-4 flex-none" />
-            <span class="truncate">{item.text}</span>
-          </a>
-        )}
-      </li>
-    ))
-  }
-</ul>
-
-<div class="mt-3 border-t border-base-content/10 pt-3">
-  <div class="flex flex-wrap gap-1">
-    {
-      USER_SIDEBAR_SOCIAL_ICONS.map((icon) => (
-        <a
-          class="btn btn-ghost btn-sm btn-square text-base-content/50 hover:text-base-content"
-          href={icon.href}
-          aria-label={icon.ariaLabel}
-          title={icon.title}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Icon name={icon.svg} class="h-4 w-4" />
-        </a>
+              <span class="truncate">{item.text}</span>
+            </a>
+          )}
+        </li>
       ))
     }
-  </div>
-</div>
+  </ul>
+</nav>

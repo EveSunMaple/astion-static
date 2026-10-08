@@ -1,34 +1,29 @@
 ---
 import type { TOCBarProps } from "@interfaces/data";
 
-// This prop indicates whether to render the TOC
-// (useful to conditionally show on certain pages)
 const { headings = [], showTOC = true } = Astro.props as TOCBarProps;
 ---
 
 {
   showTOC && headings.length > 0 && (
     <div id="toc-container">
-      <div class="px-2 pb-1 text-[13px] font-medium tracking-wide text-base-content/40 uppercase">
-        On this page
-      </div>
-      <nav class="toc-nav relative max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-none">
-        {/* Animated active indicator */}
+      <div class="px-2 pb-2 text-[12.5px] font-medium text-meta">On this page</div>
+      <nav class="toc-nav relative max-h-[calc(100vh-7rem)] overflow-y-auto scrollbar-none">
         <div
           id="active-indicator"
-          class="pointer-events-none absolute z-0 rounded-md bg-base-200 opacity-0"
+          class="pointer-events-none absolute z-0 rounded-sm bg-surface-2 opacity-0"
         />
-        <ul class="relative z-10 space-y-0">
+        <ul class="relative z-10">
           {headings.map((heading) => (
             <li>
               <a
                 href={`#${heading.slug}`}
                 data-heading-slug={heading.slug}
                 data-heading-depth={heading.depth}
-                class={`toc-link relative flex items-center rounded-md py-1 text-[14px] leading-5 ${heading.depth === 1 ? "font-medium" : ""}`}
+                class="toc-link flex items-center rounded-sm py-1 pr-2 transition-colors duration-150 ease-standard"
                 style={`padding-left: ${8 + (heading.depth - 1) * 12}px;`}
               >
-                <span class="link-text truncate transition-colors duration-200">{heading.text}</span>
+                <span class="link-text truncate">{heading.text}</span>
               </a>
             </li>
           ))}
@@ -40,39 +35,33 @@ const { headings = [], showTOC = true } = Astro.props as TOCBarProps;
 
 <style>
   .toc-link {
-    color: var(--n-text-3);
+    color: var(--meta);
+    font-size: 14px;
   }
 
   .toc-link:hover {
-    color: var(--n-text-2);
+    color: var(--muted);
   }
 
   .toc-link.active {
-    color: var(--n-text);
+    color: var(--fg);
     font-weight: 500;
-  }
-
-  .toc-link.active .link-text {
-    color: var(--n-text);
   }
 </style>
 
 <script>
-  // Highlight active heading in TOC and manage the active indicator
   let tocCleanup: (() => void) | null = null;
 
   document.addEventListener("app:page", () => {
     tocCleanup?.();
     tocCleanup = null;
 
-    // Cache DOM elements and reduce DOM queries
     const tocNav = document.querySelector(".toc-nav") as HTMLElement;
     const activeIndicator = document.getElementById("active-indicator") as HTMLElement;
     const tocLinks = Array.from(document.querySelectorAll(".toc-nav a")) as HTMLAnchorElement[];
 
     if (!tocNav || !activeIndicator || tocLinks.length === 0) return;
 
-    // Prepare headings once
     const headings = document.querySelectorAll("h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]");
     if (headings.length === 0) return;
 
@@ -80,73 +69,56 @@ const { headings = [], showTOC = true } = Astro.props as TOCBarProps;
     let disableObserverUpdates = false;
     let resizeTimer: number | null = null;
 
-    // Position the active indicator - optimized
     function updateActiveIndicator(link: HTMLAnchorElement, animate = true): void {
-      if (!link) return;
-
       const headingDepth = parseInt(link.getAttribute("data-heading-depth") || "1");
 
-      // Set the transition once
       activeIndicator.style.transition = animate
-        ? "all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1)"
+        ? "all 0.3s cubic-bezier(0.2, 0, 0, 1)"
         : "opacity 0.3s ease-in-out";
 
-      // Batch style updates in a single frame
       requestAnimationFrame(() => {
         activeIndicator.style.top = `${link.offsetTop}px`;
         activeIndicator.style.height = `${link.offsetHeight}px`;
         activeIndicator.style.opacity = "1";
-        activeIndicator.style.left = `${(headingDepth - 1) * 16}px`;
-        activeIndicator.style.width = `calc(100% - ${(headingDepth - 1) * 16}px)`;
+        activeIndicator.style.left = `${(headingDepth - 1) * 12}px`;
+        activeIndicator.style.width = `calc(100% - ${(headingDepth - 1) * 12}px)`;
       });
     }
 
-    // Check if element is in viewport - optimized
     function isElementInViewport(el: HTMLElement, container: HTMLElement): boolean {
       const rect = el.getBoundingClientRect();
       const containerRect = container.getBoundingClientRect();
-
       return rect.top >= containerRect.top && rect.bottom <= containerRect.bottom;
     }
 
-    // Handle TOC scrolling - optimized
     function scrollTOCToActiveItem(link: HTMLElement): void {
-      // Skip if link is already visible
       if (isElementInViewport(link, tocNav)) return;
 
       const tocLinkTop = link.offsetTop;
       const navHeight = tocNav.clientHeight;
       const scrollOffset = Math.max(0, tocLinkTop - navHeight / 2 + link.offsetHeight / 2);
 
-      tocNav.scrollTo({
-        top: scrollOffset,
-        behavior: "smooth",
-      });
+      tocNav.scrollTo({ top: scrollOffset, behavior: "smooth" });
     }
 
-    // Update active state - consolidated function
     function setActiveLink(link: HTMLAnchorElement): void {
       if (activeLink === link) return;
 
-      // Remove active class from previous link
       if (activeLink) {
         activeLink.classList.remove("active");
         activeLink.removeAttribute("aria-current");
       }
 
-      // Set new active link
       link.classList.add("active");
       link.setAttribute("aria-current", "true");
       activeLink = link;
       updateActiveIndicator(link);
 
-      // Only scroll if needed
       if (!isElementInViewport(link, tocNav)) {
         scrollTOCToActiveItem(link);
       }
     }
 
-    // Optimize click handler with event delegation
     tocNav.addEventListener("click", (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const link = target.closest("a") as HTMLAnchorElement | null;
@@ -161,29 +133,18 @@ const { headings = [], showTOC = true } = Astro.props as TOCBarProps;
       const targetHeading = document.getElementById(headingId);
 
       if (targetHeading) {
-        // Disable observer updates temporarily
         disableObserverUpdates = true;
-
-        // Update UI immediately
         setActiveLink(link);
-
-        // Scroll to the heading
         targetHeading.scrollIntoView({ behavior: "smooth" });
-
-        // Update URL hash without triggering scroll
         history.pushState(null, "", href);
-
-        // Re-enable observer after navigation completes
         setTimeout(() => {
           disableObserverUpdates = false;
         }, 1000);
       }
     });
 
-    // Throttled resize handler
     const onResize = () => {
       if (resizeTimer) clearTimeout(resizeTimer);
-
       resizeTimer = window.setTimeout(() => {
         if (activeLink) {
           updateActiveIndicator(activeLink, false);
@@ -192,16 +153,13 @@ const { headings = [], showTOC = true } = Astro.props as TOCBarProps;
     };
     window.addEventListener("resize", onResize, { passive: true });
 
-    // Optimized intersection observer
     const observer = new IntersectionObserver(
       (entries) => {
         if (disableObserverUpdates) return;
 
-        // Get visible headings
         const visibleEntries = entries.filter((entry) => entry.isIntersecting);
         if (visibleEntries.length === 0) return;
 
-        // Find the heading closest to top of viewport
         let bestEntry = visibleEntries[0];
         let minDistance = Infinity;
 
@@ -217,39 +175,29 @@ const { headings = [], showTOC = true } = Astro.props as TOCBarProps;
         if (!id) return;
 
         const tocLink = document.querySelector(`.toc-nav a[href="#${id}"]`) as HTMLAnchorElement | null;
-
         if (tocLink && tocLink !== activeLink) {
           setActiveLink(tocLink);
         }
       },
-      {
-        rootMargin: "-50px 0px -75% 0px",
-        threshold: [0, 0.25], // Reduced number of thresholds
-      },
+      { rootMargin: "-50px 0px -75% 0px", threshold: [0, 0.25] },
     );
 
-    // Observe headings
     headings.forEach((heading) => observer.observe(heading));
 
-    // Initial setup
     setTimeout(() => {
-      // Use hash if available, otherwise first heading
       const hash = window.location.hash.substring(1);
       const initialHeading = hash ? document.getElementById(hash) : headings[0];
 
       if (initialHeading) {
         const id = initialHeading.getAttribute("id");
         if (!id) return;
-
         const tocLink = document.querySelector(`.toc-nav a[href="#${id}"]`) as HTMLAnchorElement | null;
-
         if (tocLink) {
           setActiveLink(tocLink);
         }
       }
     }, 200);
 
-    // Hash change handler - simplified
     const onHashChange = () => {
       if (disableObserverUpdates) return;
 

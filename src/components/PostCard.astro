@@ -35,7 +35,7 @@ const hasMeta =
     {
       hasMeta && (
         <div class="doc-row-meta">
-          {badge && <span class="n-pill">{badge}</span>}
+          {badge && <span class="pill">{badge}</span>}
           {word && (
             <span>
               {word} {t("label.wordCount")}
@@ -43,14 +43,14 @@ const hasMeta =
           )}
           {time && (
             <span>
-              · {time} {t("label.readTime")}
+              {time} {t("label.readTime")}
             </span>
           )}
           {categories.map((category) => (
-            <span class="n-pill">{category}</span>
+            <span class="pill">{category}</span>
           ))}
           {tags.map((tag) => (
-            <span class="n-pill">#{tag}</span>
+            <span class="pill">{tag}</span>
           ))}
         </div>
       )
@@ -58,12 +58,12 @@ const hasMeta =
   </div>
   {
     image && (
-      <div class="cover-thumb hidden sm:block">
+      <div class="thumb hidden sm:block">
         <CoverImage
           src={image}
           alt={title}
-          width={224}
-          height={144}
+          width={320}
+          height={200}
           loading={priority ? "eager" : "lazy"}
         />
       </div>

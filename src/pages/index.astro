@@ -21,7 +21,7 @@ const postsWithStats = await getPostsWithStats(sortPostsByDate(posts));
       <h1 class="page-header-title">{FEED_TITLE}</h1>
       <p class="page-header-description">{FEED_DESCRIPTION}</p>
     </div>
-    <a href="/blog" class="btn btn-ghost btn-sm gap-1">
+    <a href="/blog" class="button gap-1.5" data-variant="ghost" data-size="sm">
       <Icon name="lucide:book-open" class="h-4 w-4" />
       <span>{t("label.blogPage")}</span>
     </a>

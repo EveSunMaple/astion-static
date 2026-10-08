@@ -54,7 +54,7 @@ const jsonLd =
 ---
 
 <!doctype html>
-<html lang={SITE_LANGUAGE} class="bg-base-100" data-theme={SITE_THEME.light} data-theme-type="light">
+<html lang={SITE_LANGUAGE} class="bg-bg" data-theme={SITE_THEME.light} data-theme-type="light">
   <head>
     <Header
       title={title}
@@ -67,7 +67,7 @@ const jsonLd =
     <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
 
     <script is:inline>
-      // Bridge swup/navigation events into stable app events used by components.
+      // Bridge navigation events into stable app events used by components.
       (function () {
         const emit = (name) => document.dispatchEvent(new Event(name));
 
@@ -78,7 +78,25 @@ const jsonLd =
           }
         };
 
-        document.addEventListener("astro:page-load", () => emit("app:page"));
+        // Initial page load (no ClientRouter, so `astro:page-load` is not
+        // guaranteed to fire). DOMContentLoaded runs after every inline
+        // component script has registered its listeners.
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", () => {
+            emit("app:page");
+            syncBreadcrumb();
+          });
+        } else {
+          requestAnimationFrame(() => {
+            emit("app:page");
+            syncBreadcrumb();
+          });
+        }
+
+        document.addEventListener("astro:page-load", () => {
+          emit("app:page");
+          syncBreadcrumb();
+        });
         document.addEventListener("swup:page:view", () => {
           emit("app:page");
           requestAnimationFrame(syncBreadcrumb);
@@ -125,10 +143,10 @@ const jsonLd =
     </script>
   </head>
 
-  <body class="min-h-screen bg-base-100" {...isIndexed ? { "data-pagefind-body": true } : {}}>
+  <body class="min-h-screen bg-bg" {...isIndexed ? { "data-pagefind-body": true } : {}}>
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:btn focus:btn-primary"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:rounded-sm focus:bg-accent focus:px-3 focus:py-2 focus:text-[15px] focus:text-[color:var(--accent-on)]"
     >
       {t("label.skipToContent")}
     </a>
@@ -139,7 +157,7 @@ const jsonLd =
       <aside
         id="app-sidebar"
         aria-label="Sidebar"
-        class="fixed inset-y-0 left-0 z-50 w-64 -translate-x-full overflow-y-auto border-r border-base-content/10 bg-base-200 transition-transform duration-200 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 lg:transition-none"
+        class="fixed inset-y-0 left-0 z-50 w-64 -translate-x-full overflow-y-auto border-r border-line bg-surface transition-transform duration-200 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 lg:transition-none"
       >
         <Sidebar />
       </aside>
@@ -149,8 +167,8 @@ const jsonLd =
 
         <main id="main-content" tabindex="-1" class="flex-1">
           <div id="swup" class="transition-swup">
-            <div class="mx-auto flex w-full max-w-[1180px] justify-center gap-10 px-5 md:px-8">
-              <div class="w-full min-w-0 max-w-[780px] pb-10">
+            <div class="mx-auto flex w-full max-w-[936px] justify-start gap-16 px-4 md:px-6">
+              <div class="w-full min-w-0 max-w-[680px] pb-10">
                 <slot />
               </div>
               {
@@ -163,7 +181,9 @@ const jsonLd =
                 )
               }
             </div>
-            <Footer />
+            <div class="mx-auto w-full max-w-[936px] px-4 md:px-6">
+              <Footer />
+            </div>
           </div>
         </main>
       </div>
@@ -269,10 +289,11 @@ const jsonLd =
             if (!href || href.startsWith("http") || href.startsWith("mailto")) return;
             const isActive =
               href === "/" ? path === "/" : path === href || path.startsWith(`${href}/`);
-            link.classList.toggle("bg-base-200", isActive);
-            link.classList.toggle("font-medium", isActive);
-            link.classList.toggle("text-base-content", isActive);
-            link.classList.toggle("text-base-content/70", !isActive);
+            if (isActive) {
+              link.setAttribute("aria-current", "page");
+            } else {
+              link.removeAttribute("aria-current");
+            }
           });
         };
 

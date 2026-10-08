@@ -37,10 +37,10 @@ const totalPosts = allPosts.length;
 
 <BaseLayout title={t("label.archivePage")}>
   <BaseCard title={t("label.archivePage")}>
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <div class="page-header flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
       <div class="flex items-center gap-2">
         <Icon name="lucide:archive" class="w-6 h-6 text-accent" />
-        <h1 id="h1" class="text-2xl md:text-3xl font-bold">{t("label.archivePage")}</h1>
+        <h1 id="h1" class="page-header-title">{t("label.archivePage")}</h1>
         <div class="badge badge-accent">{totalPosts} {totalPosts === 1 ? t("label.post") : t("label.posts")}</div>
       </div>
       <a href="/blog" class="btn btn-outline btn-sm gap-2">
@@ -49,7 +49,7 @@ const totalPosts = allPosts.length;
       </a>
     </div>
     <div class="divider my-2"></div>
-    <p class="text-sm opacity-75">{t("label.archivesPageDescription")}</p>
+    <p class="page-header-description">{t("label.archivesPageDescription")}</p>
   </BaseCard>
   <BaseCard title={t("label.archivePage")}>
     <div class="archives-container">

@@ -55,7 +55,7 @@ const jsonLd =
 ---
 
 <!doctype html>
-<html lang={SITE_LANGUAGE} class="bg-base-300" data-theme={SITE_THEME.light} data-theme-type="light">
+<html lang={SITE_LANGUAGE} class="bg-base-100" data-theme={SITE_THEME.light} data-theme-type="light">
   <head>
     <ClientRouter />
     <ElementCrossing />
@@ -95,7 +95,7 @@ const jsonLd =
     </script>
   </head>
 
-  <body class="flex flex-col min-h-screen" {...isIndexed ? { "data-pagefind-body": true } : {}}>
+  <body class="flex min-h-screen flex-col" {...isIndexed ? { "data-pagefind-body": true } : {}}>
     <a
       href="#main-content"
       class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:btn focus:btn-primary"
@@ -105,22 +105,25 @@ const jsonLd =
 
     <Navbar />
 
-    <div class="max-w-6xl mx-auto w-full flex-grow">
-      <div class="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-4 gap-4 p-4 h-full">
+    <div class="mx-auto w-full max-w-[1120px] flex-grow px-4 md:px-6">
+      <div class="grid grid-cols-1 gap-10 lg:grid-cols-[232px_minmax(0,1fr)]">
+        <aside class="order-1 hidden lg:block">
+          <div class="sticky top-20 flex flex-col">
+            <Sidebar headings={headings} showTOC={showTOC} />
+            <slot name="sidebar" />
+          </div>
+        </aside>
+
         <main
           id="main-content"
           tabindex="-1"
-          class="col-span-1 md:col-span-4 lg:col-span-3 bg-transparent order-1 md:order-2 mt-16 md:mt-0 flex flex-col gap-4"
+          class="order-2 mt-20 flex min-w-0 flex-col lg:mt-0"
         >
-          <div class="flex-grow flex flex-col gap-4">
+          <div class="flex flex-grow flex-col">
             <slot />
           </div>
           <Footer />
         </main>
-        <aside class="col-span-1 bg-transparent order-2 md:order-1 md:top-4">
-          <Sidebar headings={headings} showTOC={showTOC} />
-          <slot name="sidebar" />
-        </aside>
       </div>
     </div>
 

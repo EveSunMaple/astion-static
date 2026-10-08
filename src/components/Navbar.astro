@@ -29,11 +29,11 @@ const typedMenu = SITE_MENU as MenuItem[];
 ---
 
 <nav
-  class="navbar fixed px-2 w-full transform transition-transform delay-300 duration-500 ease-in-out text-center z-50 bg-base-100 shadow-lg md:hidden"
+  class="navbar fixed top-0 left-0 z-50 h-14 min-h-14 w-full transform border-b border-base-content/10 bg-base-100/90 px-3 text-center backdrop-blur transition-transform delay-300 duration-500 ease-in-out lg:hidden"
   id="navbar"
 >
   <div class="navbar-start">
-    <label class="btn btn-circle btn-md bg-base-100 swap swap-rotate">
+    <label class="btn btn-ghost btn-square btn-sm swap swap-rotate">
       <span class="sr-only">Toggle menu</span>
       <input type="checkbox" id="menu-toggle" />
       <Icon name="lucide:menu" class="swap-off h-5 w-5" />
@@ -42,7 +42,7 @@ const typedMenu = SITE_MENU as MenuItem[];
   </div>
 
   <div class="navbar-center">
-    <a class="btn btn-ghost text-xl hover:scale-105 transition-transform duration-300" href="/">
+    <a class="btn btn-ghost text-base font-semibold" href="/">
       {SITE_TITLE}
     </a>
   </div>
@@ -53,16 +53,16 @@ const typedMenu = SITE_MENU as MenuItem[];
 
   <div
     id="header-menu"
-    class="absolute top-full left-0 w-full transform -translate-x-full transition-transform duration-300 ease-in-out bg-base-100 shadow-lg"
+    class="absolute top-full left-0 w-full transform -translate-x-full border-b border-base-content/10 bg-base-100 transition-transform duration-300 ease-in-out"
   >
-    <ul class="menu bg-transparent w-full p-2">
+    <ul class="menu w-full gap-0 bg-transparent p-3">
       {
         typedMenu.map((item) => (
-          <li class="w-full relative group">
+          <li class="group relative w-full">
             {item.subItems ? (
               <details open={currentPath.startsWith(item.href)}>
-                <summary class="flex items-center text-lg font-bold p-3 hover:bg-base-200 rounded-lg">
-                  <Icon name={item.svg} class="w-5 h-5 mr-2" />
+                <summary class="flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-base-200">
+                  <Icon name={item.svg} class="mr-2 h-4 w-4" />
                   <span>{item.text}</span>
                 </summary>
                 <ul class="pl-4">
@@ -70,14 +70,14 @@ const typedMenu = SITE_MENU as MenuItem[];
                     <li>
                       <a
                         class:list={[
-                          "flex items-center p-2 hover:bg-base-200 rounded-lg",
+                          "flex items-center rounded-md px-3 py-2 text-sm hover:bg-base-200",
                           currentPath === subItem.href && "bg-base-200",
                         ]}
                         aria-current={currentPath === subItem.href ? "page" : undefined}
                         href={subItem.href}
                         target={subItem.target || "_self"}
                       >
-                        <Icon name={subItem.svg} class="w-4 h-4 mr-2" />
+                        <Icon name={subItem.svg} class="mr-2 h-4 w-4 opacity-70" />
                         <span>{subItem.text}</span>
                       </a>
                     </li>
@@ -87,14 +87,14 @@ const typedMenu = SITE_MENU as MenuItem[];
             ) : (
               <a
                 class:list={[
-                  "flex items-center text-lg font-bold p-3 hover:bg-base-200 rounded-lg",
+                  "flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-base-200",
                   currentPath === item.href && "bg-base-200",
                 ]}
                 aria-current={currentPath === item.href ? "page" : undefined}
                 href={item.href}
                 target={item.target || "_self"}
               >
-                <Icon name={item.svg} class="w-5 h-5 mr-2" />
+                <Icon name={item.svg} class="mr-2 h-4 w-4" />
                 <span>{item.text}</span>
               </a>
             )}

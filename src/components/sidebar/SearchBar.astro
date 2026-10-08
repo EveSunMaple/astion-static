@@ -1,34 +1,21 @@
 ---
 import { t } from "@config";
 import { Icon } from "astro-icon/components";
-import Card from "../temple/Card.astro";
 ---
 
-<Card>
-  <div class="p-4">
-    <form action="/blog/search" method="get" class="relative w-full">
-      <div class="search-container w-full relative">
-        <input
-          type="text"
-          name="q"
-          placeholder={t("label.searchPlaceholder") || "Search..."}
-          class="input input-bordered w-full pl-10 pr-16 py-2"
-          aria-label={t("label.search") || "Search"}
-        />
-        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-          <Icon name="lucide:search" class="w-5 h-5" />
-        </div>
-        <button
-          type="submit"
-          class="absolute right-2 top-1/2 transform -translate-y-1/2 p-2"
-          aria-label={t("label.search") || "Search"}
-        >
-          <Icon name="lucide:arrow-right" class="w-4 h-4" />
-        </button>
-      </div>
-    </form>
-  </div>
-</Card>
+<form action="/blog/search" method="get" class="relative w-full">
+  <Icon
+    name="lucide:search"
+    class="pointer-events-none absolute top-1/2 left-2.5 h-4 w-4 -translate-y-1/2 text-base-content/40"
+  />
+  <input
+    type="text"
+    name="q"
+    placeholder={t("label.searchPlaceholder") || "Search..."}
+    class="w-full rounded-md border-0 bg-base-200 py-1.5 pr-3 pl-8 text-sm text-base-content outline-none placeholder:text-base-content/40 focus:ring-2 focus:ring-primary/40"
+    aria-label={t("label.search") || "Search"}
+  />
+</form>
 
 <script>
   // Focus search input when pressing '/' key

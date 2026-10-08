@@ -1,26 +1,9 @@
 ---
-import Card from "@components/temple/Card.astro";
-import CoverImage from "@components/widgets/CoverImage.astro";
 import type { PostData } from "@interfaces/data";
 
-const { title, image } = Astro.props as PostData;
+const { class: className = "" } = Astro.props as PostData & { class?: string };
 ---
 
-<Card>
-  <div>
-    {
-      image && (
-        <CoverImage
-          src={image}
-          alt={title}
-          width={1920}
-          height={1080}
-          loading="eager"
-        />
-      )
-    }
-  </div>
-  <div class="p-4 sm:p-6">
-    <slot />
-  </div>
-</Card>
+<div class={`w-full ${className}`}>
+  <slot />
+</div>

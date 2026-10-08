@@ -1,21 +1,83 @@
-/* Use postcss-nesting */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Color scheme configuration to prevent Chrome's auto dark theme */
+/* ==========================================================================
+   Notion-like design tokens
+   ========================================================================== */
 :root,
 [data-theme-type="light"] {
-  color-scheme: light dark; /* This prevents Chrome's auto dark theme from taking effect */
+  --n-text: #37352f;
+  --n-text-2: rgba(55, 53, 47, 0.65);
+  --n-text-3: rgba(55, 53, 47, 0.45);
+  --n-bg: #ffffff;
+  --n-bg-gray: #f7f7f5;
+  --n-bg-hover: #efefed;
+  --n-border: rgba(55, 53, 47, 0.09);
+  --n-blue: #2383e2;
+  --n-code-bg: rgba(135, 131, 120, 0.15);
+  --n-code-text: #eb5757;
+  --n-selection: rgba(35, 131, 226, 0.28);
+  --n-callout-gray: #f1f1ef;
+  --n-callout-brown: #f4eeee;
+  --n-callout-orange: #faebdd;
+  --n-callout-yellow: #fbf3db;
+  --n-callout-green: #edf3ec;
+  --n-callout-blue: #e7f3f8;
+  --n-callout-purple: #f4f0f7;
+  --n-callout-pink: #faf1f5;
+  --n-callout-red: #fdebec;
 }
 
 [data-theme-type="dark"] {
-  color-scheme: dark;
+  --n-text: #d4d4d4;
+  --n-text-2: rgba(255, 255, 255, 0.55);
+  --n-text-3: rgba(255, 255, 255, 0.4);
+  --n-bg: #191919;
+  --n-bg-gray: #202020;
+  --n-bg-hover: #2c2c2c;
+  --n-border: rgba(255, 255, 255, 0.094);
+  --n-blue: #529cca;
+  --n-code-bg: rgba(135, 131, 120, 0.2);
+  --n-code-text: #ff7369;
+  --n-selection: rgba(82, 156, 202, 0.35);
+  --n-callout-gray: #252525;
+  --n-callout-brown: #2c2724;
+  --n-callout-orange: #352a21;
+  --n-callout-yellow: #372e20;
+  --n-callout-green: #242b26;
+  --n-callout-blue: #1f2c33;
+  --n-callout-purple: #2a2635;
+  --n-callout-pink: #32232b;
+  --n-callout-red: #362624;
 }
 
-/* Global styles with nesting support */
+/* ==========================================================================
+   Base
+   ========================================================================== */
 html {
   @apply scroll-smooth;
+}
+
+body {
+  @apply font-sans antialiased;
+  background-color: var(--n-bg);
+  color: var(--n-text);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+::selection {
+  background: var(--n-selection);
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--n-blue);
+  outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -29,789 +91,1021 @@ html {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
-}
-
-kbd {
-  @apply kbd;
-}
-
-code {
-  font-size: 0.875em;
 }
 
 .scrollbar-none {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-  &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
-  }
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.frosti-heading {
-  @apply text-2xl leading-normal pt-0 font-bold text-base-content bg-clip-text bg-gradient-to-r from-primary to-secondary duration-300 hover:text-transparent;
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }
 
-.btn-category {
-  @apply bg-primary/5 hover:bg-primary text-primary hover:text-primary-content border-none hover:scale-110;
+/* ==========================================================================
+   Notion-ified daisyUI primitives
+   ========================================================================== */
+.card {
+  @apply rounded-none bg-transparent shadow-none;
 }
 
-.btn-tag {
-  @apply bg-secondary/5 hover:bg-secondary text-secondary hover:text-secondary-content border-none hover:scale-110;
+.btn {
+  @apply rounded-md border-0 font-medium shadow-none;
+  text-transform: none;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
-.btn-copy {
-  @apply px-1 text-base-content/80;
+.btn-ghost {
+  @apply bg-transparent;
+  color: var(--n-text-2);
 }
 
-.frosti-code {
-  @apply relative my-6 rounded-xl border border-base-300/20 bg-transparent overflow-hidden;
-
-  &-toolbar {
-    @apply sticky top-0 z-10 flex justify-between items-center px-4 py-2 bg-base-200 border-b border-base-content/20;
-    &-language {
-      @apply text-sm font-semibold text-base-content/80;
-    }
-  }
-
-  &-content {
-    @apply overflow-x-auto p-4 bg-transparent;
-
-    pre {
-      @apply bg-transparent;
-      counter-reset: line;
-    }
-
-    .line {
-      counter-increment: line;
-
-      &::before {
-        content: counter(line);
-        @apply text-current mr-4 inline-block w-4 text-right;
-      }
-    }
-  }
+.btn-ghost:hover {
+  background-color: var(--n-bg-hover);
+  color: var(--n-text);
 }
 
-// Shared components and styles for blog pages
-// ===================================================
-
-// Footnotes styles
-// ---------------------------------------------------
-.footnotes {
-  @apply mt-12 p-6 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-content/20 shadow-sm;
-
-  // Footnote list item
-  li {
-    @apply text-sm text-base-content/80 relative;
-  }
+.btn-outline {
+  border: 1px solid var(--n-border);
+  background: var(--n-bg);
+  color: var(--n-text);
 }
 
-// Animation keyframes
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.btn-outline:hover {
+  background-color: var(--n-bg-hover);
+  border-color: var(--n-border);
 }
 
-// Common container for blog pages
-.blog-container {
-  @apply p-4 rounded-2xl bg-base-200/30 backdrop-blur-md border border-base-300/20;
+.btn-primary {
+  background-color: var(--n-blue);
+  color: #fff;
 }
 
-// Common stats box
-.stats-box {
-  @apply stats shadow mb-8 w-full bg-base-200/50 backdrop-blur-sm border border-base-content/20;
-
-  .stat-figure {
-    @apply text-primary;
-
-    svg {
-      @apply w-8 h-8;
-    }
-  }
-
-  .stat-value {
-    @apply text-primary;
-  }
+.btn-primary:hover {
+  background-color: color-mix(in srgb, var(--n-blue) 88%, black);
 }
 
-// Empty state component
-.empty {
-  &-state {
-    @apply flex flex-col items-center justify-center min-h-[200px] p-8 text-center text-base-content/60 bg-base-100/50 rounded-xl border border-dashed border-base-300/20;
-  }
-
-  &-icon {
-    @apply w-12 h-12 opacity-60 mb-4;
-  }
-
-  &-text {
-    @apply text-lg;
-  }
+.input {
+  @apply h-auto rounded-md border-0 px-3 py-1.5 text-sm shadow-none;
+  background-color: var(--n-bg-gray);
+  color: var(--n-text);
 }
 
-// Categories Page Components
-// ===================================================
-
-// Category component styles
-.categories {
-  &-container {
-    @extend .blog-container;
-  }
-
-  &-grid {
-    @apply grid gap-6;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  }
+.input:focus,
+.input:focus-within {
+  outline: 2px solid var(--n-blue);
+  outline-offset: 0;
 }
 
-// Category card component
-.category {
-  &-card {
-    @apply opacity-0 translate-y-5;
-    animation: fadeIn 0.8s ease-out forwards;
-
-    // Generate animation delays
-    @for $i from 0 through 100 {
-      &[data-index="#{$i}"] {
-        animation-delay: #{0.1 + ($i * 0.05)}s;
-      }
-    }
-  }
-
-  &-inner {
-    @apply rounded-2xl overflow-hidden bg-base-100 shadow-md border border-base-300/20 transition-transform duration-300 ease-in-out;
-
-    &:hover {
-      @apply -translate-y-1 shadow-lg;
-    }
-
-    &.expanded {
-      @apply shadow-xl;
-    }
-  }
-
-  &-header {
-    @apply p-4 cursor-pointer flex justify-between items-center;
-  }
-
-  &-title {
-    @apply flex items-center gap-3;
-
-    h2 {
-      @apply text-lg font-semibold m-0;
-    }
-  }
-
-  &-icon {
-    @apply flex items-center justify-center w-10 h-10 rounded-full flex-shrink-0;
-
-    svg {
-      @apply w-5 h-5;
-    }
-  }
-
-  &-count {
-    @apply inline-flex items-center justify-center min-w-6 h-6 px-2 rounded-full text-xs font-bold;
-  }
-
-  &-divider {
-    @apply h-px bg-base-300/50 mx-4;
-  }
-
-  &-content {
-    @apply max-h-0 overflow-y-auto;
-    transition: max-height 0.8s;
-  }
+.input::placeholder {
+  color: var(--n-text-3);
 }
 
-// Toggle button
-.toggle {
-  &-btn {
-    @apply bg-transparent border-none cursor-pointer p-1 flex items-center justify-center text-base-content/70;
-  }
-
-  &-icon {
-    @apply w-6 h-6 transition-transform duration-500;
-  }
+.menu {
+  @apply p-0;
 }
 
-// Post list
-.post {
-  &-list {
-    @apply list-none p-4 m-0 bg-base-100/70;
-  }
-
-  &-item {
-    @apply mb-2 truncate;
-
-    &:last-child {
-      @apply mb-0;
-    }
-  }
-
-  &-link {
-    @apply flex justify-between items-center p-3 rounded-lg bg-base-200/50 transition-transform;
-
-    &:hover {
-      @apply bg-base-200 translate-x-1;
-
-      .post-title {
-        @apply text-primary;
-      }
-    }
-  }
-
-  &-title {
-    @apply flex-1 min-w-0 font-medium overflow-hidden text-ellipsis whitespace-nowrap text-base-content/90;
-  }
-
-  &-date {
-    @apply text-xs text-base-content/60 whitespace-nowrap py-1 px-2 rounded-full bg-base-300/30 shrink-0 ml-2;
-  }
+.menu :where(li > *) {
+  @apply rounded-md px-2 py-1 text-sm font-normal;
+  color: var(--n-text-2);
+  transition: background-color 0.15s ease;
 }
 
-// Mixin for creating category color variants
-@mixin category-color-variant($color-var) {
-  .category-#{$color-var} {
-    .category-header {
-      background: linear-gradient(120deg, oklch(var(--#{$color-var}) / 0.1), oklch(var(--#{$color-var}) / 0.05));
-    }
-
-    .category-icon {
-      background-color: oklch(var(--#{$color-var}) / 0.15);
-      color: oklch(var(--#{$color-var}));
-    }
-
-    .category-count {
-      background-color: oklch(var(--#{$color-var}) / 0.15);
-      color: oklch(var(--#{$color-var}));
-    }
-
-    &.expanded {
-      border-color: oklch(var(--#{$color-var}) / 0.3);
-    }
-  }
+.menu :where(li > *):hover,
+.menu :where(li > *):focus {
+  background-color: var(--n-bg-hover);
+  color: var(--n-text);
 }
 
-// Apply color variants
-@include category-color-variant("p");
-@include category-color-variant("s");
-@include category-color-variant("a");
-@include category-color-variant("in");
-@include category-color-variant("su");
-@include category-color-variant("wa");
-@include category-color-variant("er");
-
-// Rename for clarity in the component
-.category-primary {
-  @extend .category-p;
-}
-.category-secondary {
-  @extend .category-s;
-}
-.category-accent {
-  @extend .category-a;
-}
-.category-info {
-  @extend .category-in;
-}
-.category-success {
-  @extend .category-su;
-}
-.category-warning {
-  @extend .category-wa;
-}
-.category-error {
-  @extend .category-er;
+.badge {
+  @apply border-0 font-normal;
+  background-color: var(--n-bg-gray);
+  color: var(--n-text-2);
 }
 
-// Tags Page Components
-// ===================================================
-
-.tags {
-  &-container {
-    @extend .blog-container;
-  }
-
-  &-cloud {
-    @apply flex flex-wrap justify-center gap-3 min-h-[200px];
-  }
-
-  &-item {
-    @apply relative opacity-0 translate-y-2 inline-flex items-center gap-2 rounded-full;
-    animation: fadeIn 0.8s ease-out forwards;
-
-    // Height fix - improved tag height
-    @apply h-auto py-0;
-
-    // Apply staggered animation with loop
-    @for $i from 0 through 100 {
-      &[data-index="#{$i}"] {
-        animation-delay: #{0.05 + ($i * 0.02)}s;
-      }
-    }
-  }
-
-  &-content {
-    @apply flex items-center gap-2 px-4 py-2 rounded-full bg-base-100 shadow-sm border border-transparent;
-  }
-
-  &-icon {
-    @apply w-4 h-4 flex-shrink-0;
-  }
-
-  &-count {
-    @apply inline-flex items-center justify-center min-w-6 h-6 px-2 text-xs font-bold rounded-full bg-base-300/30 text-base-content/80 duration-300;
-  }
+.divider {
+  color: var(--n-border);
 }
 
-// Tag color variants
-.tag {
-  &-high {
-    .tags-content {
-      @apply border-primary/20 bg-base-100 text-primary;
-    }
-    .tags-icon {
-      @apply text-primary;
-    }
-  }
-
-  &-medium-high {
-    .tags-content {
-      @apply border-secondary/20 bg-base-100 text-secondary;
-    }
-    .tags-icon {
-      @apply text-secondary;
-    }
-  }
-
-  &-medium {
-    .tags-content {
-      @apply border-accent/20 bg-base-100 text-accent;
-    }
-    .tags-icon {
-      @apply text-accent;
-    }
-  }
-
-  &-medium-low {
-    .tags-content {
-      @apply border-base-content/20 bg-base-100;
-    }
-    .tags-icon {
-      @apply text-base-content/80;
-    }
-  }
-
-  &-low {
-    .tags-content {
-      @apply border-base-300/20 bg-base-100;
-    }
-    .tags-icon {
-      @apply text-base-content/60;
-    }
-  }
+.dropdown-content {
+  border: 1px solid var(--n-border);
+  box-shadow:
+    rgba(15, 15, 15, 0.05) 0 0 0 1px,
+    rgba(15, 15, 15, 0.1) 0 3px 6px,
+    rgba(15, 15, 15, 0.2) 0 9px 24px;
 }
 
-// Archives Page Components
-// ===================================================
-
-.archives {
-  &-container {
-    @extend .blog-container;
-  }
-
-  &-timeline {
-    @apply relative pl-8 ml-4;
-
-    &::before {
-      content: "";
-      @apply absolute top-0 bottom-0 left-1 w-1 rounded bg-gradient-to-b from-primary to-secondary;
-    }
-  }
+/* ==========================================================================
+   Notion content typography (`#content` inside detail pages)
+   ========================================================================== */
+.notion-content {
+  color: var(--n-text);
+  font-size: 16px;
+  line-height: 1.6;
 }
 
-.timeline {
-  &-year {
-    @apply relative mb-12;
-
-    &:last-child {
-      @apply mb-0;
-    }
-  }
-
-  &-month {
-    @apply mb-10 relative;
-
-    &:last-child {
-      @apply mb-0;
-    }
-  }
+.notion-content > * + * {
+  margin-top: 0.5em;
 }
 
-.year {
-  &-header {
-    @apply relative mb-6;
-  }
-
-  &-badge {
-    @apply relative -left-12 bg-primary text-primary-content font-bold text-lg py-2 px-4 rounded-full inline-block shadow-md z-10;
-  }
-
-  &-content {
-    @apply relative;
-  }
+.notion-content h1,
+.notion-content h2,
+.notion-content h3,
+.notion-content h4,
+.notion-content h5,
+.notion-content h6 {
+  @apply font-semibold;
+  color: var(--n-text);
+  scroll-margin-top: 5rem;
 }
 
-.month {
-  &-title {
-    @apply flex items-center gap-2 text-xl font-semibold mb-5 text-secondary pb-2 border-b border-base-content/20;
-  }
-
-  &-icon {
-    @apply w-5 h-5;
-  }
-
-  &-count {
-    @apply inline-flex items-center justify-center bg-secondary text-secondary-content text-xs font-bold min-w-6 h-6 rounded-full px-2 ml-2;
-  }
+.notion-content h1 {
+  font-size: 1.875rem;
+  line-height: 1.3;
+  margin-top: 1.9em;
 }
 
-.archive {
-  &-posts {
-    @apply list-none p-0 m-0 relative;
-  }
-
-  &-item {
-    @apply relative mb-4 pl-6 flex flex-col;
-
-    &:last-child {
-      @apply mb-0;
-    }
-  }
-
-  &-marker {
-    @apply absolute -left-2 top-4 w-8 h-8 flex items-center justify-center bg-base-100 border-2 border-primary rounded-full z-10;
-  }
-
-  &-icon {
-    @apply w-4 h-4 text-primary;
-  }
-
-  &-card {
-    @apply block p-5 bg-base-100 border border-base-content/20 rounded-xl shadow-sm transition-transform duration-300;
-
-    &:hover {
-      @apply -translate-y-1 shadow-md border-primary/50 bg-base-200;
-
-      .archive-title {
-        @apply text-primary;
-      }
-    }
-  }
-
-  &-date {
-    @apply text-sm text-base-content/60 mb-1;
-  }
-
-  &-title {
-    @apply font-semibold mt-1 text-base-content line-clamp-2;
-  }
-
-  &-description {
-    @apply text-sm text-base-content/70 mt-2 line-clamp-2;
-  }
+.notion-content h2 {
+  font-size: 1.5rem;
+  line-height: 1.3;
+  margin-top: 1.4em;
 }
 
-// Responsive styles for all pages
-@media (max-width: 768px) {
-  .blog-container {
-    @apply p-3;
-  }
-
-  // Categories responsive
-  .categories-grid {
-    @apply grid-cols-1 gap-4;
-  }
-
-  .category-header {
-    @apply py-3 px-4;
-  }
-
-  .category-icon {
-    @apply w-8 h-8;
-
-    svg {
-      @apply w-4 h-4;
-    }
-  }
-
-  // Tags responsive
-  .tags-cloud {
-    @apply gap-2;
-  }
-
-  .tags-content {
-    @apply px-3 py-1.5;
-  }
-
-  // Archives responsive
-  .archives-timeline {
-    @apply pl-6 ml-0;
-  }
-
-  .year-badge {
-    @apply -left-10 text-base py-1.5 px-3;
-  }
-
-  .archive-card {
-    @apply p-4;
-  }
-
-  .archive-marker {
-    @apply w-7 h-7 -left-2;
-  }
-
-  .archive-icon {
-    @apply w-3.5 h-3.5;
-  }
+.notion-content h3 {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  margin-top: 1em;
 }
 
-@media (max-width: 480px) {
-  .blog-container {
-    @apply p-2;
-  }
-
-  // Categories responsive
-  .category-title h2 {
-    @apply text-base;
-  }
-
-  .post-link {
-    @apply py-2 px-3 flex-col items-start gap-1;
-  }
-
-  .post-date {
-    @apply self-start;
-  }
-
-  // Tags responsive
-  .tags-item {
-    // Fixed height for small screens
-    font-size: 0.9rem !important;
-  }
-
-  .tags-icon {
-    @apply w-3.5 h-3.5;
-  }
-
-  .tags-count {
-    @apply min-w-5 h-5 text-[0.65rem];
-  }
-
-  // Archives responsive
-  .archives-timeline {
-    @apply pl-5;
-  }
-
-  .year-badge {
-    @apply -left-9 text-sm py-1 px-2.5;
-  }
-
-  .month-title {
-    @apply text-lg;
-  }
+.notion-content h4,
+.notion-content h5,
+.notion-content h6 {
+  font-size: 1rem;
+  margin-top: 1em;
 }
 
-/* Pagefind UI customization with oklch colors */
-#pagefind-search {
-  --pagefind-ui-scale: 1;
-  --pagefind-ui-primary: oklch(var(--a));
-  --pagefind-ui-text: oklch(var(--bc));
-  --pagefind-ui-background: oklch(var(--b1));
-  --pagefind-ui-border: oklch(var(--bc) / 0.2);
-  --pagefind-ui-tag: oklch(var(--b2));
-  --pagefind-ui-border-width: 1px;
-  --pagefind-ui-border-radius: 0.5rem;
-  --pagefind-ui-image-border-radius: 0.5rem;
-  --pagefind-ui-image-box-ratio: 3/2;
-  --pagefind-ui-font: var(--font-sans, system-ui, sans-serif);
-
-  .pagefind-ui__search-input {
-    @apply input input-bordered w-full;
-    border: 1px solid oklch(var(--bc) / 0.2);
-  }
-
-  .pagefind-ui__search-clear {
-    @apply hidden;
-  }
-
-  .pagefind-ui__result {
-    @apply p-4 border rounded-lg mb-4;
-    border: 1px solid var(--pagefind-ui-border);
-  }
-
-  .pagefind-ui__result-title {
-    @apply text-lg font-bold mb-2;
-  }
-
-  .pagefind-ui__result-link {
-    @apply text-primary hover:underline;
-  }
-
-  .pagefind-ui__result-excerpt {
-    @apply text-sm text-base-content opacity-75;
-  }
-
-  .pagefind-ui__result-excerpt mark {
-    @apply bg-accent text-accent-content px-1 rounded;
-  }
-
-  .pagefind-ui__button {
-    @apply btn btn-primary;
-  }
-
-  .pagefind-ui__message {
-    @apply text-sm text-base-content opacity-75 my-4;
-  }
-
-  .pagefind-ui__message:empty::before {
-    content: "No results found. Try a different search term.";
-    @apply block text-center py-8 text-base-content opacity-50;
-  }
+.notion-content p {
+  margin: 0.25em 0;
+  padding: 3px 2px;
 }
 
-/* ===== Notion rendered blocks ===== */
+.notion-content a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  text-underline-offset: 2px;
+}
+
+.notion-content a:hover {
+  background-color: var(--n-bg-hover);
+  text-decoration-color: currentColor;
+}
+
+.notion-content strong,
+.notion-content b {
+  @apply font-semibold;
+}
+
+.notion-content del {
+  color: var(--n-text-2);
+}
+
+.notion-content code {
+  background: var(--n-code-bg);
+  color: var(--n-code-text);
+  border-radius: 3px;
+  padding: 0.2em 0.4em;
+  font-size: 85%;
+  @apply font-mono;
+}
+
+.notion-content blockquote {
+  border-left: 3px solid currentColor;
+  padding-left: 14px;
+  margin: 0.5em 0;
+}
+
+.notion-content blockquote p {
+  margin: 0;
+}
+
+.notion-content ul,
+.notion-content ol {
+  padding-left: 1.7em;
+  margin: 0.25em 0;
+}
+
+.notion-content ul {
+  list-style: disc;
+}
+
+.notion-content ol {
+  list-style: decimal;
+}
+
+.notion-content li {
+  margin: 2px 0;
+}
+
+.notion-content li::marker {
+  color: var(--n-text-2);
+}
+
+.notion-content hr {
+  border: 0;
+  border-top: 1px solid var(--n-border);
+  margin: 1.5em 0;
+}
+
+.notion-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  margin: 0.75em 0;
+}
+
+.notion-content th,
+.notion-content td {
+  border: 1px solid var(--n-border);
+  padding: 7px 9px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.notion-content thead th,
+.notion-content th[scope="row"] {
+  background: var(--n-bg-gray);
+  font-weight: 500;
+}
+
+.notion-content img {
+  @apply my-2 rounded-sm;
+  max-width: 100%;
+  height: auto;
+}
+
+.notion-content .anchor {
+  opacity: 0;
+  margin-left: 6px;
+  color: var(--n-text-3);
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.notion-content h1:hover .anchor,
+.notion-content h2:hover .anchor,
+.notion-content h3:hover .anchor,
+.notion-content h4:hover .anchor,
+.notion-content h5:hover .anchor,
+.notion-content h6:hover .anchor {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Notion rendered blocks
+   ========================================================================== */
 .notion-callout {
-  @apply flex items-start gap-3 rounded-xl border p-4 my-4;
-  border-color: oklch(var(--bc) / 0.15);
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  border-radius: 0.375rem;
+  padding: 1rem 1rem 1rem 0.9rem;
+  margin: 1em 0;
+  background: var(--n-callout-gray);
+}
 
-  .notion-callout-icon {
-    @apply text-xl leading-6 flex-none;
-  }
+.notion-callout-icon {
+  flex: none;
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
 
-  .notion-callout-content {
-    @apply flex-1 min-w-0;
-  }
+.notion-callout-content {
+  flex: 1;
+  min-width: 0;
+}
 
-  .notion-callout-content > p:first-child {
-    @apply mt-0;
-  }
+.notion-callout-content > p:first-child {
+  margin-top: 0;
+}
 
-  .notion-callout-content > p:last-child {
-    @apply mb-0;
-  }
+.notion-callout-content > p:last-child {
+  margin-bottom: 0;
+}
 
-  &.color-gray {
-    @apply bg-base-200;
-  }
+.notion-callout.color-gray {
+  background: var(--n-callout-gray);
+}
 
-  &.color-brown {
-    @apply bg-base-200;
-  }
+.notion-callout.color-brown {
+  background: var(--n-callout-brown);
+}
 
-  &.color-blue {
-    @apply bg-info/10;
-    border-color: oklch(var(--in) / 0.35);
-  }
+.notion-callout.color-orange {
+  background: var(--n-callout-orange);
+}
 
-  &.color-green {
-    @apply bg-success/10;
-    border-color: oklch(var(--su) / 0.35);
-  }
+.notion-callout.color-yellow {
+  background: var(--n-callout-yellow);
+}
 
-  &.color-yellow,
-  &.color-orange {
-    @apply bg-warning/10;
-    border-color: oklch(var(--wa) / 0.35);
-  }
+.notion-callout.color-green {
+  background: var(--n-callout-green);
+}
 
-  &.color-red {
-    @apply bg-error/10;
-    border-color: oklch(var(--er) / 0.35);
-  }
+.notion-callout.color-blue {
+  background: var(--n-callout-blue);
+}
 
-  &.color-purple,
-  &.color-pink {
-    @apply bg-secondary/10;
-    border-color: oklch(var(--s) / 0.35);
-  }
+.notion-callout.color-purple {
+  background: var(--n-callout-purple);
+}
+
+.notion-callout.color-pink {
+  background: var(--n-callout-pink);
+}
+
+.notion-callout.color-red {
+  background: var(--n-callout-red);
 }
 
 .notion-toggle {
-  @apply my-2 rounded-xl border border-base-300 px-4 py-2;
+  margin: 0.25em 0;
+  padding: 2px 0;
+}
 
-  summary {
-    @apply cursor-pointer select-none font-medium;
-  }
+.notion-toggle > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 3px 2px;
+  border-radius: 3px;
+}
 
-  &[open] > summary {
-    @apply mb-2;
-  }
+.notion-toggle > summary::-webkit-details-marker {
+  display: none;
+}
+
+.notion-toggle > summary::before {
+  content: "▶";
+  display: inline-block;
+  width: 1.1em;
+  font-size: 0.65em;
+  vertical-align: 0.25em;
+  color: var(--n-text-3);
+  transition: transform 0.15s ease;
+}
+
+.notion-toggle[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.notion-toggle > summary:hover {
+  background: var(--n-bg-hover);
 }
 
 .notion-image {
-  @apply my-4 flex flex-col items-center;
+  margin: 1em 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  img {
-    @apply h-auto max-w-full rounded-xl;
-  }
+.notion-image img {
+  border-radius: 4px;
+  max-width: 100%;
+  height: auto;
 }
 
 .notion-caption {
-  @apply mt-2 text-center text-sm opacity-60;
+  margin-top: 0.4rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--n-text-2);
 }
 
 .notion-code {
-  @apply my-4;
+  margin: 1em 0;
+}
 
-  .notion-caption {
-    @apply text-left;
-  }
+.notion-code .notion-caption {
+  text-align: left;
 }
 
 .notion-to_do_list {
-  @apply list-none pl-0;
+  list-style: none;
+  padding-left: 2px;
+  margin: 0.25em 0;
+}
 
-  li {
-    @apply flex items-start gap-2;
-  }
+.notion-to_do_list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 2px 0;
+}
 
-  li > input[type="checkbox"] {
-    @apply checkbox checkbox-sm mt-1 flex-none;
-  }
+.notion-to_do_list input[type="checkbox"] {
+  margin-top: 0.35em;
+  flex: none;
+  width: 14px;
+  height: 14px;
+  accent-color: var(--n-blue);
 }
 
 .notion-column_list {
-  @apply my-4 flex flex-wrap gap-4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 1em 0;
 }
 
 .notion-column {
-  @apply min-w-0 flex-1;
+  flex: 1;
+  min-width: 0;
 }
 
 .notion-divider {
-  @apply my-6 border-base-300;
+  border-top: 1px solid var(--n-border);
 }
 
 .notion-bookmark,
 .notion-link_preview,
 .notion-file {
-  @apply my-4 block rounded-xl border border-base-300 p-3 text-sm break-all;
+  display: block;
+  border: 1px solid var(--n-border);
+  border-radius: 4px;
+  padding: 0.6rem 0.75rem;
+  margin: 1em 0;
+  font-size: 0.9rem;
+  word-break: break-all;
+  color: var(--n-text-2);
 }
 
 .notion-equation {
-  @apply my-4 overflow-x-auto text-center;
+  margin: 1em 0;
+  overflow-x: auto;
+  text-align: center;
 }
 
+/* Shiki code blocks */
 pre.shiki {
-  @apply my-4 overflow-x-auto rounded-xl p-4 text-sm;
+  margin: 1em 0;
+  overflow-x: auto;
+  border-radius: 4px;
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
-.prose pre.shiki code {
-  @apply bg-transparent p-0 text-inherit;
+pre.shiki code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* ==========================================================================
+   Page header (list pages / detail pages)
+   ========================================================================== */
+.page-header {
+  padding: 2.5rem 0 1.25rem;
+}
+
+.page-header-icon {
+  font-size: 3.5rem;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+
+.page-header-title {
+  font-size: 2.25rem;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--n-text);
+  letter-spacing: -0.01em;
+}
+
+.page-header-description {
+  margin-top: 0.5rem;
+  color: var(--n-text-2);
+}
+
+.page-cover {
+  width: 100%;
+  max-height: 260px;
+  overflow: hidden;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+}
+
+.page-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Notion-like list row (posts / blog entries) */
+.doc-row {
+  display: flex;
+  gap: 1.25rem;
+  padding: 0.75rem 0.75rem;
+  border-radius: 4px;
+  transition: background-color 0.15s ease;
+}
+
+.doc-row:hover {
+  background-color: var(--n-bg-hover);
+}
+
+.doc-row-date {
+  flex: none;
+  width: 5.5rem;
+  padding-top: 0.15rem;
+  font-size: 0.78rem;
+  color: var(--n-text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.doc-row-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.doc-row-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--n-text);
+  line-height: 1.4;
+}
+
+.doc-row-description {
+  margin-top: 0.15rem;
+  font-size: 0.875rem;
+  color: var(--n-text-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.doc-row-meta {
+  margin-top: 0.45rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--n-text-3);
+}
+
+.doc-row .cover-thumb {
+  flex: none;
+  width: 112px;
+  height: 72px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--n-border);
+}
+
+.doc-row .cover-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 640px) {
+  .doc-row {
+    gap: 0.75rem;
+    padding: 0.65rem 0.5rem;
+  }
+
+  .doc-row-date {
+    display: none;
+  }
+
+  .doc-row .cover-thumb {
+    width: 84px;
+    height: 56px;
+  }
+}
+
+/* Notion-like pills (tags / categories) */
+@mixin n-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 999px;
+  padding: 0.05rem 0.55rem;
+  font-size: 0.75rem;
+  color: var(--n-text-2);
+  background: var(--n-bg-gray);
+  transition: background-color 0.15s ease;
+}
+
+.n-pill {
+  @include n-pill;
+}
+
+.n-pill:hover {
+  background: var(--n-bg-hover);
+  color: var(--n-text);
+}
+
+.btn-tag,
+.btn-category {
+  @include n-pill;
+}
+
+.btn-tag:hover,
+.btn-category:hover {
+  background: var(--n-bg-hover);
+  color: var(--n-text);
+}
+
+/* ==========================================================================
+   Tag cloud page
+   ========================================================================== */
+.tags-container {
+  padding: 0.5rem 0 2rem;
+}
+
+.tags-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.6rem;
+  align-items: center;
+}
+
+.tags-item {
+  @include n-pill;
+  line-height: 1.6;
+}
+
+.tags-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.tags-count {
+  color: var(--n-text-3);
+  font-size: 0.7rem;
+}
+
+.tag-high,
+.tag-medium-high,
+.tag-medium,
+.tag-medium-low,
+.tag-low {
+  background: var(--n-bg-gray);
+  color: var(--n-text-2);
+}
+
+.tag-high:hover,
+.tag-medium-high:hover,
+.tag-medium:hover,
+.tag-medium-low:hover,
+.tag-low:hover {
+  background: var(--n-bg-hover);
+  color: var(--n-text);
+}
+
+/* ==========================================================================
+   Categories page
+   ========================================================================== */
+.categories-container {
+  padding: 0.5rem 0 2rem;
+}
+
+.categories-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.category-card {
+  width: 100%;
+}
+
+.category-inner {
+  border: 1px solid var(--n-border);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--n-bg);
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.category-header:hover {
+  background: var(--n-bg-gray);
+}
+
+.category-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.category-title h2 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--n-text);
+}
+
+.category-icon {
+  color: var(--n-text-2);
+}
+
+.category-count {
+  font-size: 0.75rem;
+  color: var(--n-text-3);
+  background: var(--n-bg-gray);
+  border-radius: 999px;
+  padding: 0 0.5rem;
+}
+
+.toggle-btn {
+  color: var(--n-text-3);
+  transition: transform 0.2s ease;
+}
+
+.toggle-btn .rotate-180 {
+  transform: rotate(180deg);
+}
+
+.category-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.category-content.expanded {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.category-divider {
+  border-top: 1px solid var(--n-border);
+  margin: 0 1rem;
+}
+
+.post-list {
+  list-style: none;
+  padding: 0.4rem 0.5rem 0.6rem;
+  margin: 0;
+}
+
+.post-item {
+  border-radius: 4px;
+}
+
+.post-link {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: var(--n-text-2);
+}
+
+.post-link:hover {
+  background: var(--n-bg-hover);
+  color: var(--n-text);
+}
+
+.post-date {
+  flex: none;
+  font-size: 0.75rem;
+  color: var(--n-text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   Archives page
+   ========================================================================== */
+.archives-container {
+  padding: 0.5rem 0 2rem;
+}
+
+.archives-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.year-badge {
+  display: inline-block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--n-text);
+  padding-bottom: 0.4rem;
+}
+
+.year-content {
+  border-left: 1px solid var(--n-border);
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.month-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--n-text-3);
+}
+
+.month-count {
+  background: var(--n-bg-gray);
+  border-radius: 999px;
+  padding: 0 0.45rem;
+  font-size: 0.7rem;
+}
+
+.archive-posts {
+  list-style: none;
+  padding: 0.35rem 0 0;
+  margin: 0;
+}
+
+.archive-card {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 4px;
+}
+
+.archive-card:hover {
+  background: var(--n-bg-hover);
+}
+
+.archive-date {
+  flex: none;
+  width: 7rem;
+  font-size: 0.75rem;
+  color: var(--n-text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.archive-title {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--n-text);
+}
+
+.archive-description {
+  font-size: 0.8rem;
+  color: var(--n-text-3);
+}
+
+/* Empty states */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 3rem 1rem;
+  color: var(--n-text-3);
+}
+
+.empty-icon {
+  font-size: 2rem;
+}
+
+.empty-text {
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   Code toolbar (expressive-code) + heading anchors
+   ========================================================================== */
+.frosti-code {
+  position: relative;
+}
+
+.frosti-heading .anchor {
+  opacity: 0;
+  margin-left: 0.35rem;
+  color: var(--n-text-3);
+  font-weight: 400;
+}
+
+.frosti-heading:hover .anchor {
+  opacity: 1;
+}
+
+.anchor {
+  text-decoration: none;
+  color: var(--n-text-3);
+}
+
+.title-anchor {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+a:hover .title-anchor {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Pagefind UI
+   ========================================================================== */
+.pagefind-ui {
+  --pagefind-ui-primary: var(--n-text);
+  --pagefind-ui-text: var(--n-text);
+  --pagefind-ui-background: var(--n-bg);
+  --pagefind-ui-border: var(--n-border);
+  --pagefind-ui-tag: var(--n-bg-gray);
+  --pagefind-ui-border-width: 1px;
+  --pagefind-ui-border-radius: 4px;
+  --pagefind-ui-font: inherit;
+}
+
+.pagefind-ui__search-input {
+  background: var(--n-bg-gray);
+  border: 0;
+  color: var(--n-text);
+}
+
+.pagefind-ui__search-clear {
+  display: none;
+}
+
+.pagefind-ui__result {
+  padding: 1rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--n-border);
+  border-radius: 0;
+  margin: 0;
+}
+
+.pagefind-ui__result-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.pagefind-ui__result-link {
+  color: var(--n-text);
+  text-decoration: none;
+}
+
+.pagefind-ui__result-link:hover {
+  text-decoration: underline;
+}
+
+.pagefind-ui__result-excerpt {
+  font-size: 0.875rem;
+  color: var(--n-text-2);
+}
+
+.pagefind-ui__result-excerpt mark {
+  background: rgba(255, 212, 0, 0.4);
+  color: inherit;
+  padding: 0 1px;
+  border-radius: 2px;
+}
+
+.pagefind-ui__button {
+  background: var(--n-bg-gray);
+  color: var(--n-text);
+  border: 0;
+  border-radius: 4px;
+}
+
+.pagefind-ui__button:hover {
+  background: var(--n-bg-hover);
+}
+
+.pagefind-ui__message {
+  font-size: 0.875rem;
+  color: var(--n-text-2);
+  margin: 1rem 0;
+}
+
+.pagefind-ui__message:empty::before {
+  content: "No results found. Try a different search term.";
+  display: block;
+  text-align: center;
+  padding: 2rem 0;
+  color: var(--n-text-3);
 }

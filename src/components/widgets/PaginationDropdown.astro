@@ -11,17 +11,22 @@ const { hiddenPages, current, baseUrl } =
     role="button"
     aria-haspopup="menu"
     aria-label="More pages"
-    class="btn join-item bg-base-100"
+    class="btn btn-ghost btn-sm join-item px-2 font-normal text-base-content/60"
   >
     ...
   </div>
-  <ul class="dropdown-content z-[100] menu p-2 shadow-xl bg-base-100 rounded-box w-auto mx-auto mt-1">
+  <ul
+    class="dropdown-content menu z-[100] mt-1 w-auto rounded-md border border-base-content/10 bg-base-100 p-1 shadow-lg"
+  >
     {
       hiddenPages.map((page) => (
         <li class="w-full">
           <a
             href={page === 1 ? baseUrl : `${baseUrl}/${page}`}
-            class:list={["text-center py-1 px-3", page === current && "bg-primary text-primary-content"]}
+            class:list={[
+              "py-1 px-3 text-center text-sm",
+              page === current && "bg-base-200 text-base-content",
+            ]}
           >
             {page}
           </a>

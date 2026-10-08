@@ -27,6 +27,11 @@ export const DATE_FORMAT = config.site.date_format;
 export const BLOG_CONFIG = config.site.blog;
 export const BLOG_PAGE_SIZE = config.site.blog.pageSize;
 
+// 首页说说流配置
+export const FEED_CONFIG = config.site.feed;
+export const FEED_TITLE = config.site.feed.title;
+export const FEED_DESCRIPTION = config.site.feed.description;
+
 // 代码块的主题
 export const CODE_THEME = config.site.theme.code;
 

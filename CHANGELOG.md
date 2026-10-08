@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Visual redesign: replaced the Frosti look with a Notion-like design system
+  (custom `notion` / `notion-dark` daisyUI themes, Notion typography, page
+  headers, document-style list rows, subtle borders instead of cards/shadows)
+- Post/blog lists are now document rows with date column, cover thumb and
+  muted tag pills; detail pages use Notion page typography and block styles
+  (callouts, toggles, code, tables, to-dos)
+- Sidebar, navbar, search, TOC, pagination, footer and share dialog restyled
+
 ## [2.0.1] - 2026-10-08
 
 ### Fixed

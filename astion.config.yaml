@@ -5,13 +5,16 @@ site:
   description: A blog template with Notion, built with Astro # 网站的描述，用于SEO等
   language: en # 网站的语言，例如 "en" 是英文
   favicon: /favicon.svg # 网站的图标，用于浏览器标签栏和其他地方显示
-  theme: # 更多主题 https://daisyui.com/docs/themes/
-    light: winter # 主题的浅色模式
-    dark: dracula # 主题的深色模式
+  theme: # 主题名对应 tailwind.config.mjs 中的 daisyUI 自定义主题
+    light: notion # 主题的浅色模式
+    dark: notion-dark # 主题的深色模式
     code: github-dark # 代码块的主题 https://expressive-code.com/guides/themes/
   date_format: ddd MMM DD YYYY # 日期格式设置，支持自定义格式
   blog: # 博客相关配置
     pageSize: 8 # 每页显示的文章数量
+  feed: # 首页说说流配置
+    title: Posts # 说说流标题
+    description: Short notes and quick updates. # 说说流描述
   menu: # 菜单配置
     - id: home # 菜单项的唯一标识符
       text: Home # 菜单项显示的文本

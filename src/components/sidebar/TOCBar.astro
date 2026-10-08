@@ -1,7 +1,5 @@
 ---
 import type { TOCBarProps } from "@interfaces/data";
-import { Icon } from "astro-icon/components";
-import Card from "../temple/Card.astro";
 
 // This prop indicates whether to render the TOC
 // (useful to conditionally show on certain pages)
@@ -10,58 +8,52 @@ const { headings = [], showTOC = true } = Astro.props as TOCBarProps;
 
 {
   showTOC && headings.length > 0 && (
-    <div id="toc-container" class="mt-4 z-10 md:max-h-[calc(100vh-2rem)] ">
-      <Card>
-        <div class="p-4">
-          <nav class="toc-nav max-h-[calc(100vh-200px)] overflow-y-auto scrollbar-none relative">
-            {/* Animated active indicator - now moved outside the ul structure */}
-            <div
-              id="active-indicator"
-              class="absolute bg-primary/10 rounded-lg opacity-0 shadow-sm pointer-events-none z-0"
-            />
-            <ul class="space-y-0 relative z-10">
-              {headings.map((heading) => (
-                <li>
-                  <a
-                    href={`#${heading.slug}`}
-                    data-heading-slug={heading.slug}
-                    data-heading-depth={heading.depth}
-                    class={`toc-link relative flex items-center py-2 px-2 rounded-lg ${heading.depth === 1 ? "font-medium" : ""}`}
-                    style={`padding-left: ${12 + (heading.depth - 1) * 16}px;`}
-                  >
-                    <Icon
-                      name="tabler:chevron-right"
-                      class="icon-indicator absolute left-1 opacity-0 transition-all duration-200 w-4 h-4 text-primary"
-                    />
-                    <span class="link-text transition-transform duration-200">{heading.text}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      </Card>
+    <div id="toc-container" class="mt-5 hidden lg:block">
+      <div class="px-2 pb-1 text-xs font-medium tracking-wide text-base-content/40 uppercase">
+        On this page
+      </div>
+      <nav class="toc-nav relative max-h-[calc(100vh-280px)] overflow-y-auto scrollbar-none">
+        {/* Animated active indicator */}
+        <div
+          id="active-indicator"
+          class="pointer-events-none absolute z-0 rounded-md bg-base-200 opacity-0"
+        />
+        <ul class="relative z-10 space-y-0">
+          {headings.map((heading) => (
+            <li>
+              <a
+                href={`#${heading.slug}`}
+                data-heading-slug={heading.slug}
+                data-heading-depth={heading.depth}
+                class={`toc-link relative flex items-center rounded-md py-1 text-[13px] leading-5 ${heading.depth === 1 ? "font-medium" : ""}`}
+                style={`padding-left: ${8 + (heading.depth - 1) * 12}px;`}
+              >
+                <span class="link-text truncate transition-colors duration-200">{heading.text}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   )
 }
 
 <style>
-  .toc-link:hover .link-text {
-    transform: translateX(2px);
+  .toc-link {
+    color: var(--n-text-3);
+  }
+
+  .toc-link:hover {
+    color: var(--n-text-2);
   }
 
   .toc-link.active {
-    color: var(--p);
+    color: var(--n-text);
     font-weight: 500;
   }
 
-  .toc-link.active .icon-indicator {
-    opacity: 1;
-    transform: translateX(1px);
-  }
-
-  .toc-link:hover .icon-indicator {
-    opacity: 0.5;
+  .toc-link.active .link-text {
+    color: var(--n-text);
   }
 </style>
 

@@ -26,6 +26,11 @@ export interface BlogConfig {
   pageSize: number;
 }
 
+export interface FeedConfig {
+  title: string;
+  description: string;
+}
+
 export interface SiteConfig {
   tab: string;
   title: string;
@@ -39,6 +44,7 @@ export interface SiteConfig {
   };
   date_format: string;
   blog: BlogConfig;
+  feed: FeedConfig;
   menu: MenuItem[];
 }
 
